@@ -23,5 +23,13 @@
     "copyFailed": "Copy to clipboard failed.",
     "@copyFailed": {
         "description": "The message that is displayed after a value failed to copy to the clipboard"
+    },
+    "authenticationFailed": "Incorrect username or password.",
+    "@authenticationFailed": {
+        "description": "The message that is displayed when the user enters an incorrect username or password."
+    },
+    "sessionExpired": "Session has expired. Please sign in again.",
+    "@sessionExpired": {
+        "description": "The message that is displayed when the user's session has expired."
     }
-} 
+}

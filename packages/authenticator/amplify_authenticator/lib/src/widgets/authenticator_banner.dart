@@ -121,7 +121,7 @@ BannerColors getColors(
   // and StatusType is `error` use Colors.white (High-emphasis), otherwise
   // set it to null to let flutter control the foreground.
   final hasCustomBackground = customBackgroundColor != null;
-  final foregroundColorByType = isError ? Colors.white : null;
+  final foregroundColorByType = isError ? theme.colorScheme.onError : null;
   final foregroundColorFallBack =
       hasCustomBackground ? null : foregroundColorByType;
 

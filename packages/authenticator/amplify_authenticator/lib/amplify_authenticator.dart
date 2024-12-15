@@ -8,6 +8,7 @@ library amplify_authenticator;
 
 import 'dart:async';
 
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/src/blocs/auth/auth_bloc.dart';
 import 'package:amplify_authenticator/src/constants/authenticator_constants.dart';
 import 'package:amplify_authenticator/src/enums/enums.dart';
@@ -547,10 +548,24 @@ class _AuthenticatorState extends State<Authenticator> {
       if (mounted && exception.showBanner) {
         _showExceptionBanner(
           type: StatusType.error,
-          message: exception.message,
+          message: _localizedExceptionMessage(exception) ?? exception.message,
         );
       }
     });
+  }
+
+  String? _localizedExceptionMessage(AuthenticatorException exception) {
+    final context = scaffoldMessengerKey.currentContext;
+    if (context == null) {
+      return null;
+    }
+    final resolver = widget.stringResolver.messages;
+    if (exception.underlyingException is NotAuthorizedServiceException) {
+      return resolver.authenticationFailed(context);
+    } else if (exception.underlyingException == 'Your session has expired. Please sign in.') {
+      return resolver.sessionExpired(context);
+    }
+    return null;
   }
 
   void _subscribeToInfoMessages() {
