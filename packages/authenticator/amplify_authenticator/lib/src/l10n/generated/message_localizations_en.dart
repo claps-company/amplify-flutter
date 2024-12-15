@@ -21,4 +21,10 @@ class AuthenticatorMessageLocalizationsEn
 
   @override
   String get copyFailed => 'Copy to clipboard failed.';
+
+  @override
+  String get authenticationFailed => 'Incorrect username or password.';
+
+  @override
+  String get sessionExpired => 'Session has expired. Please sign in again.';
 }

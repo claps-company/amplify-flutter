@@ -122,6 +122,18 @@ abstract class AuthenticatorMessageLocalizations {
   /// In en, this message translates to:
   /// **'Copy to clipboard failed.'**
   String get copyFailed;
+
+  /// The message that is displayed when the user enters an incorrect username or password.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect username or password.'**
+  String get authenticationFailed;
+
+  /// The message that is displayed when the user's session has expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session has expired. Please sign in again.'**
+  String get sessionExpired;
 }
 
 class _AuthenticatorMessageLocalizationsDelegate
