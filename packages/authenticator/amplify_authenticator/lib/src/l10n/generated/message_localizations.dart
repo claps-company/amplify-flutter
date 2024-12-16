@@ -134,6 +134,12 @@ abstract class AuthenticatorMessageLocalizations {
   /// In en, this message translates to:
   /// **'Session has expired. Please sign in again.'**
   String get sessionExpired;
+
+  /// The message that is displayed when the user already exists.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with the given email already exists.'**
+  String get userAlreadyExists;
 }
 
 class _AuthenticatorMessageLocalizationsDelegate

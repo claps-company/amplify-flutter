@@ -31,5 +31,9 @@
     "sessionExpired": "Session has expired. Please sign in again.",
     "@sessionExpired": {
         "description": "The message that is displayed when the user's session has expired."
+    },
+    "userAlreadyExists": "An account with the given email already exists.",
+    "@userAlreadyExists": {
+        "description": "The message that is displayed when the user tries to sign up with an email that is already in use."
     }
 }

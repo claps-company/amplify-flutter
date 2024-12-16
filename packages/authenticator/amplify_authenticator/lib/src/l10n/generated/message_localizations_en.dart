@@ -27,4 +27,8 @@ class AuthenticatorMessageLocalizationsEn
 
   @override
   String get sessionExpired => 'Session has expired. Please sign in again.';
+
+  @override
+  String get userAlreadyExists =>
+      'An account with the given email already exists.';
 }
