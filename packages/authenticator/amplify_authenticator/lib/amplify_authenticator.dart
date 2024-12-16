@@ -564,6 +564,8 @@ class _AuthenticatorState extends State<Authenticator> {
       return resolver.authenticationFailed(context);
     } else if (exception.underlyingException == 'Your session has expired. Please sign in.') {
       return resolver.sessionExpired(context);
+    } else if (exception.underlyingException is UsernameExistsException) {
+      return resolver.userAlreadyExists(context);
     }
     return null;
   }

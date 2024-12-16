@@ -57,6 +57,10 @@ class MessageResolver extends Resolver<MessageResolverKey> {
     return AuthenticatorLocalizations.messagesOf(context).sessionExpired;
   }
 
+  String userAlreadyExists(BuildContext context) {
+    return AuthenticatorLocalizations.messagesOf(context).userAlreadyExists;
+  }
+
   @override
   String resolve(BuildContext context, MessageResolverKey key) {
     switch (key.type) {
