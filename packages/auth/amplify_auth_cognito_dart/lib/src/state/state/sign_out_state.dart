@@ -40,6 +40,7 @@ sealed class SignOutState extends AuthState<SignOutStateType> {
     HostedUiException? hostedUiException,
     GlobalSignOutException? globalSignOutException,
     RevokeTokenException? revokeTokenException,
+    InvalidTokenException? invalidTokenException,
   }) = SignOutPartialFailure;
 
   /// {@macro amplify_auth_cognito.sign_out_failure}
@@ -89,6 +90,7 @@ final class SignOutPartialFailure extends SignOutState {
     this.hostedUiException,
     this.globalSignOutException,
     this.revokeTokenException,
+    this.invalidTokenException,
   }) : super._();
 
   /// The exception that occurred during Hosted UI sign out.
@@ -100,12 +102,15 @@ final class SignOutPartialFailure extends SignOutState {
   /// The exception that occurred while revoking the token.
   final RevokeTokenException? revokeTokenException;
 
+  /// The exception that occurred while signing out with an invalid userpool token.
+  final InvalidTokenException? invalidTokenException;
+
   @override
   List<Object?> get props => [
-        hostedUiException,
-        globalSignOutException,
-        revokeTokenException,
-      ];
+    hostedUiException,
+    globalSignOutException,
+    revokeTokenException,
+  ];
 
   @override
   SignOutStateType get type => SignOutStateType.partialFailure;

@@ -19,8 +19,15 @@ final class TotpSetupStateMachine
   TotpSetupStateMachine(CognitoAuthStateMachine manager) : super(manager, type);
 
   /// The [TotpSetupStateMachine] type.
-  static const type = StateMachineToken<TotpSetupEvent, TotpSetupState,
-      AuthEvent, AuthState, CognitoAuthStateMachine, TotpSetupStateMachine>();
+  static const type =
+      StateMachineToken<
+        TotpSetupEvent,
+        TotpSetupState,
+        AuthEvent,
+        AuthState,
+        CognitoAuthStateMachine,
+        TotpSetupStateMachine
+      >();
 
   @override
   TotpSetupState get initialState => const TotpSetupState.idle();
@@ -56,9 +63,7 @@ final class TotpSetupStateMachine
     final tokens = await manager.getUserPoolTokens();
     final response = await _cognitoIdp
         .associateSoftwareToken(
-          AssociateSoftwareTokenRequest(
-            accessToken: tokens.accessToken.raw,
-          ),
+          AssociateSoftwareTokenRequest(accessToken: tokens.accessToken.raw),
         )
         .result;
     _session = response.session;
@@ -66,11 +71,7 @@ final class TotpSetupStateMachine
       username: CognitoIdToken(tokens.idToken).username,
       sharedSecret: response.secretCode!,
     );
-    emit(
-      TotpSetupState.requiresVerification(
-        _details!,
-      ),
-    );
+    emit(TotpSetupState.requiresVerification(_details!));
   }
 
   Future<void> _onVerify(TotpSetupVerify event) async {
@@ -96,15 +97,8 @@ final class TotpSetupStateMachine
           _details != null,
           'TotpSetupDetails should not be null. Please report this issue.',
         );
-        logger.verbose(
-          'Failed to verify TOTP code. Allowing retry...',
-          e,
-        );
-        emit(
-          TotpSetupState.requiresVerification(
-            _details!,
-          ),
-        );
+        logger.verbose('Failed to verify TOTP code. Allowing retry...', e);
+        emit(TotpSetupState.requiresVerification(_details!));
         return;
       }
       rethrow;

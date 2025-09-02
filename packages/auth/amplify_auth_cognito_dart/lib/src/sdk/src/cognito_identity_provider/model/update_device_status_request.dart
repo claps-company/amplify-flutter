@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.update_device_status_request; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -32,9 +32,9 @@ abstract class UpdateDeviceStatusRequest
   }
 
   /// Represents the request to update the device status.
-  factory UpdateDeviceStatusRequest.build(
-          [void Function(UpdateDeviceStatusRequestBuilder) updates]) =
-      _$UpdateDeviceStatusRequest;
+  factory UpdateDeviceStatusRequest.build([
+    void Function(UpdateDeviceStatusRequestBuilder) updates,
+  ]) = _$UpdateDeviceStatusRequest;
 
   const UpdateDeviceStatusRequest._();
 
@@ -42,45 +42,31 @@ abstract class UpdateDeviceStatusRequest
     UpdateDeviceStatusRequest payload,
     _i2.AWSBaseHttpRequest request, {
     Map<String, String> labels = const {},
-  }) =>
-      payload;
+  }) => payload;
 
   static const List<_i1.SmithySerializer<UpdateDeviceStatusRequest>>
-      serializers = [UpdateDeviceStatusRequestAwsJson11Serializer()];
+  serializers = [UpdateDeviceStatusRequestAwsJson11Serializer()];
 
-  /// A valid access token that Amazon Cognito issued to the user whose device status you want to update.
+  /// A valid access token that Amazon Cognito issued to the currently signed-in user. Must include a scope claim for `aws.cognito.signin.user.admin`.
   String get accessToken;
 
-  /// The device key.
+  /// The device key of the device you want to update, for example `us-west-2_a1b2c3d4-5678-90ab-cdef-EXAMPLE11111`.
   String get deviceKey;
 
-  /// The status of whether a device is remembered.
+  /// To enable device authentication with the specified device, set to `remembered`.To disable, set to `not_remembered`.
   DeviceRememberedStatusType? get deviceRememberedStatus;
   @override
   UpdateDeviceStatusRequest getPayload() => this;
 
   @override
-  List<Object?> get props => [
-        accessToken,
-        deviceKey,
-        deviceRememberedStatus,
-      ];
+  List<Object?> get props => [accessToken, deviceKey, deviceRememberedStatus];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('UpdateDeviceStatusRequest')
-      ..add(
-        'accessToken',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'deviceKey',
-        deviceKey,
-      )
-      ..add(
-        'deviceRememberedStatus',
-        deviceRememberedStatus,
-      );
+      ..add('accessToken', '***SENSITIVE***')
+      ..add('deviceKey', deviceKey)
+      ..add('deviceRememberedStatus', deviceRememberedStatus);
     return helper.toString();
   }
 }
@@ -88,21 +74,18 @@ abstract class UpdateDeviceStatusRequest
 class UpdateDeviceStatusRequestAwsJson11Serializer
     extends _i1.StructuredSmithySerializer<UpdateDeviceStatusRequest> {
   const UpdateDeviceStatusRequestAwsJson11Serializer()
-      : super('UpdateDeviceStatusRequest');
+    : super('UpdateDeviceStatusRequest');
 
   @override
   Iterable<Type> get types => const [
-        UpdateDeviceStatusRequest,
-        _$UpdateDeviceStatusRequest,
-      ];
+    UpdateDeviceStatusRequest,
+    _$UpdateDeviceStatusRequest,
+  ];
 
   @override
   Iterable<_i1.ShapeId> get supportedProtocols => const [
-        _i1.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i1.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   UpdateDeviceStatusRequest deserialize(
@@ -121,20 +104,26 @@ class UpdateDeviceStatusRequestAwsJson11Serializer
       }
       switch (key) {
         case 'AccessToken':
-          result.accessToken = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.accessToken =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'DeviceKey':
-          result.deviceKey = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.deviceKey =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'DeviceRememberedStatus':
-          result.deviceRememberedStatus = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(DeviceRememberedStatusType),
-          ) as DeviceRememberedStatusType);
+          result.deviceRememberedStatus =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DeviceRememberedStatusType),
+                  )
+                  as DeviceRememberedStatusType);
       }
     }
 
@@ -151,27 +140,23 @@ class UpdateDeviceStatusRequestAwsJson11Serializer
     final UpdateDeviceStatusRequest(
       :accessToken,
       :deviceKey,
-      :deviceRememberedStatus
+      :deviceRememberedStatus,
     ) = object;
     result$.addAll([
       'AccessToken',
-      serializers.serialize(
-        accessToken,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(accessToken, specifiedType: const FullType(String)),
       'DeviceKey',
-      serializers.serialize(
-        deviceKey,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(deviceKey, specifiedType: const FullType(String)),
     ]);
     if (deviceRememberedStatus != null) {
       result$
         ..add('DeviceRememberedStatus')
-        ..add(serializers.serialize(
-          deviceRememberedStatus,
-          specifiedType: const FullType(DeviceRememberedStatusType),
-        ));
+        ..add(
+          serializers.serialize(
+            deviceRememberedStatus,
+            specifiedType: const FullType(DeviceRememberedStatusType),
+          ),
+        );
     }
     return result$;
   }

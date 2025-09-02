@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity.model.credentials; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -36,7 +36,7 @@ abstract class Credentials
   const Credentials._();
 
   static const List<_i2.SmithySerializer<Credentials>> serializers = [
-    CredentialsAwsJson11Serializer()
+    CredentialsAwsJson11Serializer(),
   ];
 
   /// The Access Key portion of the credentials.
@@ -51,32 +51,15 @@ abstract class Credentials
   /// The date at which these credentials will expire.
   DateTime? get expiration;
   @override
-  List<Object?> get props => [
-        accessKeyId,
-        secretKey,
-        sessionToken,
-        expiration,
-      ];
+  List<Object?> get props => [accessKeyId, secretKey, sessionToken, expiration];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('Credentials')
-      ..add(
-        'accessKeyId',
-        accessKeyId,
-      )
-      ..add(
-        'secretKey',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'sessionToken',
-        sessionToken,
-      )
-      ..add(
-        'expiration',
-        expiration,
-      );
+      ..add('accessKeyId', accessKeyId)
+      ..add('secretKey', '***SENSITIVE***')
+      ..add('sessionToken', sessionToken)
+      ..add('expiration', expiration);
     return helper.toString();
   }
 }
@@ -86,18 +69,12 @@ class CredentialsAwsJson11Serializer
   const CredentialsAwsJson11Serializer() : super('Credentials');
 
   @override
-  Iterable<Type> get types => const [
-        Credentials,
-        _$Credentials,
-      ];
+  Iterable<Type> get types => const [Credentials, _$Credentials];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   Credentials deserialize(
@@ -116,25 +93,33 @@ class CredentialsAwsJson11Serializer
       }
       switch (key) {
         case 'AccessKeyId':
-          result.accessKeyId = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.accessKeyId =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'SecretKey':
-          result.secretKey = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.secretKey =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'SessionToken':
-          result.sessionToken = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.sessionToken =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'Expiration':
-          result.expiration = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime);
+          result.expiration =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime);
       }
     }
 
@@ -153,34 +138,42 @@ class CredentialsAwsJson11Serializer
     if (accessKeyId != null) {
       result$
         ..add('AccessKeyId')
-        ..add(serializers.serialize(
-          accessKeyId,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            accessKeyId,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (secretKey != null) {
       result$
         ..add('SecretKey')
-        ..add(serializers.serialize(
-          secretKey,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            secretKey,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (sessionToken != null) {
       result$
         ..add('SessionToken')
-        ..add(serializers.serialize(
-          sessionToken,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            sessionToken,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (expiration != null) {
       result$
         ..add('Expiration')
-        ..add(serializers.serialize(
-          expiration,
-          specifiedType: const FullType(DateTime),
-        ));
+        ..add(
+          serializers.serialize(
+            expiration,
+            specifiedType: const FullType(DateTime),
+          ),
+        );
     }
     return result$;
   }

@@ -19,33 +19,30 @@ class _$InitiateAuthRequest extends InitiateAuthRequest {
   final AnalyticsMetadataType? analyticsMetadata;
   @override
   final UserContextDataType? userContextData;
+  @override
+  final String? session;
 
-  factory _$InitiateAuthRequest(
-          [void Function(InitiateAuthRequestBuilder)? updates]) =>
-      (new InitiateAuthRequestBuilder()..update(updates))._build();
+  factory _$InitiateAuthRequest([
+    void Function(InitiateAuthRequestBuilder)? updates,
+  ]) => (InitiateAuthRequestBuilder()..update(updates))._build();
 
-  _$InitiateAuthRequest._(
-      {required this.authFlow,
-      this.authParameters,
-      this.clientMetadata,
-      required this.clientId,
-      this.analyticsMetadata,
-      this.userContextData})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        authFlow, r'InitiateAuthRequest', 'authFlow');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'InitiateAuthRequest', 'clientId');
-  }
-
+  _$InitiateAuthRequest._({
+    required this.authFlow,
+    this.authParameters,
+    this.clientMetadata,
+    required this.clientId,
+    this.analyticsMetadata,
+    this.userContextData,
+    this.session,
+  }) : super._();
   @override
   InitiateAuthRequest rebuild(
-          void Function(InitiateAuthRequestBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InitiateAuthRequestBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InitiateAuthRequestBuilder toBuilder() =>
-      new InitiateAuthRequestBuilder()..replace(this);
+      InitiateAuthRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -56,7 +53,8 @@ class _$InitiateAuthRequest extends InitiateAuthRequest {
         clientMetadata == other.clientMetadata &&
         clientId == other.clientId &&
         analyticsMetadata == other.analyticsMetadata &&
-        userContextData == other.userContextData;
+        userContextData == other.userContextData &&
+        session == other.session;
   }
 
   @override
@@ -68,6 +66,7 @@ class _$InitiateAuthRequest extends InitiateAuthRequest {
     _$hash = $jc(_$hash, clientId.hashCode);
     _$hash = $jc(_$hash, analyticsMetadata.hashCode);
     _$hash = $jc(_$hash, userContextData.hashCode);
+    _$hash = $jc(_$hash, session.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -83,13 +82,13 @@ class InitiateAuthRequestBuilder
 
   _i3.MapBuilder<String, String>? _authParameters;
   _i3.MapBuilder<String, String> get authParameters =>
-      _$this._authParameters ??= new _i3.MapBuilder<String, String>();
+      _$this._authParameters ??= _i3.MapBuilder<String, String>();
   set authParameters(_i3.MapBuilder<String, String>? authParameters) =>
       _$this._authParameters = authParameters;
 
   _i3.MapBuilder<String, String>? _clientMetadata;
   _i3.MapBuilder<String, String> get clientMetadata =>
-      _$this._clientMetadata ??= new _i3.MapBuilder<String, String>();
+      _$this._clientMetadata ??= _i3.MapBuilder<String, String>();
   set clientMetadata(_i3.MapBuilder<String, String>? clientMetadata) =>
       _$this._clientMetadata = clientMetadata;
 
@@ -99,15 +98,19 @@ class InitiateAuthRequestBuilder
 
   AnalyticsMetadataTypeBuilder? _analyticsMetadata;
   AnalyticsMetadataTypeBuilder get analyticsMetadata =>
-      _$this._analyticsMetadata ??= new AnalyticsMetadataTypeBuilder();
+      _$this._analyticsMetadata ??= AnalyticsMetadataTypeBuilder();
   set analyticsMetadata(AnalyticsMetadataTypeBuilder? analyticsMetadata) =>
       _$this._analyticsMetadata = analyticsMetadata;
 
   UserContextDataTypeBuilder? _userContextData;
   UserContextDataTypeBuilder get userContextData =>
-      _$this._userContextData ??= new UserContextDataTypeBuilder();
+      _$this._userContextData ??= UserContextDataTypeBuilder();
   set userContextData(UserContextDataTypeBuilder? userContextData) =>
       _$this._userContextData = userContextData;
+
+  String? _session;
+  String? get session => _$this._session;
+  set session(String? session) => _$this._session = session;
 
   InitiateAuthRequestBuilder();
 
@@ -120,6 +123,7 @@ class InitiateAuthRequestBuilder
       _clientId = $v.clientId;
       _analyticsMetadata = $v.analyticsMetadata?.toBuilder();
       _userContextData = $v.userContextData?.toBuilder();
+      _session = $v.session;
       _$v = null;
     }
     return this;
@@ -127,7 +131,6 @@ class InitiateAuthRequestBuilder
 
   @override
   void replace(InitiateAuthRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InitiateAuthRequest;
   }
 
@@ -142,16 +145,25 @@ class InitiateAuthRequestBuilder
   _$InitiateAuthRequest _build() {
     _$InitiateAuthRequest _$result;
     try {
-      _$result = _$v ??
-          new _$InitiateAuthRequest._(
-              authFlow: BuiltValueNullFieldError.checkNotNull(
-                  authFlow, r'InitiateAuthRequest', 'authFlow'),
-              authParameters: _authParameters?.build(),
-              clientMetadata: _clientMetadata?.build(),
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'InitiateAuthRequest', 'clientId'),
-              analyticsMetadata: _analyticsMetadata?.build(),
-              userContextData: _userContextData?.build());
+      _$result =
+          _$v ??
+          _$InitiateAuthRequest._(
+            authFlow: BuiltValueNullFieldError.checkNotNull(
+              authFlow,
+              r'InitiateAuthRequest',
+              'authFlow',
+            ),
+            authParameters: _authParameters?.build(),
+            clientMetadata: _clientMetadata?.build(),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+              clientId,
+              r'InitiateAuthRequest',
+              'clientId',
+            ),
+            analyticsMetadata: _analyticsMetadata?.build(),
+            userContextData: _userContextData?.build(),
+            session: session,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -165,8 +177,11 @@ class InitiateAuthRequestBuilder
         _$failedField = 'userContextData';
         _userContextData?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'InitiateAuthRequest', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(
+          r'InitiateAuthRequest',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.attribute_type; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -10,29 +10,23 @@ import 'package:smithy/smithy.dart' as _i2;
 
 part 'attribute_type.g.dart';
 
-/// Specifies whether the attribute is standard or custom.
+/// The name and value of a user attribute.
 abstract class AttributeType
     with _i1.AWSEquatable<AttributeType>
     implements Built<AttributeType, AttributeTypeBuilder> {
-  /// Specifies whether the attribute is standard or custom.
-  factory AttributeType({
-    required String name,
-    String? value,
-  }) {
-    return _$AttributeType._(
-      name: name,
-      value: value,
-    );
+  /// The name and value of a user attribute.
+  factory AttributeType({required String name, String? value}) {
+    return _$AttributeType._(name: name, value: value);
   }
 
-  /// Specifies whether the attribute is standard or custom.
+  /// The name and value of a user attribute.
   factory AttributeType.build([void Function(AttributeTypeBuilder) updates]) =
       _$AttributeType;
 
   const AttributeType._();
 
   static const List<_i2.SmithySerializer<AttributeType>> serializers = [
-    AttributeTypeAwsJson11Serializer()
+    AttributeTypeAwsJson11Serializer(),
   ];
 
   /// The name of the attribute.
@@ -41,22 +35,13 @@ abstract class AttributeType
   /// The value of the attribute.
   String? get value;
   @override
-  List<Object?> get props => [
-        name,
-        value,
-      ];
+  List<Object?> get props => [name, value];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('AttributeType')
-      ..add(
-        'name',
-        name,
-      )
-      ..add(
-        'value',
-        '***SENSITIVE***',
-      );
+      ..add('name', name)
+      ..add('value', '***SENSITIVE***');
     return helper.toString();
   }
 }
@@ -66,18 +51,12 @@ class AttributeTypeAwsJson11Serializer
   const AttributeTypeAwsJson11Serializer() : super('AttributeType');
 
   @override
-  Iterable<Type> get types => const [
-        AttributeType,
-        _$AttributeType,
-      ];
+  Iterable<Type> get types => const [AttributeType, _$AttributeType];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   AttributeType deserialize(
@@ -96,15 +75,19 @@ class AttributeTypeAwsJson11Serializer
       }
       switch (key) {
         case 'Name':
-          result.name = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.name =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'Value':
-          result.value = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.value =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -121,18 +104,14 @@ class AttributeTypeAwsJson11Serializer
     final AttributeType(:name, :value) = object;
     result$.addAll([
       'Name',
-      serializers.serialize(
-        name,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(name, specifiedType: const FullType(String)),
     ]);
     if (value != null) {
       result$
         ..add('Value')
-        ..add(serializers.serialize(
-          value,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result$;
   }

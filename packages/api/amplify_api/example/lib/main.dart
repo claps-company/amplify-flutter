@@ -77,14 +77,11 @@ class _MyAppState extends State<MyApp> {
       _isAmplifyConfigured = true;
     });
 
-    Amplify.Hub.listen(
-      HubChannel.Api,
-      (ApiHubEvent event) {
-        if (event is SubscriptionHubEvent) {
-          safePrint(event);
-        }
-      },
-    );
+    Amplify.Hub.listen(HubChannel.Api, (ApiHubEvent event) {
+      if (event is SubscriptionHubEvent) {
+        safePrint(event);
+      }
+    });
   }
 
   void _onRestApiViewButtonClick() {

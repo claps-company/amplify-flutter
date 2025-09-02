@@ -19,8 +19,15 @@ final class SignOutStateMachine
   SignOutStateMachine(CognitoAuthStateMachine manager) : super(manager, type);
 
   /// The [SignOutStateMachine] type.
-  static const type = StateMachineToken<SignOutEvent, SignOutState, AuthEvent,
-      AuthState, CognitoAuthStateMachine, SignOutStateMachine>();
+  static const type =
+      StateMachineToken<
+        SignOutEvent,
+        SignOutState,
+        AuthEvent,
+        AuthState,
+        CognitoAuthStateMachine,
+        SignOutStateMachine
+      >();
 
   @override
   SignOutState get initialState => const SignOutState.idle();
@@ -63,6 +70,13 @@ final class SignOutStateMachine
     // Do not clear other storage items (e.g. AWS credentials) in this case,
     // since an unauthenticated user may still be cached.
     final CognitoUserPoolTokens tokens;
+
+    // Capture results of individual steps to determine overall success.
+    HostedUiException? hostedUiException;
+    GlobalSignOutException? globalSignOutException;
+    RevokeTokenException? revokeTokenException;
+    InvalidTokenException? invalidTokenException;
+
     try {
       tokens = await manager.getUserPoolTokens();
     } on SignedOutException {
@@ -73,12 +87,19 @@ final class SignOutStateMachine
       // to clear the credentials associated with the non-existent user.
       await manager.clearCredentials();
       return emit(const SignOutState.success());
+    } on Exception catch (e) {
+      // unable to read tokens, clear the credentials to clear this invalid state.
+      invalidTokenException = InvalidTokenException(underlyingException: e);
+      await dispatchAndComplete(const CredentialStoreEvent.clearCredentials());
+      return emit(
+        SignOutState.partialFailure(
+          hostedUiException: hostedUiException,
+          globalSignOutException: globalSignOutException,
+          revokeTokenException: revokeTokenException,
+          invalidTokenException: invalidTokenException,
+        ),
+      );
     }
-
-    // Capture results of individual steps to determine overall success.
-    HostedUiException? hostedUiException;
-    GlobalSignOutException? globalSignOutException;
-    RevokeTokenException? revokeTokenException;
 
     // Sign out via Hosted UI, if configured.
     Future<void> signOutHostedUi() async {
@@ -109,9 +130,7 @@ final class SignOutStateMachine
       try {
         await _cognitoIdp
             .globalSignOut(
-              GlobalSignOutRequest(
-                accessToken: tokens.accessToken.raw,
-              ),
+              GlobalSignOutRequest(accessToken: tokens.accessToken.raw),
             )
             .result;
       } on Exception catch (e) {
@@ -150,9 +169,7 @@ final class SignOutStateMachine
     }
 
     // Credentials are cleared for all partial sign out cases.
-    await dispatchAndComplete(
-      const CredentialStoreEvent.clearCredentials(),
-    );
+    await dispatchAndComplete(const CredentialStoreEvent.clearCredentials());
 
     if (globalSignOutException != null || revokeTokenException != null) {
       return emit(
@@ -160,6 +177,7 @@ final class SignOutStateMachine
           hostedUiException: hostedUiException,
           globalSignOutException: globalSignOutException,
           revokeTokenException: revokeTokenException,
+          invalidTokenException: invalidTokenException,
         ),
       );
     }
@@ -174,6 +192,7 @@ final class SignOutStateMachine
           hostedUiException: hostedUiException,
           globalSignOutException: globalSignOutException,
           revokeTokenException: revokeTokenException,
+          invalidTokenException: invalidTokenException,
         ),
       );
     }

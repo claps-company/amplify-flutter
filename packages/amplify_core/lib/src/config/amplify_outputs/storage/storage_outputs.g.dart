@@ -17,32 +17,24 @@ StorageOutputs _$StorageOutputsFromJson(Map<String, dynamic> json) =>
           awsRegion: $checkedConvert('aws_region', (v) => v as String),
           bucketName: $checkedConvert('bucket_name', (v) => v as String),
           buckets: $checkedConvert(
-              'buckets',
-              (v) => (v as List<dynamic>?)
-                  ?.map(
-                      (e) => BucketOutputs.fromJson(e as Map<String, dynamic>))
-                  .toList()),
+            'buckets',
+            (v) => (v as List<dynamic>?)
+                ?.map((e) => BucketOutputs.fromJson(e as Map<String, dynamic>))
+                .toList(),
+          ),
         );
         return val;
       },
       fieldKeyMap: const {
         'awsRegion': 'aws_region',
-        'bucketName': 'bucket_name'
+        'bucketName': 'bucket_name',
       },
     );
 
-Map<String, dynamic> _$StorageOutputsToJson(StorageOutputs instance) {
-  final val = <String, dynamic>{
-    'aws_region': instance.awsRegion,
-    'bucket_name': instance.bucketName,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('buckets', instance.buckets?.map((e) => e.toJson()).toList());
-  return val;
-}
+Map<String, dynamic> _$StorageOutputsToJson(StorageOutputs instance) =>
+    <String, dynamic>{
+      'aws_region': instance.awsRegion,
+      'bucket_name': instance.bucketName,
+      if (instance.buckets?.map((e) => e.toJson()).toList() case final value?)
+        'buckets': value,
+    };

@@ -94,9 +94,7 @@ Future<void> logMetric() async {
     'pub_server',
   ];
 
-  final category = categories.firstWhereOrNull(
-    workingDirectory.contains,
-  );
+  final category = categories.firstWhereOrNull(workingDirectory.contains);
 
   if (category == null) {
     throw Exception(
@@ -112,16 +110,24 @@ Future<void> logMetric() async {
       'framework input of $framework must be one of: dart, flutter',
     );
   }
-  final flutterDartChannel =
-      core.getInput('flutter-dart-channel', defaultValue: defaultValue);
+  final flutterDartChannel = core.getInput(
+    'flutter-dart-channel',
+    defaultValue: defaultValue,
+  );
   final dartVersion = core.getInput('dart-version', defaultValue: defaultValue);
-  final flutterVersion =
-      core.getInput('flutter-version', defaultValue: defaultValue);
-  final dartCompiler =
-      core.getInput('dart-compiler', defaultValue: defaultValue);
+  final flutterVersion = core.getInput(
+    'flutter-version',
+    defaultValue: defaultValue,
+  );
+  final dartCompiler = core.getInput(
+    'dart-compiler',
+    defaultValue: defaultValue,
+  );
   final platform = core.getInput('platform', defaultValue: defaultValue);
-  final platformVersion =
-      core.getInput('platform-version', defaultValue: defaultValue);
+  final platformVersion = core.getInput(
+    'platform-version',
+    defaultValue: defaultValue,
+  );
 
   final value = isFailed ? '1' : '0';
 
@@ -140,8 +146,9 @@ Future<void> logMetric() async {
     //if (failingStep.isNotEmpty) 'failing-step': failingStep,
   };
 
-  final dimensionString =
-      dimensions.entries.map((e) => '${e.key}=${e.value}').join(',');
+  final dimensionString = dimensions.entries
+      .map((e) => '${e.key}=${e.value}')
+      .join(',');
 
   final cloudArgs = <String>[
     'cloudwatch',
@@ -156,9 +163,7 @@ Future<void> logMetric() async {
     dimensionString,
   ];
 
-  await processManager.run(
-    <String>['aws', ...cloudArgs],
-  );
+  await processManager.run(<String>['aws', ...cloudArgs]);
 
   core.info('Sent cloudwatch metric with args: $cloudArgs');
 }

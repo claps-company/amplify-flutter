@@ -47,8 +47,9 @@ Future<AWSBaseHttpRequest> authorizeHttpRequest(
       return authorizedRequest;
     case APIAuthorizationType.iam:
       final authProvider = _validateAuthProvider(
-        authProviderRepo
-            .getAuthProvider(APIAuthorizationType.iam.authProviderToken),
+        authProviderRepo.getAuthProvider(
+          APIAuthorizationType.iam.authProviderToken,
+        ),
         authType,
       );
       final isGraphQL = endpointConfig.apiType == ApiType.graphQL;
@@ -56,8 +57,9 @@ Future<AWSBaseHttpRequest> authorizeHttpRequest(
           ? AWSService.appSync
           : AWSService.apiGatewayManagementApi; // resolves to "execute-api"
       // Do not sign body for REST to avoid CORS issue on web.
-      final serviceConfiguration =
-          isGraphQL ? null : const ServiceConfiguration(signBody: false);
+      final serviceConfiguration = isGraphQL
+          ? null
+          : const ServiceConfiguration(signBody: false);
 
       final authorizedRequest = await authProvider.authorizeRequest(
         request,

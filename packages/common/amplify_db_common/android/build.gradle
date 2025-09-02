@@ -2,14 +2,14 @@ group 'com.amazonaws.amplify.amplify_db_common'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '2.2.0'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'com.android.tools.build:gradle:8.11.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -49,5 +49,5 @@ android {
 
 dependencies {
     // Keep in sync with: https://github.com/simolus3/sqlite3.dart/blob/main/sqlite3_flutter_libs/android/build.gradle
-    implementation 'eu.simonbinder:sqlite3-native-library:3.43.0'
+    implementation 'eu.simonbinder:sqlite3-native-library:3.50.1'
 }

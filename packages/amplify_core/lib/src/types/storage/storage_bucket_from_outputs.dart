@@ -14,10 +14,7 @@ class StorageBucketFromOutputs implements StorageBucket {
 
   @override
   BucketInfo resolveBucketInfo(StorageOutputs? storageOutputs) {
-    assert(
-      storageOutputs != null,
-      'storageOutputs can not be null',
-    );
+    assert(storageOutputs != null, 'storageOutputs can not be null');
     final buckets = storageOutputs!.buckets;
     if (buckets == null) {
       throw const InvalidStorageBucketException(
@@ -31,18 +28,14 @@ class StorageBucketFromOutputs implements StorageBucket {
       (e) => e.name == _name,
       orElse: () => throw const InvalidStorageBucketException(
         'Unable to lookup bucket from provided name in Amplify Outputs file.',
-        recoverySuggestion: 'Make sure Amplify Outputs file has the specified '
+        recoverySuggestion:
+            'Make sure Amplify Outputs file has the specified '
             'bucket configuration.',
       ),
     );
-    return BucketInfo(
-      bucketName: bucket.bucketName,
-      region: bucket.awsRegion,
-    );
+    return BucketInfo(bucketName: bucket.bucketName, region: bucket.awsRegion);
   }
 
   @override
-  Map<String, Object?> toJson() => {
-        '_name': _name,
-      };
+  Map<String, Object?> toJson() => {'_name': _name};
 }

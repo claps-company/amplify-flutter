@@ -38,9 +38,6 @@ class SecureStorageWorkerImpl extends SecureStorageWorker {
       port: baseUri.port,
       path: '$basePath/test/$relativePath',
     ).toString();
-    return [
-      relativePath,
-      testRelativePath,
-    ];
+    return [relativePath, testRelativePath];
   }
 }

@@ -27,9 +27,9 @@ extension type ChildProcess(JSObject it) {
   external NodeChildProcess _exec(
     String command,
     _ChildProcessOptions options, [
-    JSFunction callback,
-  ] // (error: Error, stdout: string, stderr: string) => void
-      );
+    JSFunction
+    callback, // (error: Error, stdout: string, stderr: string) => void
+  ]);
 
   @JS('execSync')
   external JSUint8Array? _execSync(
@@ -52,10 +52,12 @@ extension type ChildProcess(JSObject it) {
       <String>[command, ...args].join(' '),
       _ChildProcessOptions(
         cwd: workingDirectory,
-        env: <String, String?>{
-          ...?environment,
-          if (includeParentEnvironment) ...process.env,
-        }.jsify() as JSObject,
+        env:
+            <String, String?>{
+                  ...?environment,
+                  if (includeParentEnvironment) ...process.env,
+                }.jsify()
+                as JSObject,
         encoding: 'utf8',
         shell: runInShell ? '/bin/sh' : null,
       ),
@@ -66,12 +68,7 @@ extension type ChildProcess(JSObject it) {
           );
         }
         completer.complete(
-          ProcessResult(
-            child.pid ?? -1,
-            child.exitCode!,
-            stdout,
-            stderr,
-          ),
+          ProcessResult(child.pid ?? -1, child.exitCode!, stdout, stderr),
         );
       }.toJS,
     );
@@ -92,10 +89,12 @@ extension type ChildProcess(JSObject it) {
         <String>[command, ...args].join(' '),
         _ChildProcessOptions(
           cwd: workingDirectory,
-          env: <String, String?>{
-            ...?environment,
-            if (includeParentEnvironment) ...process.env,
-          }.jsify() as JSObject,
+          env:
+              <String, String?>{
+                    ...?environment,
+                    if (includeParentEnvironment) ...process.env,
+                  }.jsify()
+                  as JSObject,
           shell: runInShell ? '/bin/sh' : null,
           encoding: 'buffer',
           stdio: <JSAny?>[
@@ -105,12 +104,7 @@ extension type ChildProcess(JSObject it) {
           ].toJS,
         ),
       );
-      return ProcessResult(
-        -1,
-        0,
-        stdout?.toDart ?? Uint8List(0),
-        Uint8List(0),
-      );
+      return ProcessResult(-1, 0, stdout?.toDart ?? Uint8List(0), Uint8List(0));
     } on Object catch (e) {
       final message = switch (e) {
         final JSError e => e.message,
@@ -136,18 +130,20 @@ extension type ChildProcess(JSObject it) {
       ProcessStartMode.detachedWithStdio => 'pipe',
       ProcessStartMode.inheritStdio => 'inherit',
       _ => unreachable,
-    }
-        .toJS;
+    }.toJS;
     return _spawn(
       command,
       args.map((arg) => arg.toJS).toList().toJS,
       _ChildProcessOptions(
         cwd: workingDirectory,
-        env: {
-          ...?environment,
-          if (includeParentEnvironment) ...process.env,
-        }.jsify() as JSObject,
-        detached: mode == ProcessStartMode.detached ||
+        env:
+            {
+                  ...?environment,
+                  if (includeParentEnvironment) ...process.env,
+                }.jsify()
+                as JSObject,
+        detached:
+            mode == ProcessStartMode.detached ||
             mode == ProcessStartMode.detachedWithStdio,
         stdio: <JSAny>[
           // stdin
@@ -255,6 +251,9 @@ extension type EventEmitter._(JSObject it) implements JSObject {
 @JS()
 @anonymous
 extension type NodeWriteableStream._(JSObject it) {
-  external void write(JSUint8Array chunk,
-      [String? encoding, JSFunction flushCallback]);
+  external void write(
+    JSUint8Array chunk, [
+    String? encoding,
+    JSFunction flushCallback,
+  ]);
 }

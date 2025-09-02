@@ -9,8 +9,10 @@ import android.content.Intent
 import aws.smithy.kotlin.runtime.time.Instant
 import com.amazonaws.amplify.amplify_datastore.pigeons.NativeAuthPlugin
 import com.amplifyframework.annotations.InternalAmplifyApi
+import com.amplifyframework.auth.AWSCognitoUserPoolTokens
 import com.amplifyframework.auth.AWSCredentials
 import com.amplifyframework.auth.AuthCodeDeliveryDetails
+import com.amplifyframework.auth.TOTPSetupDetails
 import com.amplifyframework.auth.AuthDevice
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthPlugin
@@ -23,10 +25,13 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthService
 import com.amplifyframework.auth.cognito.BuildConfig
 import com.amplifyframework.auth.cognito.helpers.FlutterFactory
 import com.amplifyframework.auth.exceptions.UnknownException
+import com.amplifyframework.auth.options.AuthAssociateWebAuthnCredentialsOptions
 import com.amplifyframework.auth.options.AuthConfirmResetPasswordOptions
 import com.amplifyframework.auth.options.AuthConfirmSignInOptions
 import com.amplifyframework.auth.options.AuthConfirmSignUpOptions
+import com.amplifyframework.auth.options.AuthDeleteWebAuthnCredentialOptions
 import com.amplifyframework.auth.options.AuthFetchSessionOptions
+import com.amplifyframework.auth.options.AuthListWebAuthnCredentialsOptions
 import com.amplifyframework.auth.options.AuthResendSignUpCodeOptions
 import com.amplifyframework.auth.options.AuthResendUserAttributeConfirmationCodeOptions
 import com.amplifyframework.auth.options.AuthResetPasswordOptions
@@ -35,7 +40,9 @@ import com.amplifyframework.auth.options.AuthSignOutOptions
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.options.AuthUpdateUserAttributeOptions
 import com.amplifyframework.auth.options.AuthUpdateUserAttributesOptions
+import com.amplifyframework.auth.options.AuthVerifyTOTPSetupOptions
 import com.amplifyframework.auth.options.AuthWebUISignInOptions
+import com.amplifyframework.auth.result.AuthListWebAuthnCredentialsResult
 import com.amplifyframework.auth.result.AuthResetPasswordResult
 import com.amplifyframework.auth.result.AuthSessionResult
 import com.amplifyframework.auth.result.AuthSignInResult
@@ -85,45 +92,50 @@ class NativeAuthPluginWrapper(
             return
         }
         MainScope().launch {
-            nativePlugin.fetchAuthSession() { session ->
-                val couldNotFetchException = UnknownException("Could not fetch")
-                val userPoolTokens = if (session.userPoolTokens != null) {
-                    val tokens = FlutterFactory.createAWSCognitoUserPoolTokens(
-                        session.userPoolTokens!!.accessToken,
-                        session.userPoolTokens!!.idToken,
-                        session.userPoolTokens!!.refreshToken
-                    )
-                    AuthSessionResult.success(tokens)
-                } else {
-                    AuthSessionResult.failure(couldNotFetchException)
-                }
-                val awsCredentials: AuthSessionResult<AWSCredentials> =
-                    if (session.awsCredentials != null) {
-                        val sessionCredentials = session.awsCredentials!!
-                        val credentials = AWSCredentials.createAWSCredentials(
-                            sessionCredentials.accessKeyId,
-                            sessionCredentials.secretAccessKey,
-                            sessionCredentials.sessionToken,
-                            if (sessionCredentials.expirationIso8601Utc != null) {
-                                Instant.fromIso8601(
-                                    sessionCredentials.expirationIso8601Utc!!
-                                ).epochSeconds
-                            } else {
-                                null
-                            }
+            nativePlugin.fetchAuthSession() { result ->
+                val session = result.getOrNull()
+                if(session != null) {
+                    val userPoolTokens = if (session.userPoolTokens != null) {
+                        val tokens = FlutterFactory.createAWSCognitoUserPoolTokens(
+                            session.userPoolTokens!!.accessToken,
+                            session.userPoolTokens!!.idToken,
+                            session.userPoolTokens!!.refreshToken
                         )
-                        AuthSessionResult.success(credentials)
+                        AuthSessionResult.success(tokens)
                     } else {
-                        AuthSessionResult.failure(couldNotFetchException)
+                        AuthSessionResult.failure(UnknownException("Could not fetch userPoolTokens"))
                     }
-                val authSession = FlutterFactory.createAWSCognitoAuthSession(
-                    session.isSignedIn,
-                    AuthSessionResult.success(session.identityId),
-                    awsCredentials,
-                    AuthSessionResult.success(session.userSub),
-                    userPoolTokens
-                )
-                onSuccess.accept(authSession)
+                    val awsCredentials: AuthSessionResult<AWSCredentials> =
+                        if (session.awsCredentials != null) {
+                            val sessionCredentials = session.awsCredentials!!
+                            val credentials = AWSCredentials.createAWSCredentials(
+                                sessionCredentials.accessKeyId,
+                                sessionCredentials.secretAccessKey,
+                                sessionCredentials.sessionToken,
+                                if (sessionCredentials.expirationIso8601Utc != null) {
+                                    Instant.fromIso8601(
+                                        sessionCredentials.expirationIso8601Utc!!
+                                    ).epochSeconds
+                                } else {
+                                    null
+                                }
+                            )
+                            AuthSessionResult.success(credentials)
+                        } else {
+                            AuthSessionResult.failure(UnknownException("Could not fetch awsCredentials"))
+                        }
+                    val authSession = FlutterFactory.createAWSCognitoAuthSession(
+                        session.isSignedIn,
+                        AuthSessionResult.success(session.identityId),
+                        awsCredentials,
+                        AuthSessionResult.success(session.userSub),
+                        userPoolTokens
+                    )
+                    onSuccess.accept(authSession)
+                } else {
+                    val error = UnknownException(result.exceptionOrNull()?.message ?: "Could not fetch")
+                    AuthSessionResult.failure<AWSCognitoUserPoolTokens>(error)
+                }
             }
         }
     }
@@ -138,7 +150,7 @@ class NativeAuthPluginWrapper(
 
     override fun signUp(
         username: String,
-        password: String,
+        password: String?,
         options: AuthSignUpOptions,
         onSuccess: Consumer<AuthSignUpResult>,
         onError: Consumer<AuthException>
@@ -409,6 +421,86 @@ class NativeAuthPluginWrapper(
 
     override fun deleteUser(onSuccess: Action, onError: Consumer<AuthException>) {
         unsupported("deleteUser")
+    }
+
+    override fun setUpTOTP(
+        onSuccess: Consumer<TOTPSetupDetails>,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("setUpTOTP")
+    }
+
+    override fun verifyTOTPSetup(
+        code: String,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("verifyTOTPSetup")
+    }
+
+    override fun verifyTOTPSetup(
+        code: String,
+        options: AuthVerifyTOTPSetupOptions,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("verifyTOTPSetup")
+    }
+
+    override fun associateWebAuthnCredential(
+        callingActivity: Activity,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("associateWebAuthnCredential")
+    }
+
+    override fun associateWebAuthnCredential(
+        callingActivity: Activity,
+        options: AuthAssociateWebAuthnCredentialsOptions,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("associateWebAuthnCredential")
+    }
+
+    override fun listWebAuthnCredentials(
+        onSuccess: Consumer<AuthListWebAuthnCredentialsResult>,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("listWebAuthnCredentials")
+    }
+
+    override fun listWebAuthnCredentials(
+        options: AuthListWebAuthnCredentialsOptions,
+        onSuccess: Consumer<AuthListWebAuthnCredentialsResult>,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("listWebAuthnCredentials")
+    }
+
+    override fun deleteWebAuthnCredential(
+        credentialId: String,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("deleteWebAuthnCredential")
+    }
+
+    override fun deleteWebAuthnCredential(
+        credentialId: String,
+        options: AuthDeleteWebAuthnCredentialOptions,
+        onSuccess: Action,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("deleteWebAuthnCredential")
+    }
+
+    override fun autoSignIn(
+        onSuccess: Consumer<AuthSignInResult>,
+        onError: Consumer<AuthException>
+    ) {
+        unsupported("autoSignIn")
     }
 
     private fun unsupported(methodName: String): Nothing {

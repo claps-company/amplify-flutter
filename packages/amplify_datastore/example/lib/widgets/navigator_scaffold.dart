@@ -4,10 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 
 class NavigatorScaffold extends StatefulWidget {
-  const NavigatorScaffold({
-    super.key,
-    this.isAmplifyConfigured = false,
-  });
+  const NavigatorScaffold({super.key, this.isAmplifyConfigured = false});
   final bool isAmplifyConfigured;
 
   @override
@@ -57,9 +54,7 @@ class _NavigatorScaffoldState extends State<NavigatorScaffold>
                 AuthView(isAmplifyConfigured: widget.isAmplifyConfigured),
               ],
             )
-          : Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
+          : Center(child: CircularProgressIndicator.adaptive()),
     );
   }
 }

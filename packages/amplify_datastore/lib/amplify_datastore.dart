@@ -27,15 +27,15 @@ class AmplifyDataStore extends DataStorePluginInterface
     required ModelProviderInterface modelProvider,
     DataStorePluginOptions options = const DataStorePluginOptions(),
   }) : super(
-          modelProvider: modelProvider,
-          errorHandler: options.errorHandler,
-          conflictHandler: options.conflictHandler,
-          syncExpressions: options.syncExpressions,
-          syncInterval: options.syncInterval,
-          syncMaxRecords: options.syncMaxRecords,
-          syncPageSize: options.syncPageSize,
-          authModeStrategy: options.authModeStrategy,
-        );
+         modelProvider: modelProvider,
+         errorHandler: options.errorHandler,
+         conflictHandler: options.conflictHandler,
+         syncExpressions: options.syncExpressions,
+         syncInterval: options.syncInterval,
+         syncMaxRecords: options.syncMaxRecords,
+         syncPageSize: options.syncPageSize,
+         authModeStrategy: options.authModeStrategy,
+       );
 
   /// Internal use constructor
   @protected
@@ -61,7 +61,7 @@ class AmplifyDataStore extends DataStorePluginInterface
     if (authPlugin != null) {
       // Configure this plugin to act as a native iOS/Android plugin.
       final nativePlugin = _NativeAmplifyAuthCognito();
-      NativeAuthPlugin.setup(nativePlugin);
+      NativeAuthPlugin.setUp(nativePlugin);
       final nativeBridge = NativeAuthBridge();
       try {
         await nativeBridge.addAuthPlugin();
@@ -109,12 +109,13 @@ class AmplifyDataStore extends DataStorePluginInterface
         endpoints[e.key] = e.value.defaultAuthorizationType.name;
       });
       final nativePlugin = NativeAmplifyApi(authProviders);
-      NativeApiPlugin.setup(nativePlugin);
+      NativeApiPlugin.setUp(nativePlugin);
 
       final nativeBridge = NativeApiBridge();
       try {
-        final authProvidersList =
-            authProviders.keys.map((key) => key.rawValue).toList();
+        final authProvidersList = authProviders.keys
+            .map((key) => key.rawValue)
+            .toList();
         await nativeBridge.addApiPlugin(authProvidersList, endpoints);
       } on PlatformException catch (e) {
         if (e.code.contains('AmplifyAlreadyConfiguredException') ||
@@ -169,9 +170,11 @@ class AmplifyDataStore extends DataStorePluginInterface
   }) async {
     ModelProviderInterface provider = modelProvider ?? this.modelProvider!;
     if (provider.modelSchemas.isEmpty) {
-      throw DataStoreException('No modelProvider or modelSchemas found',
-          recoverySuggestion:
-              'Pass in a modelProvider instance while instantiating DataStorePlugin');
+      throw DataStoreException(
+        'No modelProvider or modelSchemas found',
+        recoverySuggestion:
+            'Pass in a modelProvider instance while instantiating DataStorePlugin',
+      );
     }
     streamWrapper.registerModelsForHub(provider);
     return _instance.configureDataStore(
@@ -187,12 +190,18 @@ class AmplifyDataStore extends DataStorePluginInterface
   }
 
   @override
-  Future<List<T>> query<T extends Model>(ModelType<T> modelType,
-      {QueryPredicate? where,
-      QueryPagination? pagination,
-      List<QuerySortBy>? sortBy}) async {
-    return _instance.query(modelType,
-        where: where, pagination: pagination, sortBy: sortBy);
+  Future<List<T>> query<T extends Model>(
+    ModelType<T> modelType, {
+    QueryPredicate? where,
+    QueryPagination? pagination,
+    List<QuerySortBy>? sortBy,
+  }) async {
+    return _instance.query(
+      modelType,
+      where: where,
+      pagination: pagination,
+      sortBy: sortBy,
+    );
   }
 
   @override
@@ -206,8 +215,10 @@ class AmplifyDataStore extends DataStorePluginInterface
   }
 
   @override
-  Stream<SubscriptionEvent<T>> observe<T extends Model>(ModelType<T> modelType,
-      {QueryPredicate? where}) {
+  Stream<SubscriptionEvent<T>> observe<T extends Model>(
+    ModelType<T> modelType, {
+    QueryPredicate? where,
+  }) {
     return _instance.observe(modelType, where: where);
   }
 
@@ -275,8 +286,9 @@ class _NativeAmplifyAuthCognito
           accessKeyId: awsCredentials.accessKeyId,
           secretAccessKey: awsCredentials.secretAccessKey,
           sessionToken: awsCredentials.sessionToken,
-          expirationIso8601Utc:
-              awsCredentials.expiration?.toUtc().toIso8601String(),
+          expirationIso8601Utc: awsCredentials.expiration
+              ?.toUtc()
+              .toIso8601String(),
         );
       }
       return nativeAuthSession;
@@ -298,10 +310,10 @@ class NativeAmplifyApi
 
   /// The registered [APIAuthProvider] instances.
   final Map<APIAuthorizationType<AmplifyAuthProvider>, APIAuthProvider>
-      _authProviders;
+  _authProviders;
 
   final Map<String, StreamSubscription<GraphQLResponse<String>>>
-      _subscriptionsCache = {};
+  _subscriptionsCache = {};
 
   @override
   String get runtimeTypeName => 'NativeAmplifyApi';
@@ -326,8 +338,9 @@ class NativeAmplifyApi
   Future<NativeGraphQLResponse> mutate(NativeGraphQLRequest request) async {
     try {
       final flutterRequest = nativeRequestToGraphQLRequest(request);
-      final response =
-          await Amplify.API.mutate(request: flutterRequest).response;
+      final response = await Amplify.API
+          .mutate(request: flutterRequest)
+          .response;
       return graphQLResponseToNativeResponse(response);
     } on Exception catch (e) {
       return handleGraphQLOperationException(e, request);
@@ -338,8 +351,9 @@ class NativeAmplifyApi
   Future<NativeGraphQLResponse> query(NativeGraphQLRequest request) async {
     try {
       final flutterRequest = nativeRequestToGraphQLRequest(request);
-      final response =
-          await Amplify.API.query(request: flutterRequest).response;
+      final response = await Amplify.API
+          .query(request: flutterRequest)
+          .response;
       return graphQLResponseToNativeResponse(response);
     } on Exception catch (e) {
       return handleGraphQLOperationException(e, request);
@@ -348,21 +362,25 @@ class NativeAmplifyApi
 
   @override
   Future<NativeGraphQLSubscriptionResponse> subscribe(
-      NativeGraphQLRequest request) async {
+    NativeGraphQLRequest request,
+  ) async {
     final flutterRequest = nativeRequestToGraphQLRequest(request);
     // Turn off then default reconnection behavior to allow native side to trigger reconnect
     // ignore: invalid_use_of_internal_member
     WebSocketOptions.autoReconnect = false;
-    final operation = Amplify.API.subscribe(flutterRequest,
-        onEstablished: () => sendNativeStartAckEvent(flutterRequest.id));
+    final operation = Amplify.API.subscribe(
+      flutterRequest,
+      onEstablished: () => sendNativeStartAckEvent(flutterRequest.id),
+    );
 
     final subscription = operation.listen(
-        (GraphQLResponse<String> event) =>
-            sendSubscriptionEvent(flutterRequest.id, event),
-        onError: (Object error) {
-          sendSubscriptionStreamErrorEvent(flutterRequest.id, error);
-        },
-        onDone: () => sendNativeCompleteEvent(flutterRequest.id));
+      (GraphQLResponse<String> event) =>
+          sendSubscriptionEvent(flutterRequest.id, event),
+      onError: (Object error) {
+        sendSubscriptionStreamErrorEvent(flutterRequest.id, error);
+      },
+      onDone: () => sendNativeCompleteEvent(flutterRequest.id),
+    );
 
     _subscriptionsCache[flutterRequest.id] = subscription;
 

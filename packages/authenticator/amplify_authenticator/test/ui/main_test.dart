@@ -81,14 +81,11 @@ enum TestTheme {
             backgroundColor: Colors.white,
           ),
         ).copyWith(
-          indicatorColor: Colors.red,
+          tabBarTheme: const TabBarThemeData(indicatorColor: Colors.red),
         );
       case TestTheme.custom:
         return ThemeData.light().copyWith(
-          tabBarTheme: const TabBarTheme(
-            labelColor: Colors.amber,
-          ),
-          indicatorColor: Colors.pink,
+          tabBarTheme: const TabBarThemeData(labelColor: Colors.amber),
         );
     }
   }
@@ -113,10 +110,7 @@ enum TestTheme {
         );
       case TestTheme.custom:
         return ThemeData.dark().copyWith(
-          tabBarTheme: const TabBarTheme(
-            labelColor: Colors.amber,
-          ),
-          indicatorColor: Colors.pink,
+          tabBarTheme: const TabBarThemeData(labelColor: Colors.amber),
         );
     }
   }

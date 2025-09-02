@@ -38,7 +38,7 @@ class DataStoreCategory extends AmplifyCategory<DataStorePluginInterface> {
           throw AmplifyException.fromMap(
             Map<String, String>.from(
               // ignore: avoid_dynamic_calls
-              (e as dynamic /* PlatformException */).details as Map,
+              (e as dynamic /* PlatformException */ ).details as Map,
             ),
           );
         } on NoSuchMethodError {

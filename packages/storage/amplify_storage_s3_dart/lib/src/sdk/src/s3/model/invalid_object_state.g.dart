@@ -14,21 +14,20 @@ class _$InvalidObjectState extends InvalidObjectState {
   @override
   final Map<String, String>? headers;
 
-  factory _$InvalidObjectState(
-          [void Function(InvalidObjectStateBuilder)? updates]) =>
-      (new InvalidObjectStateBuilder()..update(updates))._build();
+  factory _$InvalidObjectState([
+    void Function(InvalidObjectStateBuilder)? updates,
+  ]) => (InvalidObjectStateBuilder()..update(updates))._build();
 
   _$InvalidObjectState._({this.storageClass, this.accessTier, this.headers})
-      : super._();
-
+    : super._();
   @override
   InvalidObjectState rebuild(
-          void Function(InvalidObjectStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvalidObjectStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvalidObjectStateBuilder toBuilder() =>
-      new InvalidObjectStateBuilder()..replace(this);
+      InvalidObjectStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -81,7 +80,6 @@ class InvalidObjectStateBuilder
 
   @override
   void replace(InvalidObjectState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvalidObjectState;
   }
 
@@ -94,11 +92,13 @@ class InvalidObjectStateBuilder
   InvalidObjectState build() => _build();
 
   _$InvalidObjectState _build() {
-    final _$result = _$v ??
-        new _$InvalidObjectState._(
-            storageClass: storageClass,
-            accessTier: accessTier,
-            headers: headers);
+    final _$result =
+        _$v ??
+        _$InvalidObjectState._(
+          storageClass: storageClass,
+          accessTier: accessTier,
+          headers: headers,
+        );
     replace(_$result);
     return _$result;
   }

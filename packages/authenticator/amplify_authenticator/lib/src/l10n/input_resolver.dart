@@ -46,17 +46,17 @@ enum InputResolverKeyType {
   usernameRequirements,
   passwordRequirements,
   format,
-  mismatch
+  mismatch,
 }
 
 class InputResolverKey {
   const InputResolverKey.passwordRequirementsUnmet(
     UnmetPasswordRequirements requirements,
   ) : this._(
-          InputResolverKeyType.passwordRequirements,
-          field: InputField.password,
-          unmetPasswordRequirements: requirements,
-        );
+        InputResolverKeyType.passwordRequirements,
+        field: InputField.password,
+        unmetPasswordRequirements: requirements,
+      );
   const InputResolverKey._(
     this.type, {
     required this.field,
@@ -414,10 +414,12 @@ class InputResolver extends Resolver<InputResolverKey> {
       case InputField.newPassword:
         return AuthenticatorLocalizations.inputsOf(context).newPassword;
       case InputField.passwordConfirmation:
-        final attributeName =
-            AuthenticatorLocalizations.inputsOf(context).password;
-        return AuthenticatorLocalizations.inputsOf(context)
-            .confirmAttribute(attributeName);
+        final attributeName = AuthenticatorLocalizations.inputsOf(
+          context,
+        ).password;
+        return AuthenticatorLocalizations.inputsOf(
+          context,
+        ).confirmAttribute(attributeName);
       case InputField.verificationCode:
         return AuthenticatorLocalizations.inputsOf(context).verificationCode;
       case InputField.customAuthChallenge:
@@ -475,8 +477,9 @@ class InputResolver extends Resolver<InputResolverKey> {
   String hint(BuildContext context, InputField field) {
     final fieldName = title(context, field);
     final lowercasedFieldName = fieldName.toLowerCase();
-    return AuthenticatorLocalizations.inputsOf(context)
-        .promptFill(lowercasedFieldName);
+    return AuthenticatorLocalizations.inputsOf(
+      context,
+    ).promptFill(lowercasedFieldName);
   }
 
   /// Returns the hint text used for confirmation fields where the
@@ -484,21 +487,24 @@ class InputResolver extends Resolver<InputResolverKey> {
   String confirmHint(BuildContext context, InputField field) {
     final fieldName = AuthenticatorLocalizations.inputsOf(context).password;
     final lowercasedFieldName = fieldName.toLowerCase();
-    return AuthenticatorLocalizations.inputsOf(context)
-        .promptRefill(lowercasedFieldName);
+    return AuthenticatorLocalizations.inputsOf(
+      context,
+    ).promptRefill(lowercasedFieldName);
   }
 
   /// Returns the text displayed when a required field is left empty.
   String empty(BuildContext context, InputField field) {
-    return AuthenticatorLocalizations.inputsOf(context)
-        .warnEmpty(title(context, field));
+    return AuthenticatorLocalizations.inputsOf(
+      context,
+    ).warnEmpty(title(context, field));
   }
 
   /// Returns the text displayed when a field fails a format validation check,
   /// such as an invalid email format, an invalid confirmation code length, etc.
   String format(BuildContext context, InputField field) {
-    return AuthenticatorLocalizations.inputsOf(context)
-        .warnInvalidFormat(title(context, field).toLowerCase());
+    return AuthenticatorLocalizations.inputsOf(
+      context,
+    ).warnInvalidFormat(title(context, field).toLowerCase());
   }
 
   /// Returns the text displayed when the username requirements are not met
@@ -519,19 +525,23 @@ class InputResolver extends Resolver<InputResolverKey> {
     }
     final sb = StringBuffer()
       ..writeln(
-        AuthenticatorLocalizations.inputsOf(context)
-            .passwordRequirementsPreamble,
+        AuthenticatorLocalizations.inputsOf(
+          context,
+        ).passwordRequirementsPreamble,
       );
     if (minLength != null) {
-      final atLeast = AuthenticatorLocalizations.inputsOf(context)
-          .passwordRequirementsAtLeast(minLength, '');
+      final atLeast = AuthenticatorLocalizations.inputsOf(
+        context,
+      ).passwordRequirementsAtLeast(minLength, '');
       sb.writeln('* $atLeast');
     }
     for (final characterReq in characterReqs) {
-      final characterType = AuthenticatorLocalizations.inputsOf(context)
-          .passwordRequirementsCharacterType(characterReq.name);
-      final atLeast = AuthenticatorLocalizations.inputsOf(context)
-          .passwordRequirementsAtLeast(1, characterType);
+      final characterType = AuthenticatorLocalizations.inputsOf(
+        context,
+      ).passwordRequirementsCharacterType(characterReq.name);
+      final atLeast = AuthenticatorLocalizations.inputsOf(
+        context,
+      ).passwordRequirementsAtLeast(1, characterType);
       sb.writeln('* $atLeast');
     }
     return sb.toString();

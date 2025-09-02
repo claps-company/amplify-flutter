@@ -17,11 +17,7 @@ final AmplifyLogger _logger = AmplifyLogger('MyStorageApp');
 
 void main() {
   AmplifyLogger().logLevel = LogLevel.debug;
-  runApp(
-    const MyApp(
-      title: 'Amplify Storage Example',
-    ),
-  );
+  runApp(const MyApp(title: 'Amplify Storage Example'));
 }
 
 class MyApp extends StatefulWidget {
@@ -39,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     routes: [
       GoRoute(
         path: '/',
-        builder: (BuildContext _, GoRouterState __) => const HomeScreen(),
+        builder: (BuildContext _, GoRouterState _) => const HomeScreen(),
       ),
     ],
   );
@@ -183,8 +179,9 @@ class _HomeScreenState extends State<HomeScreen> {
       await Amplify.Storage.downloadFile(
         path: StoragePath.fromString(path),
         localFile: AWSFile.fromPath(filepath),
-        onProgress: (p0) => _logger
-            .debug('Progress: ${(p0.transferredBytes / p0.totalBytes) * 100}%'),
+        onProgress: (p0) => _logger.debug(
+          'Progress: ${(p0.transferredBytes / p0.totalBytes) * 100}%',
+        ),
       ).result;
       await _listAllPublicFiles();
     } on StorageException catch (e) {
@@ -198,8 +195,9 @@ class _HomeScreenState extends State<HomeScreen> {
       await Amplify.Storage.downloadFile(
         path: StoragePath.fromString(path),
         localFile: AWSFile.fromPath(path),
-        onProgress: (p0) => _logger
-            .debug('Progress: ${(p0.transferredBytes / p0.totalBytes) * 100}%'),
+        onProgress: (p0) => _logger.debug(
+          'Progress: ${(p0.transferredBytes / p0.totalBytes) * 100}%',
+        ),
       ).result;
       await _listAllPublicFiles();
     } on StorageException catch (e) {
@@ -210,9 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // delete file from S3 bucket
   Future<void> removeFile(String path) async {
     try {
-      await Amplify.Storage.remove(
-        path: StoragePath.fromString(path),
-      ).result;
+      await Amplify.Storage.remove(path: StoragePath.fromString(path)).result;
       setState(() {
         // set the imageUrl to empty if the deleted file is the one being displayed
         imageUrl = '';
@@ -248,9 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Amplify Storage Example'),
-      ),
+      appBar: AppBar(title: const Text('Amplify Storage Example')),
       body: Stack(
         children: [
           Center(

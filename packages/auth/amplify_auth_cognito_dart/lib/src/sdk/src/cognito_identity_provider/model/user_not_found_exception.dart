@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.user_not_found_exception; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -22,9 +22,9 @@ abstract class UserNotFoundException
   }
 
   /// This exception is thrown when a user isn't found.
-  factory UserNotFoundException.build(
-          [void Function(UserNotFoundExceptionBuilder) updates]) =
-      _$UserNotFoundException;
+  factory UserNotFoundException.build([
+    void Function(UserNotFoundExceptionBuilder) updates,
+  ]) = _$UserNotFoundException;
 
   const UserNotFoundException._();
 
@@ -32,13 +32,12 @@ abstract class UserNotFoundException
   factory UserNotFoundException.fromResponse(
     UserNotFoundException payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload.rebuild((b) {
-        b.headers = response.headers;
-      });
+  ) => payload.rebuild((b) {
+    b.headers = response.headers;
+  });
 
   static const List<_i2.SmithySerializer<UserNotFoundException>> serializers = [
-    UserNotFoundExceptionAwsJson11Serializer()
+    UserNotFoundExceptionAwsJson11Serializer(),
   ];
 
   /// The message returned when a user isn't found.
@@ -46,9 +45,9 @@ abstract class UserNotFoundException
   String? get message;
   @override
   _i2.ShapeId get shapeId => const _i2.ShapeId(
-        namespace: 'com.amazonaws.cognitoidentityprovider',
-        shape: 'UserNotFoundException',
-      );
+    namespace: 'com.amazonaws.cognitoidentityprovider',
+    shape: 'UserNotFoundException',
+  );
 
   @override
   _i2.RetryConfig? get retryConfig => null;
@@ -69,10 +68,7 @@ abstract class UserNotFoundException
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('UserNotFoundException')
-      ..add(
-        'message',
-        message,
-      );
+      ..add('message', message);
     return helper.toString();
   }
 }
@@ -80,21 +76,18 @@ abstract class UserNotFoundException
 class UserNotFoundExceptionAwsJson11Serializer
     extends _i2.StructuredSmithySerializer<UserNotFoundException> {
   const UserNotFoundExceptionAwsJson11Serializer()
-      : super('UserNotFoundException');
+    : super('UserNotFoundException');
 
   @override
   Iterable<Type> get types => const [
-        UserNotFoundException,
-        _$UserNotFoundException,
-      ];
+    UserNotFoundException,
+    _$UserNotFoundException,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   UserNotFoundException deserialize(
@@ -113,10 +106,12 @@ class UserNotFoundExceptionAwsJson11Serializer
       }
       switch (key) {
         case 'message':
-          result.message = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.message =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -134,10 +129,9 @@ class UserNotFoundExceptionAwsJson11Serializer
     if (message != null) {
       result$
         ..add('message')
-        ..add(serializers.serialize(
-          message,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(message, specifiedType: const FullType(String)),
+        );
     }
     return result$;
   }

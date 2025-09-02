@@ -83,12 +83,8 @@ Future<void> listOperation() async {
   // get plugin with plugin key to gain S3 specific interface
   final s3Plugin = Amplify.Storage.getPlugin(AmplifyStorageS3Dart.pluginKey);
   final options = listAll
-      ? const StorageListOptions(
-          pluginOptions: S3ListPluginOptions.listAll(),
-        )
-      : const StorageListOptions(
-          pageSize: pageSize,
-        );
+      ? const StorageListOptions(pluginOptions: S3ListPluginOptions.listAll())
+      : const StorageListOptions(pageSize: pageSize);
   final operation = s3Plugin.list(
     path: StoragePath.fromString(path),
     options: options,
@@ -117,9 +113,9 @@ Future<void> listOperation() async {
       break;
     }
 
-    final listNextPage =
-        prompt(('There are more objects to list, list next page? (Y/n): '))
-            .toLowerCase();
+    final listNextPage = prompt(
+      ('There are more objects to list, list next page? (Y/n): '),
+    ).toLowerCase();
 
     if (listNextPage != 'y') {
       break;
@@ -165,9 +161,7 @@ Future<void> getUrlOperation() async {
     path: StoragePath.fromString(key),
     options: StorageGetUrlOptions(
       pluginOptions: S3GetUrlPluginOptions(
-        expiresIn: const Duration(
-          minutes: 10,
-        ),
+        expiresIn: const Duration(minutes: 10),
         validateObjectExistence: true,
         useAccelerateEndpoint: useAccelerateEndpoint,
       ),
@@ -193,9 +187,7 @@ Future<void> downloadDataOperation() async {
   final downloadDataOperation = s3Plugin.downloadData(
     path: StoragePath.fromString(key),
     options: const StorageDownloadDataOptions(
-      pluginOptions: S3DownloadDataPluginOptions(
-        getProperties: true,
-      ),
+      pluginOptions: S3DownloadDataPluginOptions(getProperties: true),
     ),
     onProgress: onTransferProgress,
   );
@@ -271,9 +263,7 @@ Future<void> uploadDataUrlOperation() async {
     data: S3DataPayload.dataUrl(dataUrl),
     path: StoragePath.fromString(key),
     options: const StorageUploadDataOptions(
-      pluginOptions: S3UploadDataPluginOptions(
-        getProperties: true,
-      ),
+      pluginOptions: S3UploadDataPluginOptions(getProperties: true),
     ),
   );
 
@@ -313,9 +303,7 @@ Future<void> uploadFileOperation() async {
     path: StoragePath.fromString(key),
     onProgress: onTransferProgress,
     options: StorageUploadFileOptions(
-      metadata: {
-        'nameTag': nameTag,
-      },
+      metadata: {'nameTag': nameTag},
       pluginOptions: S3UploadFilePluginOptions(
         getProperties: true,
         useAccelerateEndpoint: useAccelerateEndpoint,
@@ -376,9 +364,7 @@ Future<void> removeOperation() async {
   final key = prompt('Enter the object key to remove: ');
 
   final s3Plugin = Amplify.Storage.getPlugin(AmplifyStorageS3Dart.pluginKey);
-  final removeOperation = s3Plugin.remove(
-    path: StoragePath.fromString(key),
-  );
+  final removeOperation = s3Plugin.remove(path: StoragePath.fromString(key));
 
   try {
     final result = await removeOperation.result;
@@ -405,8 +391,9 @@ bool promptUseAcceleration() {
   String input;
 
   do {
-    input = prompt('Use transfer acceleration for this operation? (y/n): ')
-        .toLowerCase();
+    input = prompt(
+      'Use transfer acceleration for this operation? (y/n): ',
+    ).toLowerCase();
   } while (input != 'y' && input != 'n');
 
   return input == 'y';
@@ -423,15 +410,9 @@ void onTransferProgress(S3TransferProgress progress) {
   final numberOfSigns = (progress.fractionCompleted * 20).ceil();
   final sb = StringBuffer();
   sb.write('[');
+  sb.writeAll(List.generate(numberOfSigns, (index) => index).map((e) => '='));
   sb.writeAll(
-    List.generate(numberOfSigns, (index) => index).map(
-      (e) => '=',
-    ),
-  );
-  sb.writeAll(
-    List.generate(20 - numberOfSigns, (index) => index).map(
-      (e) => '-',
-    ),
+    List.generate(20 - numberOfSigns, (index) => index).map((e) => '-'),
   );
   sb.write(
     '] | ${(progress.fractionCompleted * 100).ceil()}% | ${progress.transferredBytes}/${progress.totalBytes} | ${progress.state}     ',

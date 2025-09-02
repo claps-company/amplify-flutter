@@ -26,7 +26,6 @@ class CognitoOAuthConfig
     this.tokenUri,
     this.signInUriQueryParameters,
     this.signOutUriQueryParameters,
-    this.tokenUriQueryParameters,
   });
 
   @internal
@@ -51,7 +50,6 @@ class CognitoOAuthConfig
     final signOutRedirectUri = authOutputs.oauth!.redirectSignOutUri.join(',');
     final webDomain = authOutputs.oauth!.domain;
     final tokenUri = authOutputs.oauth!.tokenUri;
-    final tokenUriQueryParameters = authOutputs.oauth!.tokenUriQueryParameters;
 
     return CognitoOAuthConfig(
       appClientId: appClientId,
@@ -65,7 +63,6 @@ class CognitoOAuthConfig
       signInUriQueryParameters: signInUriQueryParameters,
       signOutUriQueryParameters: signOutUriQueryParameters,
       tokenUri: tokenUri,
-      tokenUriQueryParameters: tokenUriQueryParameters,
     );
   }
 
@@ -103,26 +100,22 @@ class CognitoOAuthConfig
   @JsonKey(name: 'TokenURI')
   final String? tokenUri;
 
-  @JsonKey(name: 'TokenURIQueryParameters')
-  final Map<String, String>? tokenUriQueryParameters;
-
   final List<String> scopes;
 
   @override
   List<Object?> get props => [
-        webDomain,
-        appClientId,
-        appClientSecret,
-        signInRedirectUri,
-        signInUri,
-        signInUriQueryParameters,
-        signOutRedirectUri,
-        signOutUri,
-        signOutUriQueryParameters,
-        tokenUri,
-        tokenUriQueryParameters,
-        scopes,
-      ];
+    webDomain,
+    appClientId,
+    appClientSecret,
+    signInRedirectUri,
+    signInUri,
+    signInUriQueryParameters,
+    signOutRedirectUri,
+    signOutUri,
+    signOutUriQueryParameters,
+    tokenUri,
+    scopes,
+  ];
 
   CognitoOAuthConfig copyWith({
     String? webDomain,
@@ -135,7 +128,6 @@ class CognitoOAuthConfig
     String? signOutUri,
     Map<String, String>? signOutUriQueryParameters,
     String? tokenUri,
-    Map<String, String>? tokenUriQueryParameters,
     List<String>? scopes,
   }) {
     return CognitoOAuthConfig(
@@ -144,21 +136,19 @@ class CognitoOAuthConfig
       appClientSecret: appClientSecret ?? this.appClientSecret,
       signInRedirectUri: signInRedirectUri ?? this.signInRedirectUri,
       signInUri: signInUri ?? this.signInUri,
-      signInUriQueryParameters: signInUriQueryParameters ??
+      signInUriQueryParameters:
+          signInUriQueryParameters ??
           (this.signInUriQueryParameters == null
               ? null
               : Map.of(this.signInUriQueryParameters!)),
       signOutRedirectUri: signOutRedirectUri ?? this.signOutRedirectUri,
       signOutUri: signOutUri ?? this.signOutUri,
-      signOutUriQueryParameters: signOutUriQueryParameters ??
+      signOutUriQueryParameters:
+          signOutUriQueryParameters ??
           (this.signOutUriQueryParameters == null
               ? null
               : Map.of(this.signOutUriQueryParameters!)),
       tokenUri: tokenUri ?? this.tokenUri,
-      tokenUriQueryParameters: tokenUriQueryParameters ??
-          (this.tokenUriQueryParameters == null
-              ? null
-              : Map.of(this.tokenUriQueryParameters!)),
       scopes: scopes ?? List.of(this.scopes),
     );
   }

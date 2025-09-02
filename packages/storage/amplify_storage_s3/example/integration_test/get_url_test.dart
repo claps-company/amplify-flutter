@@ -115,9 +115,7 @@ void main() {
           final result = await Amplify.Storage.getUrl(
             path: StoragePath.fromString(path),
             options: const StorageGetUrlOptions(
-              pluginOptions: S3GetUrlPluginOptions(
-                expiresIn: duration,
-              ),
+              pluginOptions: S3GetUrlPluginOptions(expiresIn: duration),
             ),
           ).result;
           expect(result.url.path, '/$path');
@@ -162,9 +160,7 @@ void main() {
           final result = await Amplify.Storage.getUrl(
             path: StoragePath.fromString(path),
             options: const StorageGetUrlOptions(
-              pluginOptions: S3GetUrlPluginOptions(
-                useAccelerateEndpoint: true,
-              ),
+              pluginOptions: S3GetUrlPluginOptions(useAccelerateEndpoint: true),
             ),
           ).result;
           expect(result.url.path, '/$path');
@@ -191,25 +187,19 @@ void main() {
           await Amplify.Storage.uploadData(
             data: StorageDataPayload.bytes(data),
             path: storagePathMain,
-            options: StorageUploadDataOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageUploadDataOptions(bucket: mainBucket),
           ).result;
           await Amplify.Storage.uploadData(
             data: StorageDataPayload.bytes(data),
             path: storagePathSecondary,
-            options: StorageUploadDataOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageUploadDataOptions(bucket: secondaryBucket),
           ).result;
         });
 
         testWidgets('can get url from main bucket', (_) async {
           final result = await Amplify.Storage.getUrl(
             path: storagePathMain,
-            options: StorageGetUrlOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageGetUrlOptions(bucket: mainBucket),
           ).result;
           expect(result.url.path, '/$pathMain');
           final actualData = await readData(result.url);
@@ -219,9 +209,7 @@ void main() {
         testWidgets('can get url from secondary bucket', (_) async {
           final result = await Amplify.Storage.getUrl(
             path: storagePathSecondary,
-            options: StorageGetUrlOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageGetUrlOptions(bucket: secondaryBucket),
           ).result;
           expect(result.url.path, '/$pathSecondary');
           final actualData = await readData(result.url);
@@ -239,35 +227,27 @@ void main() {
           path: StoragePath.fromString(path),
         ).result;
       });
-      testWidgets(
-        'standard getUrl works',
-        (_) async {
-          final result = await Amplify.Storage.getUrl(
-            path: StoragePath.fromString(path),
-          ).result;
-          expect(result.url.path, contains('/$path'));
-          final actualData = await readData(result.url);
-          expect(actualData, data);
-        },
-      );
+      testWidgets('standard getUrl works', (_) async {
+        final result = await Amplify.Storage.getUrl(
+          path: StoragePath.fromString(path),
+        ).result;
+        expect(result.url.path, contains('/$path'));
+        final actualData = await readData(result.url);
+        expect(actualData, data);
+      });
 
-      testWidgets(
-        'useAccelerateEndpoint throws',
-        (_) async {
-          await expectLater(
-            () => Amplify.Storage.getUrl(
-              path: StoragePath.fromString(path),
-              options: const StorageGetUrlOptions(
-                pluginOptions: S3GetUrlPluginOptions(
-                  useAccelerateEndpoint: true,
-                ),
-              ),
-            ).result,
-            // useAccelerateEndpoint is not supported with a bucket name with dots
-            throwsA(isA<ConfigurationError>()),
-          );
-        },
-      );
+      testWidgets('useAccelerateEndpoint throws', (_) async {
+        await expectLater(
+          () => Amplify.Storage.getUrl(
+            path: StoragePath.fromString(path),
+            options: const StorageGetUrlOptions(
+              pluginOptions: S3GetUrlPluginOptions(useAccelerateEndpoint: true),
+            ),
+          ).result,
+          // useAccelerateEndpoint is not supported with a bucket name with dots
+          throwsA(isA<ConfigurationError>()),
+        );
+      });
     });
   });
 }

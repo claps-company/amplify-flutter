@@ -59,8 +59,7 @@ Future<S3DownloadFileResult> _downloadFromUrl({
   final downloadedItem = (await storageS3Service.getProperties(
     path: path,
     options: StorageGetPropertiesOptions(bucket: options.bucket),
-  ))
-      .storageItem;
+  )).storageItem;
 
   // A download url expires in 15 mins by default, see [S3GetUrlPluginOptions].
   // We are not setting validateObjectExistence to true here as we are not
@@ -73,8 +72,7 @@ Future<S3DownloadFileResult> _downloadFromUrl({
       ),
       bucket: options.bucket,
     ),
-  ))
-      .url;
+  )).url;
 
   // Trigger a browser download on the presigned url.
   DomHelper.instance.download(

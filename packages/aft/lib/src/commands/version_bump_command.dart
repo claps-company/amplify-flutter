@@ -40,7 +40,8 @@ class VersionBumpCommand extends AmplifyCommand
       )
       ..addFlag(
         'skip-build-version',
-        help: 'Skips running build version in packages that depend on '
+        help:
+            'Skips running build version in packages that depend on '
             'build_version. Intended for use in tests.',
         negatable: false,
       );
@@ -82,9 +83,7 @@ class VersionBumpCommand extends AmplifyCommand
       changesForPackage: _changesForPackage,
       forcedBumpType: forcedBumpType,
     );
-    return repo.writeChanges(
-      packages: repo.publishablePackages(),
-    );
+    return repo.writeChanges(packages: repo.publishablePackages());
   }
 
   @override
@@ -107,18 +106,15 @@ class VersionBumpCommand extends AmplifyCommand
         if (!needsBuildRunner) {
           continue;
         }
-        await runBuildRunner(
-          package,
-          logger: logger,
-          verbose: verbose,
-        );
+        await runBuildRunner(package, logger: logger, verbose: verbose);
       }
     }
 
     logger.info('Version successfully bumped');
     // Stage changes
-    final publishableBumpedPackages =
-        commandPackages.values.where((pkg) => pkg.isPublishable).toList();
+    final publishableBumpedPackages = commandPackages.values
+        .where((pkg) => pkg.isPublishable)
+        .toList();
     final mergedChangelog = Changelog.empty().makeVersionEntry(
       commits: {
         for (final package in publishableBumpedPackages)
@@ -129,17 +125,20 @@ class VersionBumpCommand extends AmplifyCommand
       publishableBumpedPackages.map((pkg) => pkg.name),
     );
     for (final component in repo.components.values) {
-      final componentPackages =
-          component.packages.map((pkg) => pkg.name).toList();
+      final componentPackages = component.packages
+          .map((pkg) => pkg.name)
+          .toList();
       if (componentPackages.every(updatedComponents.contains)) {
         updatedComponents
           ..removeWhere(componentPackages.contains)
           ..add(component.name);
       }
     }
-    final changelog =
-        LineSplitter.split(render(mergedChangelog)).skip(2).join('\n');
-    final commitMsg = '''
+    final changelog = LineSplitter.split(
+      render(mergedChangelog),
+    ).skip(2).join('\n');
+    final commitMsg =
+        '''
 chore(version): Bump version
 
 $changelog

@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.associate_software_token_response; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -11,11 +11,12 @@ import 'package:smithy/smithy.dart' as _i2;
 part 'associate_software_token_response.g.dart';
 
 abstract class AssociateSoftwareTokenResponse
-    with
-        _i1.AWSEquatable<AssociateSoftwareTokenResponse>
+    with _i1.AWSEquatable<AssociateSoftwareTokenResponse>
     implements
-        Built<AssociateSoftwareTokenResponse,
-            AssociateSoftwareTokenResponseBuilder> {
+        Built<
+          AssociateSoftwareTokenResponse,
+          AssociateSoftwareTokenResponseBuilder
+        > {
   factory AssociateSoftwareTokenResponse({
     String? secretCode,
     String? session,
@@ -26,9 +27,9 @@ abstract class AssociateSoftwareTokenResponse
     );
   }
 
-  factory AssociateSoftwareTokenResponse.build(
-          [void Function(AssociateSoftwareTokenResponseBuilder) updates]) =
-      _$AssociateSoftwareTokenResponse;
+  factory AssociateSoftwareTokenResponse.build([
+    void Function(AssociateSoftwareTokenResponseBuilder) updates,
+  ]) = _$AssociateSoftwareTokenResponse;
 
   const AssociateSoftwareTokenResponse._();
 
@@ -36,34 +37,24 @@ abstract class AssociateSoftwareTokenResponse
   factory AssociateSoftwareTokenResponse.fromResponse(
     AssociateSoftwareTokenResponse payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload;
+  ) => payload;
 
   static const List<_i2.SmithySerializer<AssociateSoftwareTokenResponse>>
-      serializers = [AssociateSoftwareTokenResponseAwsJson11Serializer()];
+  serializers = [AssociateSoftwareTokenResponseAwsJson11Serializer()];
 
-  /// A unique generated shared secret code that is used in the TOTP algorithm to generate a one-time code.
+  /// A unique generated shared secret code that is used by the TOTP algorithm to generate a one-time code.
   String? get secretCode;
 
-  /// The session that should be passed both ways in challenge-response calls to the service. This allows authentication of the user as part of the MFA setup process.
+  /// The session identifier that maintains the state of authentication requests and challenge responses.
   String? get session;
   @override
-  List<Object?> get props => [
-        secretCode,
-        session,
-      ];
+  List<Object?> get props => [secretCode, session];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('AssociateSoftwareTokenResponse')
-      ..add(
-        'secretCode',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'session',
-        '***SENSITIVE***',
-      );
+      ..add('secretCode', '***SENSITIVE***')
+      ..add('session', '***SENSITIVE***');
     return helper.toString();
   }
 }
@@ -71,21 +62,18 @@ abstract class AssociateSoftwareTokenResponse
 class AssociateSoftwareTokenResponseAwsJson11Serializer
     extends _i2.StructuredSmithySerializer<AssociateSoftwareTokenResponse> {
   const AssociateSoftwareTokenResponseAwsJson11Serializer()
-      : super('AssociateSoftwareTokenResponse');
+    : super('AssociateSoftwareTokenResponse');
 
   @override
   Iterable<Type> get types => const [
-        AssociateSoftwareTokenResponse,
-        _$AssociateSoftwareTokenResponse,
-      ];
+    AssociateSoftwareTokenResponse,
+    _$AssociateSoftwareTokenResponse,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   AssociateSoftwareTokenResponse deserialize(
@@ -104,15 +92,19 @@ class AssociateSoftwareTokenResponseAwsJson11Serializer
       }
       switch (key) {
         case 'SecretCode':
-          result.secretCode = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.secretCode =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'Session':
-          result.session = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.session =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -130,18 +122,19 @@ class AssociateSoftwareTokenResponseAwsJson11Serializer
     if (secretCode != null) {
       result$
         ..add('SecretCode')
-        ..add(serializers.serialize(
-          secretCode,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            secretCode,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (session != null) {
       result$
         ..add('Session')
-        ..add(serializers.serialize(
-          session,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(session, specifiedType: const FullType(String)),
+        );
     }
     return result$;
   }

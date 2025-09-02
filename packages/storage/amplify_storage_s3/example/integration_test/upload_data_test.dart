@@ -253,8 +253,9 @@ void main() {
       });
 
       group('multi-bucket', () {
-        final mainBucket =
-            StorageBucket.fromOutputs('Storage Integ Test main bucket');
+        final mainBucket = StorageBucket.fromOutputs(
+          'Storage Integ Test main bucket',
+        );
         final secondaryBucket = StorageBucket.fromOutputs(
           'Storage Integ Test secondary bucket',
         );
@@ -263,25 +264,18 @@ void main() {
           final path = 'public/multi-bucket-upload-data-${uuid()}';
           final storagePath = StoragePath.fromString(path);
           final data = 'multi bucket upload data byte'.codeUnits;
-          addTearDownMultiBucket(
-            storagePath,
-            [mainBucket, secondaryBucket],
-          );
+          addTearDownMultiBucket(storagePath, [mainBucket, secondaryBucket]);
           //  main bucket
           final mainResult = await Amplify.Storage.uploadData(
             data: StorageDataPayload.bytes(data),
             path: storagePath,
-            options: StorageUploadDataOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageUploadDataOptions(bucket: mainBucket),
           ).result;
           expect(mainResult.uploadedItem.path, path);
 
           final downloadMainResult = await Amplify.Storage.downloadData(
             path: storagePath,
-            options: StorageDownloadDataOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageDownloadDataOptions(bucket: mainBucket),
           ).result;
           expect(downloadMainResult.bytes, data);
 
@@ -289,17 +283,13 @@ void main() {
           final secondaryResult = await Amplify.Storage.uploadData(
             data: StorageDataPayload.bytes(data),
             path: storagePath,
-            options: StorageUploadDataOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageUploadDataOptions(bucket: secondaryBucket),
           ).result;
           expect(secondaryResult.uploadedItem.path, path);
 
           final downloadSecondaryResult = await Amplify.Storage.downloadData(
             path: storagePath,
-            options: StorageDownloadDataOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageDownloadDataOptions(bucket: secondaryBucket),
           ).result;
           expect(downloadSecondaryResult.bytes, data);
         });
@@ -354,35 +344,40 @@ void main() {
         });
 
         testWidgets(
-            'does not report fractionCompleted or totalBytes for streams',
-            (_) async {
-          final path = 'public/upload-data-progress-stream-${uuid()}';
-          final data = [1, 2, 3, 4, 5, 6];
+          'does not report fractionCompleted or totalBytes for streams',
+          (_) async {
+            final path = 'public/upload-data-progress-stream-${uuid()}';
+            final data = [1, 2, 3, 4, 5, 6];
 
-          var fractionCompleted = 0.0;
-          var totalBytes = 0;
-          var transferredBytes = 0;
+            var fractionCompleted = 0.0;
+            var totalBytes = 0;
+            var transferredBytes = 0;
 
-          addTearDownPath(StoragePath.fromString(path));
-          await Amplify.Storage.uploadData(
-            data: StorageDataPayload.streaming(Stream.value(data)),
-            path: StoragePath.fromString(path),
-            onProgress: (StorageTransferProgress progress) {
-              fractionCompleted = progress.fractionCompleted;
-              totalBytes = progress.totalBytes;
-              transferredBytes = progress.transferredBytes;
-            },
-          ).result;
-          expect(fractionCompleted, -1);
-          expect(totalBytes, -1);
-          expect(transferredBytes, data.length);
-        });
+            addTearDownPath(StoragePath.fromString(path));
+            await Amplify.Storage.uploadData(
+              data: StorageDataPayload.streaming(Stream.value(data)),
+              path: StoragePath.fromString(path),
+              onProgress: (StorageTransferProgress progress) {
+                fractionCompleted = progress.fractionCompleted;
+                totalBytes = progress.totalBytes;
+                transferredBytes = progress.transferredBytes;
+              },
+            ).result;
+            expect(fractionCompleted, -1);
+            expect(totalBytes, -1);
+            expect(transferredBytes, data.length);
+          },
+        );
       });
 
       testWidgets('can cancel', (_) async {
         const size = 1024 * 1024 * 6;
         const chars = 'qwertyuiopasdfghjklzxcvbnm';
-        final content = List.generate(size, (i) => chars[i % 25]).join();
+        final sb = StringBuffer();
+        for (var i = 0; i < size; i++) {
+          sb.write(chars[i % 25]);
+        }
+        final content = sb.toString();
         final fileId = uuid();
         final path = 'public/upload-data-cancel-$fileId';
         addTearDownPath(StoragePath.fromString(path));
@@ -402,45 +397,39 @@ void main() {
       setUpAll(() async {
         await configure(amplifyEnvironments['dots-in-name']!);
       });
-      testWidgets(
-        'standard upload works',
-        (_) async {
-          final path = 'public/upload-data-from-bytes-${uuid()}';
-          final data = 'from bytes'.codeUnits;
-          addTearDownPath(StoragePath.fromString(path));
-          final result = await Amplify.Storage.uploadData(
+      testWidgets('standard upload works', (_) async {
+        final path = 'public/upload-data-from-bytes-${uuid()}';
+        final data = 'from bytes'.codeUnits;
+        addTearDownPath(StoragePath.fromString(path));
+        final result = await Amplify.Storage.uploadData(
+          data: StorageDataPayload.bytes(data),
+          path: StoragePath.fromString(path),
+        ).result;
+        expect(result.uploadedItem.path, path);
+
+        final downloadResult = await Amplify.Storage.downloadData(
+          path: StoragePath.fromString(path),
+        ).result;
+        expect(downloadResult.bytes, data);
+      });
+
+      testWidgets('useAccelerateEndpoint throws', (_) async {
+        final path = 'public/upload-data-from-bytes-${uuid()}';
+        final data = 'from bytes'.codeUnits;
+        await expectLater(
+          () => Amplify.Storage.uploadData(
             data: StorageDataPayload.bytes(data),
             path: StoragePath.fromString(path),
-          ).result;
-          expect(result.uploadedItem.path, path);
-
-          final downloadResult = await Amplify.Storage.downloadData(
-            path: StoragePath.fromString(path),
-          ).result;
-          expect(downloadResult.bytes, data);
-        },
-      );
-
-      testWidgets(
-        'useAccelerateEndpoint throws',
-        (_) async {
-          final path = 'public/upload-data-from-bytes-${uuid()}';
-          final data = 'from bytes'.codeUnits;
-          await expectLater(
-            () => Amplify.Storage.uploadData(
-              data: StorageDataPayload.bytes(data),
-              path: StoragePath.fromString(path),
-              options: const StorageUploadDataOptions(
-                pluginOptions: S3UploadDataPluginOptions(
-                  useAccelerateEndpoint: true,
-                ),
+            options: const StorageUploadDataOptions(
+              pluginOptions: S3UploadDataPluginOptions(
+                useAccelerateEndpoint: true,
               ),
-            ).result,
-            // useAccelerateEndpoint is not supported with a bucket name with dots
-            throwsA(isA<ConfigurationError>()),
-          );
-        },
-      );
+            ),
+          ).result,
+          // useAccelerateEndpoint is not supported with a bucket name with dots
+          throwsA(isA<ConfigurationError>()),
+        );
+      });
     });
   });
 }

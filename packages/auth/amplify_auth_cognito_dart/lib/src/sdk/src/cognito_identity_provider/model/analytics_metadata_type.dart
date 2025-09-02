@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.analytics_metadata_type; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -10,33 +10,33 @@ import 'package:smithy/smithy.dart' as _i2;
 
 part 'analytics_metadata_type.g.dart';
 
-/// An Amazon Pinpoint analytics endpoint.
+/// Information that your application adds to authentication requests. Applies an endpoint ID to the analytics data that your user pool sends to Amazon Pinpoint.
 ///
-/// An endpoint uniquely identifies a mobile device, email address, or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
+/// An endpoint ID uniquely identifies a mobile device, email address or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
 abstract class AnalyticsMetadataType
     with _i1.AWSEquatable<AnalyticsMetadataType>
     implements Built<AnalyticsMetadataType, AnalyticsMetadataTypeBuilder> {
-  /// An Amazon Pinpoint analytics endpoint.
+  /// Information that your application adds to authentication requests. Applies an endpoint ID to the analytics data that your user pool sends to Amazon Pinpoint.
   ///
-  /// An endpoint uniquely identifies a mobile device, email address, or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
+  /// An endpoint ID uniquely identifies a mobile device, email address or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
   factory AnalyticsMetadataType({String? analyticsEndpointId}) {
     return _$AnalyticsMetadataType._(analyticsEndpointId: analyticsEndpointId);
   }
 
-  /// An Amazon Pinpoint analytics endpoint.
+  /// Information that your application adds to authentication requests. Applies an endpoint ID to the analytics data that your user pool sends to Amazon Pinpoint.
   ///
-  /// An endpoint uniquely identifies a mobile device, email address, or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
-  factory AnalyticsMetadataType.build(
-          [void Function(AnalyticsMetadataTypeBuilder) updates]) =
-      _$AnalyticsMetadataType;
+  /// An endpoint ID uniquely identifies a mobile device, email address or phone number that can receive messages from Amazon Pinpoint analytics. For more information about Amazon Web Services Regions that can contain Amazon Pinpoint resources for use with Amazon Cognito user pools, see [Using Amazon Pinpoint analytics with Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html).
+  factory AnalyticsMetadataType.build([
+    void Function(AnalyticsMetadataTypeBuilder) updates,
+  ]) = _$AnalyticsMetadataType;
 
   const AnalyticsMetadataType._();
 
   static const List<_i2.SmithySerializer<AnalyticsMetadataType>> serializers = [
-    AnalyticsMetadataTypeAwsJson11Serializer()
+    AnalyticsMetadataTypeAwsJson11Serializer(),
   ];
 
-  /// The endpoint ID.
+  /// The endpoint ID. Information that you want to pass to Amazon Pinpoint about where to send notifications.
   String? get analyticsEndpointId;
   @override
   List<Object?> get props => [analyticsEndpointId];
@@ -44,10 +44,7 @@ abstract class AnalyticsMetadataType
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('AnalyticsMetadataType')
-      ..add(
-        'analyticsEndpointId',
-        analyticsEndpointId,
-      );
+      ..add('analyticsEndpointId', analyticsEndpointId);
     return helper.toString();
   }
 }
@@ -55,21 +52,18 @@ abstract class AnalyticsMetadataType
 class AnalyticsMetadataTypeAwsJson11Serializer
     extends _i2.StructuredSmithySerializer<AnalyticsMetadataType> {
   const AnalyticsMetadataTypeAwsJson11Serializer()
-      : super('AnalyticsMetadataType');
+    : super('AnalyticsMetadataType');
 
   @override
   Iterable<Type> get types => const [
-        AnalyticsMetadataType,
-        _$AnalyticsMetadataType,
-      ];
+    AnalyticsMetadataType,
+    _$AnalyticsMetadataType,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   AnalyticsMetadataType deserialize(
@@ -88,10 +82,12 @@ class AnalyticsMetadataTypeAwsJson11Serializer
       }
       switch (key) {
         case 'AnalyticsEndpointId':
-          result.analyticsEndpointId = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.analyticsEndpointId =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -109,10 +105,12 @@ class AnalyticsMetadataTypeAwsJson11Serializer
     if (analyticsEndpointId != null) {
       result$
         ..add('AnalyticsEndpointId')
-        ..add(serializers.serialize(
-          analyticsEndpointId,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            analyticsEndpointId,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     return result$;
   }

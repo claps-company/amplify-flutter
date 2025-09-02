@@ -85,8 +85,9 @@ class AWSService {
   static const applicationAutoScaling = AWSService('application-autoscaling');
 
   /// AWS Application Cost Profiler
-  static const applicationCostProfiler =
-      AWSService('application-cost-profiler');
+  static const applicationCostProfiler = AWSService(
+    'application-cost-profiler',
+  );
 
   /// AWS Application Discovery Service
   static const applicationDiscoveryService = AWSService('discovery');
@@ -557,6 +558,9 @@ class AWSService {
   /// AWS IoT
   static const iot = AWSService('iot');
 
+  /// AWS IoT Core Device
+  static const iotCore = AWSService('iotdevicegateway');
+
   /// AWS IoT 1-Click Devices Service
   static const iot1ClickDevicesService = AWSService('iot1click');
 
@@ -661,12 +665,14 @@ class AWSService {
   static const licenseManager = AWSService('license-manager');
 
   /// AWS License Manager Linux Subscriptions
-  static const licenseManagerLinuxSubscriptions =
-      AWSService('license-manager-linux-subscriptions');
+  static const licenseManagerLinuxSubscriptions = AWSService(
+    'license-manager-linux-subscriptions',
+  );
 
   /// AWS License Manager User Subscriptions
-  static const licenseManagerUserSubscriptions =
-      AWSService('license-manager-user-subscriptions');
+  static const licenseManagerUserSubscriptions = AWSService(
+    'license-manager-user-subscriptions',
+  );
 
   /// Amazon Lightsail
   static const lightsail = AWSService('lightsail');
@@ -715,8 +721,9 @@ class AWSService {
   static const marketplaceCatalog = AWSService('aws-marketplace');
 
   /// AWS Marketplace Commerce Analytics
-  static const marketplaceCommerceAnalytics =
-      AWSService('marketplacecommerceanalytics');
+  static const marketplaceCommerceAnalytics = AWSService(
+    'marketplacecommerceanalytics',
+  );
 
   /// AWS Marketplace Deployment Service
   static const marketplaceDeployment = AWSService('aws-marketplace');
@@ -770,8 +777,9 @@ class AWSService {
   static const migrationHubConfig = AWSService('mgh');
 
   /// AWS Migration Hub Orchestrator
-  static const migrationHubOrchestrator =
-      AWSService('migrationhub-orchestrator');
+  static const migrationHubOrchestrator = AWSService(
+    'migrationhub-orchestrator',
+  );
 
   /// AWS Migration Hub Refactor Spaces
   static const migrationHubRefactorSpaces = AWSService('refactor-spaces');
@@ -970,12 +978,14 @@ class AWSService {
   static const route53RecoveryCluster = AWSService('route53-recovery-cluster');
 
   /// AWS Route53 Recovery Control Config
-  static const route53RecoveryControlConfig =
-      AWSService('route53-recovery-control-config');
+  static const route53RecoveryControlConfig = AWSService(
+    'route53-recovery-control-config',
+  );
 
   /// AWS Route53 Recovery Readiness
-  static const route53RecoveryReadiness =
-      AWSService('route53-recovery-readiness');
+  static const route53RecoveryReadiness = AWSService(
+    'route53-recovery-readiness',
+  );
 
   /// Amazon Route 53 Resolver
   static const route53Resolver = AWSService('route53resolver');

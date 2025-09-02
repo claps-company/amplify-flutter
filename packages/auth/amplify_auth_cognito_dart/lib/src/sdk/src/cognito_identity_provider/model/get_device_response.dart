@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.get_device_response; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -21,8 +21,9 @@ abstract class GetDeviceResponse
   }
 
   /// Gets the device response.
-  factory GetDeviceResponse.build(
-      [void Function(GetDeviceResponseBuilder) updates]) = _$GetDeviceResponse;
+  factory GetDeviceResponse.build([
+    void Function(GetDeviceResponseBuilder) updates,
+  ]) = _$GetDeviceResponse;
 
   const GetDeviceResponse._();
 
@@ -30,14 +31,13 @@ abstract class GetDeviceResponse
   factory GetDeviceResponse.fromResponse(
     GetDeviceResponse payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload;
+  ) => payload;
 
   static const List<_i2.SmithySerializer<GetDeviceResponse>> serializers = [
-    GetDeviceResponseAwsJson11Serializer()
+    GetDeviceResponseAwsJson11Serializer(),
   ];
 
-  /// The device.
+  /// Details of the requested device. Includes device information, last-accessed and created dates, and the device key.
   DeviceType get device;
   @override
   List<Object?> get props => [device];
@@ -45,10 +45,7 @@ abstract class GetDeviceResponse
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('GetDeviceResponse')
-      ..add(
-        'device',
-        device,
-      );
+      ..add('device', device);
     return helper.toString();
   }
 }
@@ -58,18 +55,12 @@ class GetDeviceResponseAwsJson11Serializer
   const GetDeviceResponseAwsJson11Serializer() : super('GetDeviceResponse');
 
   @override
-  Iterable<Type> get types => const [
-        GetDeviceResponse,
-        _$GetDeviceResponse,
-      ];
+  Iterable<Type> get types => const [GetDeviceResponse, _$GetDeviceResponse];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   GetDeviceResponse deserialize(
@@ -88,10 +79,13 @@ class GetDeviceResponseAwsJson11Serializer
       }
       switch (key) {
         case 'Device':
-          result.device.replace((serializers.deserialize(
-            value,
-            specifiedType: const FullType(DeviceType),
-          ) as DeviceType));
+          result.device.replace(
+            (serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DeviceType),
+                )
+                as DeviceType),
+          );
       }
     }
 
@@ -108,10 +102,7 @@ class GetDeviceResponseAwsJson11Serializer
     final GetDeviceResponse(:device) = object;
     result$.addAll([
       'Device',
-      serializers.serialize(
-        device,
-        specifiedType: const FullType(DeviceType),
-      ),
+      serializers.serialize(device, specifiedType: const FullType(DeviceType)),
     ]);
     return result$;
   }

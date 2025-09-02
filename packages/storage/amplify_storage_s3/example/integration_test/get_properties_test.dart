@@ -102,10 +102,12 @@ void main() {
       });
     });
     group('multibucket config', () {
-      final mainBucket =
-          StorageBucket.fromOutputs('Storage Integ Test main bucket');
-      final secondaryBucket =
-          StorageBucket.fromOutputs('Storage Integ Test secondary bucket');
+      final mainBucket = StorageBucket.fromOutputs(
+        'Storage Integ Test main bucket',
+      );
+      final secondaryBucket = StorageBucket.fromOutputs(
+        'Storage Integ Test secondary bucket',
+      );
       setUpAll(() async {
         await configure(amplifyEnvironments['main']!);
         addTearDownPath(StoragePath.fromString(path));
@@ -130,9 +132,7 @@ void main() {
       testWidgets('String StoragePath', (_) async {
         final result = await Amplify.Storage.getProperties(
           path: StoragePath.fromString(path),
-          options: StorageGetPropertiesOptions(
-            bucket: mainBucket,
-          ),
+          options: StorageGetPropertiesOptions(bucket: mainBucket),
         ).result;
         expect(result.storageItem.path, path);
         expect(result.storageItem.metadata, metadata);
@@ -141,9 +141,7 @@ void main() {
 
         final resultSecondaryBucket = await Amplify.Storage.getProperties(
           path: StoragePath.fromString(path),
-          options: StorageGetPropertiesOptions(
-            bucket: secondaryBucket,
-          ),
+          options: StorageGetPropertiesOptions(bucket: secondaryBucket),
         ).result;
         expect(resultSecondaryBucket.storageItem.path, path);
         expect(resultSecondaryBucket.storageItem.metadata, metadata);
@@ -169,9 +167,7 @@ void main() {
           path: StoragePath.fromIdentityId(
             ((identityId) => 'private/$identityId/$name'),
           ),
-          options: StorageGetPropertiesOptions(
-            bucket: secondaryBucket,
-          ),
+          options: StorageGetPropertiesOptions(bucket: secondaryBucket),
         ).result;
         expect(result.storageItem.path, expectedResolvedPath);
         expect(result.storageItem.metadata, metadata);
@@ -184,18 +180,14 @@ void main() {
         await expectLater(
           () => Amplify.Storage.getProperties(
             path: const StoragePath.fromString('public/not-existent-path'),
-            options: StorageGetPropertiesOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageGetPropertiesOptions(bucket: mainBucket),
           ).result,
           throwsA(isA<StorageNotFoundException>()),
         );
         await expectLater(
           () => Amplify.Storage.getProperties(
             path: const StoragePath.fromString('public/not-existent-path'),
-            options: StorageGetPropertiesOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageGetPropertiesOptions(bucket: secondaryBucket),
           ).result,
           throwsA(isA<StorageNotFoundException>()),
         );
@@ -204,18 +196,14 @@ void main() {
         await expectLater(
           () => Amplify.Storage.getProperties(
             path: const StoragePath.fromString('unauthorized/path'),
-            options: StorageGetPropertiesOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageGetPropertiesOptions(bucket: mainBucket),
           ).result,
           throwsA(isA<StorageAccessDeniedException>()),
         );
         await expectLater(
           () => Amplify.Storage.getProperties(
             path: const StoragePath.fromString('unauthorized/path'),
-            options: StorageGetPropertiesOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageGetPropertiesOptions(bucket: secondaryBucket),
           ).result,
           throwsA(isA<StorageAccessDeniedException>()),
         );

@@ -52,8 +52,9 @@ void main() {
         worker.stream,
         emits(
           isA<RespondToAuthChallengeRequest>().having(
-            (req) => req.challengeResponses?[
-                CognitoConstants.challengeParamPasswordSignature],
+            (req) =>
+                req.challengeResponses?[CognitoConstants
+                    .challengeParamPasswordSignature],
             'signature',
             isNotNull,
           ),
@@ -81,14 +82,8 @@ void main() {
       );
       worker.add(message);
 
-      expect(
-        worker.result,
-        completion(isA<ErrorResult>()),
-      );
-      await expectLater(
-        worker.stream,
-        emitsError(isA<WorkerBeeException>()),
-      );
+      expect(worker.result, completion(isA<ErrorResult>()));
+      await expectLater(worker.stream, emitsError(isA<WorkerBeeException>()));
       unawaited(worker.close());
     });
   });
