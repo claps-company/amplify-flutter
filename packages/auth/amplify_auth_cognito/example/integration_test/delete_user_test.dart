@@ -48,10 +48,7 @@ void main() {
               : isA<UserNotFoundException>();
 
           await expectLater(
-            Amplify.Auth.signIn(
-              username: username,
-              password: password,
-            ),
+            Amplify.Auth.signIn(username: username, password: password),
             throwsA(expectedException),
             reason: 'Subsequent signIn calls should fail',
           );

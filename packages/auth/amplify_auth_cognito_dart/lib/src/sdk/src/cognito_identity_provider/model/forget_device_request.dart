@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.forget_device_request; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -28,9 +28,9 @@ abstract class ForgetDeviceRequest
   }
 
   /// Represents the request to forget the device.
-  factory ForgetDeviceRequest.build(
-          [void Function(ForgetDeviceRequestBuilder) updates]) =
-      _$ForgetDeviceRequest;
+  factory ForgetDeviceRequest.build([
+    void Function(ForgetDeviceRequestBuilder) updates,
+  ]) = _$ForgetDeviceRequest;
 
   const ForgetDeviceRequest._();
 
@@ -38,38 +38,28 @@ abstract class ForgetDeviceRequest
     ForgetDeviceRequest payload,
     _i2.AWSBaseHttpRequest request, {
     Map<String, String> labels = const {},
-  }) =>
-      payload;
+  }) => payload;
 
   static const List<_i1.SmithySerializer<ForgetDeviceRequest>> serializers = [
-    ForgetDeviceRequestAwsJson11Serializer()
+    ForgetDeviceRequestAwsJson11Serializer(),
   ];
 
-  /// A valid access token that Amazon Cognito issued to the user whose registered device you want to forget.
+  /// A valid access token that Amazon Cognito issued to the currently signed-in user. Must include a scope claim for `aws.cognito.signin.user.admin`.
   String? get accessToken;
 
-  /// The device key.
+  /// The unique identifier, or device key, of the device that the user wants to forget.
   String get deviceKey;
   @override
   ForgetDeviceRequest getPayload() => this;
 
   @override
-  List<Object?> get props => [
-        accessToken,
-        deviceKey,
-      ];
+  List<Object?> get props => [accessToken, deviceKey];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('ForgetDeviceRequest')
-      ..add(
-        'accessToken',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'deviceKey',
-        deviceKey,
-      );
+      ..add('accessToken', '***SENSITIVE***')
+      ..add('deviceKey', deviceKey);
     return helper.toString();
   }
 }
@@ -80,17 +70,14 @@ class ForgetDeviceRequestAwsJson11Serializer
 
   @override
   Iterable<Type> get types => const [
-        ForgetDeviceRequest,
-        _$ForgetDeviceRequest,
-      ];
+    ForgetDeviceRequest,
+    _$ForgetDeviceRequest,
+  ];
 
   @override
   Iterable<_i1.ShapeId> get supportedProtocols => const [
-        _i1.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i1.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   ForgetDeviceRequest deserialize(
@@ -109,15 +96,19 @@ class ForgetDeviceRequestAwsJson11Serializer
       }
       switch (key) {
         case 'AccessToken':
-          result.accessToken = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.accessToken =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'DeviceKey':
-          result.deviceKey = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.deviceKey =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -134,18 +125,17 @@ class ForgetDeviceRequestAwsJson11Serializer
     final ForgetDeviceRequest(:accessToken, :deviceKey) = object;
     result$.addAll([
       'DeviceKey',
-      serializers.serialize(
-        deviceKey,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(deviceKey, specifiedType: const FullType(String)),
     ]);
     if (accessToken != null) {
       result$
         ..add('AccessToken')
-        ..add(serializers.serialize(
-          accessToken,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            accessToken,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     return result$;
   }

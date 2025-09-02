@@ -10,33 +10,38 @@ class _$InvalidParameterException extends InvalidParameterException {
   @override
   final String? message;
   @override
+  final String? reasonCode;
+  @override
   final Map<String, String>? headers;
 
-  factory _$InvalidParameterException(
-          [void Function(InvalidParameterExceptionBuilder)? updates]) =>
-      (new InvalidParameterExceptionBuilder()..update(updates))._build();
+  factory _$InvalidParameterException([
+    void Function(InvalidParameterExceptionBuilder)? updates,
+  ]) => (InvalidParameterExceptionBuilder()..update(updates))._build();
 
-  _$InvalidParameterException._({this.message, this.headers}) : super._();
-
+  _$InvalidParameterException._({this.message, this.reasonCode, this.headers})
+    : super._();
   @override
   InvalidParameterException rebuild(
-          void Function(InvalidParameterExceptionBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvalidParameterExceptionBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvalidParameterExceptionBuilder toBuilder() =>
-      new InvalidParameterExceptionBuilder()..replace(this);
+      InvalidParameterExceptionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is InvalidParameterException && message == other.message;
+    return other is InvalidParameterException &&
+        message == other.message &&
+        reasonCode == other.reasonCode;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, message.hashCode);
+    _$hash = $jc(_$hash, reasonCode.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -51,6 +56,10 @@ class InvalidParameterExceptionBuilder
   String? get message => _$this._message;
   set message(String? message) => _$this._message = message;
 
+  String? _reasonCode;
+  String? get reasonCode => _$this._reasonCode;
+  set reasonCode(String? reasonCode) => _$this._reasonCode = reasonCode;
+
   Map<String, String>? _headers;
   Map<String, String>? get headers => _$this._headers;
   set headers(Map<String, String>? headers) => _$this._headers = headers;
@@ -61,6 +70,7 @@ class InvalidParameterExceptionBuilder
     final $v = _$v;
     if ($v != null) {
       _message = $v.message;
+      _reasonCode = $v.reasonCode;
       _headers = $v.headers;
       _$v = null;
     }
@@ -69,7 +79,6 @@ class InvalidParameterExceptionBuilder
 
   @override
   void replace(InvalidParameterException other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvalidParameterException;
   }
 
@@ -82,8 +91,13 @@ class InvalidParameterExceptionBuilder
   InvalidParameterException build() => _build();
 
   _$InvalidParameterException _build() {
-    final _$result = _$v ??
-        new _$InvalidParameterException._(message: message, headers: headers);
+    final _$result =
+        _$v ??
+        _$InvalidParameterException._(
+          message: message,
+          reasonCode: reasonCode,
+          headers: headers,
+        );
     replace(_$result);
     return _$result;
   }

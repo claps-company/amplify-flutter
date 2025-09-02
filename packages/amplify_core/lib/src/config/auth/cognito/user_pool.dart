@@ -53,13 +53,13 @@ class CognitoUserPoolConfig
 
   @override
   List<Object?> get props => [
-        poolId,
-        appClientId,
-        appClientSecret,
-        region,
-        hostedUI,
-        endpoint,
-      ];
+    poolId,
+    appClientId,
+    appClientSecret,
+    region,
+    hostedUI,
+    endpoint,
+  ];
 
   CognitoUserPoolConfig copyWith({
     String? poolId,

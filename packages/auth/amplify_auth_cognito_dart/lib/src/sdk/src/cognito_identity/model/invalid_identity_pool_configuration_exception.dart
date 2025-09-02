@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity.model.invalid_identity_pool_configuration_exception; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -10,23 +10,30 @@ import 'package:smithy/smithy.dart' as _i2;
 
 part 'invalid_identity_pool_configuration_exception.g.dart';
 
-/// Thrown if the identity pool has no role associated for the given auth type (auth/unauth) or if the AssumeRole fails.
+/// If you provided authentication information in the request, the identity pool has no authenticated role configured, or STS returned an error response to the request to assume the authenticated role from the identity pool. If you provided no authentication information in the request, the identity pool has no unauthenticated role configured, or STS returned an error response to the request to assume the unauthenticated role from the identity pool.
+///
+/// Your role trust policy must grant `AssumeRoleWithWebIdentity` permissions to `cognito-identity.amazonaws.com`.
 abstract class InvalidIdentityPoolConfigurationException
-    with
-        _i1.AWSEquatable<InvalidIdentityPoolConfigurationException>
+    with _i1.AWSEquatable<InvalidIdentityPoolConfigurationException>
     implements
-        Built<InvalidIdentityPoolConfigurationException,
-            InvalidIdentityPoolConfigurationExceptionBuilder>,
+        Built<
+          InvalidIdentityPoolConfigurationException,
+          InvalidIdentityPoolConfigurationExceptionBuilder
+        >,
         _i2.SmithyHttpException {
-  /// Thrown if the identity pool has no role associated for the given auth type (auth/unauth) or if the AssumeRole fails.
+  /// If you provided authentication information in the request, the identity pool has no authenticated role configured, or STS returned an error response to the request to assume the authenticated role from the identity pool. If you provided no authentication information in the request, the identity pool has no unauthenticated role configured, or STS returned an error response to the request to assume the unauthenticated role from the identity pool.
+  ///
+  /// Your role trust policy must grant `AssumeRoleWithWebIdentity` permissions to `cognito-identity.amazonaws.com`.
   factory InvalidIdentityPoolConfigurationException({String? message}) {
     return _$InvalidIdentityPoolConfigurationException._(message: message);
   }
 
-  /// Thrown if the identity pool has no role associated for the given auth type (auth/unauth) or if the AssumeRole fails.
-  factory InvalidIdentityPoolConfigurationException.build(
-      [void Function(InvalidIdentityPoolConfigurationExceptionBuilder)
-          updates]) = _$InvalidIdentityPoolConfigurationException;
+  /// If you provided authentication information in the request, the identity pool has no authenticated role configured, or STS returned an error response to the request to assume the authenticated role from the identity pool. If you provided no authentication information in the request, the identity pool has no unauthenticated role configured, or STS returned an error response to the request to assume the unauthenticated role from the identity pool.
+  ///
+  /// Your role trust policy must grant `AssumeRoleWithWebIdentity` permissions to `cognito-identity.amazonaws.com`.
+  factory InvalidIdentityPoolConfigurationException.build([
+    void Function(InvalidIdentityPoolConfigurationExceptionBuilder) updates,
+  ]) = _$InvalidIdentityPoolConfigurationException;
 
   const InvalidIdentityPoolConfigurationException._();
 
@@ -34,15 +41,15 @@ abstract class InvalidIdentityPoolConfigurationException
   factory InvalidIdentityPoolConfigurationException.fromResponse(
     InvalidIdentityPoolConfigurationException payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload.rebuild((b) {
-        b.headers = response.headers;
-      });
+  ) => payload.rebuild((b) {
+    b.headers = response.headers;
+  });
 
   static const List<
-          _i2.SmithySerializer<InvalidIdentityPoolConfigurationException>>
-      serializers = [
-    InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer()
+    _i2.SmithySerializer<InvalidIdentityPoolConfigurationException>
+  >
+  serializers = [
+    InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer(),
   ];
 
   /// The message returned for an `InvalidIdentityPoolConfigurationException`
@@ -50,9 +57,9 @@ abstract class InvalidIdentityPoolConfigurationException
   String? get message;
   @override
   _i2.ShapeId get shapeId => const _i2.ShapeId(
-        namespace: 'com.amazonaws.cognitoidentity',
-        shape: 'InvalidIdentityPoolConfigurationException',
-      );
+    namespace: 'com.amazonaws.cognitoidentity',
+    shape: 'InvalidIdentityPoolConfigurationException',
+  );
 
   @override
   _i2.RetryConfig? get retryConfig => null;
@@ -72,34 +79,31 @@ abstract class InvalidIdentityPoolConfigurationException
 
   @override
   String toString() {
-    final helper =
-        newBuiltValueToStringHelper('InvalidIdentityPoolConfigurationException')
-          ..add(
-            'message',
-            message,
-          );
+    final helper = newBuiltValueToStringHelper(
+      'InvalidIdentityPoolConfigurationException',
+    )..add('message', message);
     return helper.toString();
   }
 }
 
-class InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer extends _i2
-    .StructuredSmithySerializer<InvalidIdentityPoolConfigurationException> {
+class InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer
+    extends
+        _i2.StructuredSmithySerializer<
+          InvalidIdentityPoolConfigurationException
+        > {
   const InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer()
-      : super('InvalidIdentityPoolConfigurationException');
+    : super('InvalidIdentityPoolConfigurationException');
 
   @override
   Iterable<Type> get types => const [
-        InvalidIdentityPoolConfigurationException,
-        _$InvalidIdentityPoolConfigurationException,
-      ];
+    InvalidIdentityPoolConfigurationException,
+    _$InvalidIdentityPoolConfigurationException,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   InvalidIdentityPoolConfigurationException deserialize(
@@ -118,10 +122,12 @@ class InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer extends _i2
       }
       switch (key) {
         case 'message':
-          result.message = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.message =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -139,10 +145,9 @@ class InvalidIdentityPoolConfigurationExceptionAwsJson11Serializer extends _i2
     if (message != null) {
       result$
         ..add('message')
-        ..add(serializers.serialize(
-          message,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(message, specifiedType: const FullType(String)),
+        );
     }
     return result$;
   }

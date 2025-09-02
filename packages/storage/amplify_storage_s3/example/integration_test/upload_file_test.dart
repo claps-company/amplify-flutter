@@ -24,25 +24,22 @@ void main() {
         await configure(amplifyEnvironments['main']!);
       });
       group('for file type', () {
-        testWidgets(
-          'from data',
-          (_) async {
-            await Future<void>.delayed(const Duration(seconds: 5));
-            final path = 'public/upload-file-from-data-${uuid()}';
-            final data = 'data'.codeUnits;
-            addTearDownPath(StoragePath.fromString(path));
-            final result = await Amplify.Storage.uploadFile(
-              localFile: AWSFile.fromData(data),
-              path: StoragePath.fromString(path),
-            ).result;
-            expect(result.uploadedItem.path, path);
+        testWidgets('from data', (_) async {
+          await Future<void>.delayed(const Duration(seconds: 5));
+          final path = 'public/upload-file-from-data-${uuid()}';
+          final data = 'data'.codeUnits;
+          addTearDownPath(StoragePath.fromString(path));
+          final result = await Amplify.Storage.uploadFile(
+            localFile: AWSFile.fromData(data),
+            path: StoragePath.fromString(path),
+          ).result;
+          expect(result.uploadedItem.path, path);
 
-            final downloadResult = await Amplify.Storage.downloadData(
-              path: StoragePath.fromString(path),
-            ).result;
-            expect(downloadResult.bytes, data);
-          },
-        );
+          final downloadResult = await Amplify.Storage.downloadData(
+            path: StoragePath.fromString(path),
+          ).result;
+          expect(downloadResult.bytes, data);
+        });
 
         testWidgets('from path', (_) async {
           final fileId = uuid();
@@ -93,13 +90,17 @@ void main() {
           final contentType = await localFile.contentType;
           expect(contentType, 'text/plain');
           addTearDownPath(StoragePath.fromString(path));
-          final result = await Amplify.Storage.uploadFile(
-            localFile: localFile,
-            path: StoragePath.fromString(path),
-            options: const StorageUploadFileOptions(
-              pluginOptions: S3UploadFilePluginOptions(getProperties: true),
-            ),
-          ).result as S3UploadFileResult;
+          final result =
+              await Amplify.Storage.uploadFile(
+                    localFile: localFile,
+                    path: StoragePath.fromString(path),
+                    options: const StorageUploadFileOptions(
+                      pluginOptions: S3UploadFilePluginOptions(
+                        getProperties: true,
+                      ),
+                    ),
+                  ).result
+                  as S3UploadFileResult;
           expect(result.uploadedItem.contentType, 'text/plain');
         });
 
@@ -115,13 +116,17 @@ void main() {
           final contentType = await localFile.contentType;
           expect(contentType, 'image/jpeg');
           addTearDownPath(StoragePath.fromString(path));
-          final result = await Amplify.Storage.uploadFile(
-            localFile: localFile,
-            path: StoragePath.fromString(path),
-            options: const StorageUploadFileOptions(
-              pluginOptions: S3UploadFilePluginOptions(getProperties: true),
-            ),
-          ).result as S3UploadFileResult;
+          final result =
+              await Amplify.Storage.uploadFile(
+                    localFile: localFile,
+                    path: StoragePath.fromString(path),
+                    options: const StorageUploadFileOptions(
+                      pluginOptions: S3UploadFilePluginOptions(
+                        getProperties: true,
+                      ),
+                    ),
+                  ).result
+                  as S3UploadFileResult;
           expect(result.uploadedItem.contentType, 'image/jpeg');
         });
       });
@@ -222,8 +227,9 @@ void main() {
       });
 
       group('multi-bucket', () {
-        final mainBucket =
-            StorageBucket.fromOutputs('Storage Integ Test main bucket');
+        final mainBucket = StorageBucket.fromOutputs(
+          'Storage Integ Test main bucket',
+        );
         final secondaryBucket = StorageBucket.fromOutputs(
           'Storage Integ Test secondary bucket',
         );
@@ -235,10 +241,7 @@ void main() {
           const content = 'upload file';
           final data = content.codeUnits;
           final filePath = await createFile(path: fileId, content: content);
-          addTearDownMultiBucket(
-            storagePath,
-            [mainBucket, secondaryBucket],
-          );
+          addTearDownMultiBucket(storagePath, [mainBucket, secondaryBucket]);
           //  main bucket
           final mainResult = await Amplify.Storage.uploadFile(
             localFile: AWSFile.fromPath(filePath),
@@ -254,9 +257,7 @@ void main() {
 
           final downloadMainResult = await Amplify.Storage.downloadData(
             path: storagePath,
-            options: StorageDownloadDataOptions(
-              bucket: mainBucket,
-            ),
+            options: StorageDownloadDataOptions(bucket: mainBucket),
           ).result;
           expect(downloadMainResult.bytes, data);
 
@@ -275,24 +276,13 @@ void main() {
 
           final downloadSecondaryResult = await Amplify.Storage.downloadData(
             path: storagePath,
-            options: StorageDownloadDataOptions(
-              bucket: secondaryBucket,
-            ),
+            options: StorageDownloadDataOptions(bucket: secondaryBucket),
           ).result;
           expect(downloadSecondaryResult.bytes, data);
 
+          expect(await objectExists(storagePath, bucket: mainBucket), true);
           expect(
-            await objectExists(
-              storagePath,
-              bucket: mainBucket,
-            ),
-            true,
-          );
-          expect(
-            await objectExists(
-              storagePath,
-              bucket: secondaryBucket,
-            ),
+            await objectExists(storagePath, bucket: secondaryBucket),
             true,
           );
         });
@@ -325,8 +315,9 @@ void main() {
           expect(transferredBytes, data.length);
         });
 
-        testWidgets('reports progress for streams based on provided size',
-            (_) async {
+        testWidgets('reports progress for streams based on provided size', (
+          _,
+        ) async {
           final fileId = uuid();
           final path = 'public/upload-file-stream-progress-$fileId';
           const content = 'upload data';
@@ -365,72 +356,70 @@ void main() {
         for (final fileSize in fileSizes) {
           final size = 1024 * 1024 * fileSize;
           const chars = 'qwertyuiopasdfghjklzxcvbnm';
-          final content = List.generate(size, (i) => chars[i % 25]).join();
-          testWidgets(
-            'can pause (file size: $fileSize mb)',
-            (_) async {
-              final fileId = uuid();
-              final path = 'public/upload-file-pause-$fileId';
-              final filePath = await createFile(path: fileId, content: content);
-              StorageTransferState? state;
-              addTearDownPath(StoragePath.fromString(path));
-              final operation = Amplify.Storage.uploadFile(
-                localFile: AWSFile.fromPath(filePath),
-                path: StoragePath.fromString(path),
-                onProgress: (progress) {
-                  state = progress.state;
-                },
+          final sb = StringBuffer();
+          for (var i = 0; i < size; i++) {
+            sb.write(chars[i % 25]);
+          }
+          final content = sb.toString();
+          testWidgets('can pause (file size: $fileSize mb)', (_) async {
+            final fileId = uuid();
+            final path = 'public/upload-file-pause-$fileId';
+            final filePath = await createFile(path: fileId, content: content);
+            StorageTransferState? state;
+            addTearDownPath(StoragePath.fromString(path));
+            final operation = Amplify.Storage.uploadFile(
+              localFile: AWSFile.fromPath(filePath),
+              path: StoragePath.fromString(path),
+              onProgress: (progress) {
+                state = progress.state;
+              },
+            );
+            await operation.pause();
+            // pause is only supported for multi part uploads (over 5 mb)
+            // calling .pause() should not throw, but the operation will not
+            // actually pause.
+            if (fileSize > 5) {
+              unawaited(
+                operation.result.then(
+                  (value) => fail('should not complete after pause'),
+                ),
               );
-              await operation.pause();
-              // pause is only supported for multi part uploads (over 5 mb)
-              // calling .pause() should not throw, but the operation will not
-              // actually pause.
-              if (fileSize > 5) {
-                unawaited(
-                  operation.result.then(
-                    (value) => fail('should not complete after pause'),
-                  ),
-                );
-                await Future<void>.delayed(const Duration(seconds: 15));
-                expect(state, StorageTransferState.paused);
-                await expectLater(
-                  () => Amplify.Storage.downloadData(
-                    path: StoragePath.fromString(path),
-                  ).result,
-                  throwsA(isA<StorageNotFoundException>()),
-                );
-              }
-            },
-          );
+              await Future<void>.delayed(const Duration(seconds: 15));
+              expect(state, StorageTransferState.paused);
+              await expectLater(
+                () => Amplify.Storage.downloadData(
+                  path: StoragePath.fromString(path),
+                ).result,
+                throwsA(isA<StorageNotFoundException>()),
+              );
+            }
+          });
 
-          testWidgets(
-            'can resume (file size: $fileSize mb)',
-            (_) async {
-              final fileId = uuid();
-              final path = 'public/upload-file-resume-$fileId';
-              final filePath = await createFile(path: fileId, content: content);
-              final state = StreamController<StorageTransferState>();
-              addTearDownPath(StoragePath.fromString(path));
-              final operation = Amplify.Storage.uploadFile(
-                localFile: AWSFile.fromPath(filePath),
-                path: StoragePath.fromString(path),
-                onProgress: (progress) {
-                  state.sink.add(progress.state);
-                },
-              );
-              await operation.pause();
-              await operation.resume();
-              final nextProgressState = await state.stream.first;
-              expect(nextProgressState, StorageTransferState.inProgress);
-              final result = await operation.result;
-              expect(result.uploadedItem.path, path);
-              final downloadResult = await Amplify.Storage.downloadData(
-                path: StoragePath.fromString(path),
-              ).result;
-              expect(downloadResult.bytes, content.codeUnits);
-              await state.close();
-            },
-          );
+          testWidgets('can resume (file size: $fileSize mb)', (_) async {
+            final fileId = uuid();
+            final path = 'public/upload-file-resume-$fileId';
+            final filePath = await createFile(path: fileId, content: content);
+            final state = StreamController<StorageTransferState>();
+            addTearDownPath(StoragePath.fromString(path));
+            final operation = Amplify.Storage.uploadFile(
+              localFile: AWSFile.fromPath(filePath),
+              path: StoragePath.fromString(path),
+              onProgress: (progress) {
+                state.sink.add(progress.state);
+              },
+            );
+            await operation.pause();
+            await operation.resume();
+            final nextProgressState = await state.stream.first;
+            expect(nextProgressState, StorageTransferState.inProgress);
+            final result = await operation.result;
+            expect(result.uploadedItem.path, path);
+            final downloadResult = await Amplify.Storage.downloadData(
+              path: StoragePath.fromString(path),
+            ).result;
+            expect(downloadResult.bytes, content.codeUnits);
+            await state.close();
+          });
 
           testWidgets('can cancel (file size: $fileSize mb)', (_) async {
             final fileId = uuid();
@@ -467,50 +456,44 @@ void main() {
       setUpAll(() async {
         await configure(amplifyEnvironments['dots-in-name']!);
       });
-      testWidgets(
-        'standard upload works',
-        (_) async {
-          final fileId = uuid();
-          final path = 'public/upload-file-from-path-$fileId';
-          const content = 'upload data';
-          final data = content.codeUnits;
-          final filePath = await createFile(path: fileId, content: content);
-          addTearDownPath(StoragePath.fromString(path));
-          final result = await Amplify.Storage.uploadFile(
-            localFile: AWSFile.fromPath(filePath),
-            path: StoragePath.fromString(path),
-          ).result;
-          expect(result.uploadedItem.path, path);
+      testWidgets('standard upload works', (_) async {
+        final fileId = uuid();
+        final path = 'public/upload-file-from-path-$fileId';
+        const content = 'upload data';
+        final data = content.codeUnits;
+        final filePath = await createFile(path: fileId, content: content);
+        addTearDownPath(StoragePath.fromString(path));
+        final result = await Amplify.Storage.uploadFile(
+          localFile: AWSFile.fromPath(filePath),
+          path: StoragePath.fromString(path),
+        ).result;
+        expect(result.uploadedItem.path, path);
 
-          final downloadResult = await Amplify.Storage.downloadData(
-            path: StoragePath.fromString(path),
-          ).result;
-          expect(downloadResult.bytes, data);
-        },
-      );
+        final downloadResult = await Amplify.Storage.downloadData(
+          path: StoragePath.fromString(path),
+        ).result;
+        expect(downloadResult.bytes, data);
+      });
 
-      testWidgets(
-        'useAccelerateEndpoint throws',
-        (_) async {
-          await Future<void>.delayed(const Duration(seconds: 5));
-          final path = 'public/upload-file-from-data-${uuid()}';
-          final data = 'data'.codeUnits;
-          addTearDownPath(StoragePath.fromString(path));
-          await expectLater(
-            () => Amplify.Storage.uploadFile(
-              localFile: AWSFile.fromData(data),
-              path: StoragePath.fromString(path),
-              options: const StorageUploadFileOptions(
-                pluginOptions: S3UploadFilePluginOptions(
-                  useAccelerateEndpoint: true,
-                ),
+      testWidgets('useAccelerateEndpoint throws', (_) async {
+        await Future<void>.delayed(const Duration(seconds: 5));
+        final path = 'public/upload-file-from-data-${uuid()}';
+        final data = 'data'.codeUnits;
+        addTearDownPath(StoragePath.fromString(path));
+        await expectLater(
+          () => Amplify.Storage.uploadFile(
+            localFile: AWSFile.fromData(data),
+            path: StoragePath.fromString(path),
+            options: const StorageUploadFileOptions(
+              pluginOptions: S3UploadFilePluginOptions(
+                useAccelerateEndpoint: true,
               ),
-            ).result,
-            // useAccelerateEndpoint is not supported with a bucket name with dots
-            throwsA(isA<ConfigurationError>()),
-          );
-        },
-      );
+            ),
+          ).result,
+          // useAccelerateEndpoint is not supported with a bucket name with dots
+          throwsA(isA<ConfigurationError>()),
+        );
+      });
     });
   });
 }

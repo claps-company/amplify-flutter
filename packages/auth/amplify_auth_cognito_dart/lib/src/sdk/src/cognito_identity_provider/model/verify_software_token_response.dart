@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.verify_software_token_response; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -19,15 +19,12 @@ abstract class VerifySoftwareTokenResponse
     VerifySoftwareTokenResponseType? status,
     String? session,
   }) {
-    return _$VerifySoftwareTokenResponse._(
-      status: status,
-      session: session,
-    );
+    return _$VerifySoftwareTokenResponse._(status: status, session: session);
   }
 
-  factory VerifySoftwareTokenResponse.build(
-          [void Function(VerifySoftwareTokenResponseBuilder) updates]) =
-      _$VerifySoftwareTokenResponse;
+  factory VerifySoftwareTokenResponse.build([
+    void Function(VerifySoftwareTokenResponseBuilder) updates,
+  ]) = _$VerifySoftwareTokenResponse;
 
   const VerifySoftwareTokenResponse._();
 
@@ -35,34 +32,24 @@ abstract class VerifySoftwareTokenResponse
   factory VerifySoftwareTokenResponse.fromResponse(
     VerifySoftwareTokenResponse payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload;
+  ) => payload;
 
   static const List<_i2.SmithySerializer<VerifySoftwareTokenResponse>>
-      serializers = [VerifySoftwareTokenResponseAwsJson11Serializer()];
+  serializers = [VerifySoftwareTokenResponseAwsJson11Serializer()];
 
-  /// The status of the verify software token.
+  /// Amazon Cognito can accept or reject the code that you provide. This response parameter indicates the success of TOTP verification. Some reasons that this operation might return an error are clock skew on the user's device and excessive retries.
   VerifySoftwareTokenResponseType? get status;
 
-  /// The session that should be passed both ways in challenge-response calls to the service.
+  /// This session ID satisfies an `MFA_SETUP` challenge. Supply the session ID in your challenge response.
   String? get session;
   @override
-  List<Object?> get props => [
-        status,
-        session,
-      ];
+  List<Object?> get props => [status, session];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('VerifySoftwareTokenResponse')
-      ..add(
-        'status',
-        status,
-      )
-      ..add(
-        'session',
-        '***SENSITIVE***',
-      );
+      ..add('status', status)
+      ..add('session', '***SENSITIVE***');
     return helper.toString();
   }
 }
@@ -70,21 +57,18 @@ abstract class VerifySoftwareTokenResponse
 class VerifySoftwareTokenResponseAwsJson11Serializer
     extends _i2.StructuredSmithySerializer<VerifySoftwareTokenResponse> {
   const VerifySoftwareTokenResponseAwsJson11Serializer()
-      : super('VerifySoftwareTokenResponse');
+    : super('VerifySoftwareTokenResponse');
 
   @override
   Iterable<Type> get types => const [
-        VerifySoftwareTokenResponse,
-        _$VerifySoftwareTokenResponse,
-      ];
+    VerifySoftwareTokenResponse,
+    _$VerifySoftwareTokenResponse,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   VerifySoftwareTokenResponse deserialize(
@@ -103,15 +87,21 @@ class VerifySoftwareTokenResponseAwsJson11Serializer
       }
       switch (key) {
         case 'Status':
-          result.status = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(VerifySoftwareTokenResponseType),
-          ) as VerifySoftwareTokenResponseType);
+          result.status =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(
+                      VerifySoftwareTokenResponseType,
+                    ),
+                  )
+                  as VerifySoftwareTokenResponseType);
         case 'Session':
-          result.session = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.session =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -129,18 +119,19 @@ class VerifySoftwareTokenResponseAwsJson11Serializer
     if (status != null) {
       result$
         ..add('Status')
-        ..add(serializers.serialize(
-          status,
-          specifiedType: const FullType(VerifySoftwareTokenResponseType),
-        ));
+        ..add(
+          serializers.serialize(
+            status,
+            specifiedType: const FullType(VerifySoftwareTokenResponseType),
+          ),
+        );
     }
     if (session != null) {
       result$
         ..add('Session')
-        ..add(serializers.serialize(
-          session,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(session, specifiedType: const FullType(String)),
+        );
     }
     return result$;
   }

@@ -26,6 +26,7 @@ sealed class CognitoSignOutResult extends SignOutResult
     HostedUiException? hostedUiException,
     GlobalSignOutException? globalSignOutException,
     RevokeTokenException? revokeTokenException,
+    InvalidTokenException? invalidTokenException,
   }) = CognitoPartialSignOut._;
 
   /// Whether credentials have been cleared from the local device.
@@ -38,9 +39,7 @@ sealed class CognitoSignOutResult extends SignOutResult
   String get runtimeTypeName => 'CognitoSignOutResult';
 
   @override
-  Map<String, Object?> toJson() => {
-        'signedOutLocally': signedOutLocally,
-      };
+  Map<String, Object?> toJson() => {'signedOutLocally': signedOutLocally};
 }
 
 /// {@template amplify_auth_cognito_dart.model.cognito_complete_sign_out}
@@ -72,9 +71,9 @@ final class CognitoFailedSignOut extends CognitoSignOutResult {
 
   @override
   Map<String, Object?> toJson() => {
-        'exception': exception.toString(),
-        'signedOutLocally': signedOutLocally,
-      };
+    'exception': exception.toString(),
+    'signedOutLocally': signedOutLocally,
+  };
 }
 
 /// {@template amplify_auth_cognito_dart.model.cognito_partial_sign_out}
@@ -87,6 +86,7 @@ final class CognitoPartialSignOut extends CognitoSignOutResult {
     this.hostedUiException,
     this.globalSignOutException,
     this.revokeTokenException,
+    this.invalidTokenException,
   }) : super._();
 
   /// The exception that occurred during Hosted UI sign out.
@@ -98,24 +98,44 @@ final class CognitoPartialSignOut extends CognitoSignOutResult {
   /// The exception that occurred while revoking the token.
   final RevokeTokenException? revokeTokenException;
 
+  /// The exception that occurred while signing out with an invalid userpool token.
+  final InvalidTokenException? invalidTokenException;
+
   @override
   bool get signedOutLocally => true;
 
   @override
   List<Object?> get props => [
-        hostedUiException,
-        globalSignOutException,
-        revokeTokenException,
-        signedOutLocally,
-      ];
+    hostedUiException,
+    globalSignOutException,
+    revokeTokenException,
+    invalidTokenException,
+    signedOutLocally,
+  ];
 
   @override
   Map<String, Object?> toJson() => {
-        'hostedUiException': hostedUiException?.toString(),
-        'globalSignOutException': globalSignOutException?.toString(),
-        'revokeTokenException': revokeTokenException?.toString(),
-        'signedOutLocally': signedOutLocally,
-      };
+    'hostedUiException': hostedUiException?.toString(),
+    'globalSignOutException': globalSignOutException?.toString(),
+    'revokeTokenException': revokeTokenException?.toString(),
+    'invalidTokenException': invalidTokenException?.toString(),
+    'signedOutLocally': signedOutLocally,
+  };
+}
+
+/// {@template amplify_auth_cognito_dart.model.signout.hosted_ui_exception}
+/// Exception thrown trying to sign out with an invalid userpool token (one or more of the Id, Access, or Refresh Token).
+/// {@endtemplate}
+class InvalidTokenException extends AuthServiceException {
+  /// {@macro amplify_auth_cognito_dart.model.signout.invalid_token_exception}
+  const InvalidTokenException({super.underlyingException})
+    : super(
+        'The provided user pool token is invalid',
+        recoverySuggestion: 'See underlyingException for more details',
+      );
+
+  @override
+  String get runtimeTypeName => 'InvalidTokenException';
 }
 
 /// {@template amplify_auth_cognito_dart.model.signout.hosted_ui_exception}
@@ -123,12 +143,11 @@ final class CognitoPartialSignOut extends CognitoSignOutResult {
 /// {@endtemplate}
 final class HostedUiException extends UnknownException {
   /// {@macro amplify_auth_cognito_dart.model.signout.hosted_ui_exception}
-  const HostedUiException({
-    super.underlyingException,
-  }) : super(
-          'Failed to perform Hosted UI sign out',
-          recoverySuggestion: 'See underlyingException for more details',
-        );
+  const HostedUiException({super.underlyingException})
+    : super(
+        'Failed to perform Hosted UI sign out',
+        recoverySuggestion: 'See underlyingException for more details',
+      );
 
   @override
   String get runtimeTypeName => 'HostedUiException';
@@ -143,9 +162,9 @@ final class GlobalSignOutException extends AuthServiceException {
     required this.accessToken,
     super.underlyingException,
   }) : super(
-          'Failed to sign out globally',
-          recoverySuggestion: 'See underlyingException for more details',
-        );
+         'Failed to sign out globally',
+         recoverySuggestion: 'See underlyingException for more details',
+       );
 
   /// The access token which failed global sign out.
   ///
@@ -165,9 +184,9 @@ final class RevokeTokenException extends AuthServiceException {
     required this.refreshToken,
     super.underlyingException,
   }) : super(
-          'Failed to revoke token',
-          recoverySuggestion: 'See underlyingException for more details',
-        );
+         'Failed to revoke token',
+         recoverySuggestion: 'See underlyingException for more details',
+       );
 
   /// The refresh token which failed to revoke.
   ///

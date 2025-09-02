@@ -1,3 +1,21 @@
+## 0.3.7
+
+### Chores
+- chore(all): Bump Dart SDK to 3.8.0 ([#6165](https://github.com/aws-amplify/amplify-flutter/pull/6165))
+
+## 0.3.6
+
+- Minor bug fixes and improvements
+
+## 0.3.5
+
+### Chores
+- chore(all): Bump Dart SDK to 3.7.0 ([#6026](https://github.com/aws-amplify/amplify-flutter/pull/6026))
+
+## 0.3.4
+
+- Minor bug fixes and improvements
+
 ## 0.3.3
 
 - Minor bug fixes and improvements

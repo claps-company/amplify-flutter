@@ -18,9 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'test_runner.dart';
 
-AmplifyAuthCognito get cognitoPlugin => Amplify.Auth.getPlugin(
-      AmplifyAuthCognito.pluginKey,
-    );
+AmplifyAuthCognito get cognitoPlugin =>
+    Amplify.Auth.getPlugin(AmplifyAuthCognito.pluginKey);
 
 void main() {
   testRunner.setupTests();
@@ -211,15 +210,12 @@ void main() {
       await federateToIdentityPool();
 
       final session = await cognitoPlugin.fetchAuthSession();
-      expect(
-        session.isSignedIn,
-        isTrue,
-        reason: 'API requirement',
-      );
+      expect(session.isSignedIn, isTrue, reason: 'API requirement');
       await expectLater(
         cognitoPlugin.getCurrentUser(),
         throwsA(isA<InvalidStateException>()),
-        reason: 'API requirement. getCurrentUser should throw '
+        reason:
+            'API requirement. getCurrentUser should throw '
             'even though isSignedIn=true',
       );
     });

@@ -38,9 +38,6 @@ class E2EWorkerThrowsImpl extends E2EWorkerThrows {
       port: baseUri.port,
       path: '$basePath/test/$relativePath',
     ).toString();
-    return [
-      relativePath,
-      testRelativePath,
-    ];
+    return [relativePath, testRelativePath];
   }
 }

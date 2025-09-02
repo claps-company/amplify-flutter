@@ -11,14 +11,11 @@ import 'package:meta/meta.dart';
 class AmplifySecureStorage extends AmplifySecureStorageInterface {
   /// {@macro amplify_secure_storage.amplify_secure_storage.from_config}
   @internal
-  AmplifySecureStorage({
-    required super.config,
-  });
+  AmplifySecureStorage({required super.config});
 
   /// {@macro amplify_secure_storage.amplify_secure_storage.factory_from}
-  static AmplifySecureStorage Function(
-    AmplifySecureStorageScope amplifyScope,
-  ) factoryFrom({
+  static AmplifySecureStorage Function(AmplifySecureStorageScope amplifyScope)
+  factoryFrom({
     WebSecureStorageOptions? webOptions,
     WindowsSecureStorageOptions? windowsOptions,
     LinuxSecureStorageOptions? linuxOptions,

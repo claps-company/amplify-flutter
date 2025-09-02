@@ -29,23 +29,19 @@ void main() {
         TestIamAuthProvider(),
       );
     test(
-        'configure() should override AppPathProvider with the Flutter provider',
-        () {
-      runZoned(
-        () async {
+      'configure() should override AppPathProvider with the Flutter provider',
+      () {
+        runZoned(() async {
           final s3Plugin = AmplifyStorageS3();
           await s3Plugin.configure(
             config: testConfig,
             authProviderRepo: testAuthProviderRepo,
           );
-          final pathProvider =
-              s3Plugin.dependencies.getOrCreate<AppPathProvider>();
+          final pathProvider = s3Plugin.dependencies
+              .getOrCreate<AppPathProvider>();
           expect(pathProvider, isA<S3AppPathProvider>());
-        },
-        zoneValues: {
-          zIsTest: true,
-        },
-      );
-    });
+        }, zoneValues: {zIsTest: true});
+      },
+    );
   });
 }

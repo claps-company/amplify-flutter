@@ -26,7 +26,6 @@ class OAuthOutputs
     this.signOutUri,
     this.signOutUriQueryParameters,
     this.tokenUri,
-    this.tokenUriQueryParameters,
     required this.responseType,
   });
 
@@ -85,31 +84,23 @@ class OAuthOutputs
   @internal
   final String? tokenUri;
 
-  /// Optional query params in the OAuth token URI.
-  ///
-  /// Note: This attribute is not part of the Amplify Outputs schema.
-  /// This exists for backwards compatibility with the Gen 1 config.
-  @internal
-  final Map<String, String>? tokenUriQueryParameters;
-
   /// {@macro amplify_core.amplify_outputs.oauth_response_type}
   final OAuthResponseType responseType;
 
   @override
   List<Object?> get props => [
-        identityProviders,
-        domain,
-        scopes,
-        redirectSignInUri,
-        signInUri,
-        signInUriQueryParameters,
-        redirectSignOutUri,
-        signOutUri,
-        signOutUriQueryParameters,
-        tokenUri,
-        tokenUriQueryParameters,
-        responseType,
-      ];
+    identityProviders,
+    domain,
+    scopes,
+    redirectSignInUri,
+    signInUri,
+    signInUriQueryParameters,
+    redirectSignOutUri,
+    signOutUri,
+    signOutUriQueryParameters,
+    tokenUri,
+    responseType,
+  ];
 
   @override
   String get runtimeTypeName => 'OAuthOutputs';

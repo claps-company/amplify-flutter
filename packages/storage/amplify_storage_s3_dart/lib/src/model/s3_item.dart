@@ -46,9 +46,7 @@ class S3Item extends StorageItem
 
   /// Creates a [S3Item] from [s3.S3Object] provided by S3 Client.
   @internal
-  factory S3Item.fromS3Object(
-    s3.S3Object object,
-  ) {
+  factory S3Item.fromS3Object(s3.S3Object object) {
     final key = object.key;
 
     // Sanity check, key property should never be null in a S3Object returned
@@ -112,14 +110,14 @@ class S3Item extends StorageItem
 
   @override
   List<Object?> get props => [
-        path,
-        size,
-        lastModified,
-        eTag,
-        metadata,
-        versionId,
-        contentType,
-      ];
+    path,
+    size,
+    lastModified,
+    eTag,
+    metadata,
+    versionId,
+    contentType,
+  ];
 
   @override
   String get runtimeTypeName => 'S3Item';

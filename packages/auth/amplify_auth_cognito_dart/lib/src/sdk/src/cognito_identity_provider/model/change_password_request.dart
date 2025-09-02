@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.change_password_request; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -18,7 +18,7 @@ abstract class ChangePasswordRequest
     implements Built<ChangePasswordRequest, ChangePasswordRequestBuilder> {
   /// Represents the request to change a user password.
   factory ChangePasswordRequest({
-    required String previousPassword,
+    String? previousPassword,
     required String proposedPassword,
     required String accessToken,
   }) {
@@ -30,9 +30,9 @@ abstract class ChangePasswordRequest
   }
 
   /// Represents the request to change a user password.
-  factory ChangePasswordRequest.build(
-          [void Function(ChangePasswordRequestBuilder) updates]) =
-      _$ChangePasswordRequest;
+  factory ChangePasswordRequest.build([
+    void Function(ChangePasswordRequestBuilder) updates,
+  ]) = _$ChangePasswordRequest;
 
   const ChangePasswordRequest._();
 
@@ -40,17 +40,16 @@ abstract class ChangePasswordRequest
     ChangePasswordRequest payload,
     _i2.AWSBaseHttpRequest request, {
     Map<String, String> labels = const {},
-  }) =>
-      payload;
+  }) => payload;
 
   static const List<_i1.SmithySerializer<ChangePasswordRequest>> serializers = [
-    ChangePasswordRequestAwsJson11Serializer()
+    ChangePasswordRequestAwsJson11Serializer(),
   ];
 
-  /// The old password.
-  String get previousPassword;
+  /// The user's previous password. Required if the user has a password. If the user has no password and only signs in with passwordless authentication options, you can omit this parameter.
+  String? get previousPassword;
 
-  /// The new password.
+  /// A new password that you prompted the user to enter in your application.
   String get proposedPassword;
 
   /// A valid access token that Amazon Cognito issued to the user whose password you want to change.
@@ -59,27 +58,14 @@ abstract class ChangePasswordRequest
   ChangePasswordRequest getPayload() => this;
 
   @override
-  List<Object?> get props => [
-        previousPassword,
-        proposedPassword,
-        accessToken,
-      ];
+  List<Object?> get props => [previousPassword, proposedPassword, accessToken];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('ChangePasswordRequest')
-      ..add(
-        'previousPassword',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'proposedPassword',
-        '***SENSITIVE***',
-      )
-      ..add(
-        'accessToken',
-        '***SENSITIVE***',
-      );
+      ..add('previousPassword', '***SENSITIVE***')
+      ..add('proposedPassword', '***SENSITIVE***')
+      ..add('accessToken', '***SENSITIVE***');
     return helper.toString();
   }
 }
@@ -87,21 +73,18 @@ abstract class ChangePasswordRequest
 class ChangePasswordRequestAwsJson11Serializer
     extends _i1.StructuredSmithySerializer<ChangePasswordRequest> {
   const ChangePasswordRequestAwsJson11Serializer()
-      : super('ChangePasswordRequest');
+    : super('ChangePasswordRequest');
 
   @override
   Iterable<Type> get types => const [
-        ChangePasswordRequest,
-        _$ChangePasswordRequest,
-      ];
+    ChangePasswordRequest,
+    _$ChangePasswordRequest,
+  ];
 
   @override
   Iterable<_i1.ShapeId> get supportedProtocols => const [
-        _i1.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i1.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   ChangePasswordRequest deserialize(
@@ -120,20 +103,26 @@ class ChangePasswordRequestAwsJson11Serializer
       }
       switch (key) {
         case 'PreviousPassword':
-          result.previousPassword = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.previousPassword =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'ProposedPassword':
-          result.proposedPassword = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.proposedPassword =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'AccessToken':
-          result.accessToken = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.accessToken =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
       }
     }
 
@@ -150,25 +139,27 @@ class ChangePasswordRequestAwsJson11Serializer
     final ChangePasswordRequest(
       :previousPassword,
       :proposedPassword,
-      :accessToken
+      :accessToken,
     ) = object;
     result$.addAll([
-      'PreviousPassword',
-      serializers.serialize(
-        previousPassword,
-        specifiedType: const FullType(String),
-      ),
       'ProposedPassword',
       serializers.serialize(
         proposedPassword,
         specifiedType: const FullType(String),
       ),
       'AccessToken',
-      serializers.serialize(
-        accessToken,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(accessToken, specifiedType: const FullType(String)),
     ]);
+    if (previousPassword != null) {
+      result$
+        ..add('PreviousPassword')
+        ..add(
+          serializers.serialize(
+            previousPassword,
+            specifiedType: const FullType(String),
+          ),
+        );
+    }
     return result$;
   }
 }

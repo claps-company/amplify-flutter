@@ -16,9 +16,8 @@ part 'api_config.g.dart';
 @zAmplifySerializable
 class ApiConfig extends AmplifyPluginConfigMap {
   /// {@macro amplify_core.api_config}
-  const ApiConfig({
-    required Map<String, AmplifyPluginConfig> plugins,
-  }) : super(plugins);
+  const ApiConfig({required Map<String, AmplifyPluginConfig> plugins})
+    : super(plugins);
 
   factory ApiConfig.fromJson(Map<String, Object?> json) =>
       _$ApiConfigFromJson(json);
@@ -85,8 +84,9 @@ class ApiConfig extends AmplifyPluginConfigMap {
     if (plugin == null) {
       return null;
     }
-    final entries =
-        plugin.all.entries.where((p) => p.value.endpointType == endpointType);
+    final entries = plugin.all.entries.where(
+      (p) => p.value.endpointType == endpointType,
+    );
     return Map<String, AWSApiConfig>.fromEntries(entries);
   }
 }

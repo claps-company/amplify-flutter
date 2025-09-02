@@ -7,30 +7,35 @@ part of 'confirm_sign_up_response.dart';
 // **************************************************************************
 
 class _$ConfirmSignUpResponse extends ConfirmSignUpResponse {
-  factory _$ConfirmSignUpResponse(
-          [void Function(ConfirmSignUpResponseBuilder)? updates]) =>
-      (new ConfirmSignUpResponseBuilder()..update(updates))._build();
+  @override
+  final String? session;
 
-  _$ConfirmSignUpResponse._() : super._();
+  factory _$ConfirmSignUpResponse([
+    void Function(ConfirmSignUpResponseBuilder)? updates,
+  ]) => (ConfirmSignUpResponseBuilder()..update(updates))._build();
 
+  _$ConfirmSignUpResponse._({this.session}) : super._();
   @override
   ConfirmSignUpResponse rebuild(
-          void Function(ConfirmSignUpResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ConfirmSignUpResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ConfirmSignUpResponseBuilder toBuilder() =>
-      new ConfirmSignUpResponseBuilder()..replace(this);
+      ConfirmSignUpResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ConfirmSignUpResponse;
+    return other is ConfirmSignUpResponse && session == other.session;
   }
 
   @override
   int get hashCode {
-    return 634256045;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, session.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 }
 
@@ -38,11 +43,23 @@ class ConfirmSignUpResponseBuilder
     implements Builder<ConfirmSignUpResponse, ConfirmSignUpResponseBuilder> {
   _$ConfirmSignUpResponse? _$v;
 
+  String? _session;
+  String? get session => _$this._session;
+  set session(String? session) => _$this._session = session;
+
   ConfirmSignUpResponseBuilder();
+
+  ConfirmSignUpResponseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _session = $v.session;
+      _$v = null;
+    }
+    return this;
+  }
 
   @override
   void replace(ConfirmSignUpResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ConfirmSignUpResponse;
   }
 
@@ -55,7 +72,7 @@ class ConfirmSignUpResponseBuilder
   ConfirmSignUpResponse build() => _build();
 
   _$ConfirmSignUpResponse _build() {
-    final _$result = _$v ?? new _$ConfirmSignUpResponse._();
+    final _$result = _$v ?? _$ConfirmSignUpResponse._(session: session);
     replace(_$result);
     return _$result;
   }

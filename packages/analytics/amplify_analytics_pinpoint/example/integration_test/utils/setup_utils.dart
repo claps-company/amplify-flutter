@@ -37,9 +37,7 @@ Future<void> configureAnalytics({
   }
 
   await Amplify.addPlugins([
-    AmplifyAuthCognito(
-      secureStorageFactory: storageFactory,
-    ),
+    AmplifyAuthCognito(secureStorageFactory: storageFactory),
     AmplifyAnalyticsPinpoint(
       appLifecycleProvider: appLifecycleProvider,
       secureStorageFactory: storageFactory,
@@ -61,8 +59,8 @@ Future<Stream<TestEvent>> subscribeToEvents() async {
 
   final eventsStream = Amplify.API
       .subscribe(
-    GraphQLRequest<String>(
-      document: '''
+        GraphQLRequest<String>(
+          document: '''
             subscription {
               onCreateRecord {
                 id
@@ -70,27 +68,29 @@ Future<Stream<TestEvent>> subscribeToEvents() async {
               }
             }
             ''',
-    ),
-    onEstablished: subscriptionEstablished.complete,
-  )
+        ),
+        onEstablished: subscriptionEstablished.complete,
+      )
       .map((event) {
-    if (event.hasErrors) {
-      throw Exception(event.errors);
-    }
-    final data = event.data;
-    if (data == null) {
-      throw Exception('No data');
-    }
-    final json = jsonDecode(data) as Map<String, Object?>;
-    final payload =
-        jsonDecode((json['onCreateRecord'] as Map)['payload'] as String)
-            as Map<String, Object?>;
-    return TestEvent.fromJson(payload);
-  }).where((payload) {
-    // Filter for endpoint IDs which match this test suite since there may be
-    // multiple tests running concurrently in CI.
-    return payload.endpoint.id == mockEndpointId;
-  }).asBroadcastStream();
+        if (event.hasErrors) {
+          throw Exception(event.errors);
+        }
+        final data = event.data;
+        if (data == null) {
+          throw Exception('No data');
+        }
+        final json = jsonDecode(data) as Map<String, Object?>;
+        final payload =
+            jsonDecode((json['onCreateRecord'] as Map)['payload'] as String)
+                as Map<String, Object?>;
+        return TestEvent.fromJson(payload);
+      })
+      .where((payload) {
+        // Filter for endpoint IDs which match this test suite since there may be
+        // multiple tests running concurrently in CI.
+        return payload.endpoint.id == mockEndpointId;
+      })
+      .asBroadcastStream();
 
   await subscriptionEstablished.future.timeout(
     const Duration(seconds: 10), // Auto-flush duration

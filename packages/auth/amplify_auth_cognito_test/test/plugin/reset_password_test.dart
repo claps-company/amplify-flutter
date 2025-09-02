@@ -17,8 +17,9 @@ import 'package:test/test.dart';
 // https://github.com/aws-amplify/amplify-android/tree/main/aws-auth-cognito/src/test/resources/feature-test/testsuites/resetPassword
 void main() {
   final userPoolKeys = CognitoUserPoolKeys(mockConfig.auth!.userPoolClientId!);
-  final identityPoolKeys =
-      CognitoIdentityPoolKeys(mockConfig.auth!.identityPoolId!);
+  final identityPoolKeys = CognitoIdentityPoolKeys(
+    mockConfig.auth!.identityPoolId!,
+  );
 
   late AmplifyAuthCognitoDart plugin;
   late CognitoAuthStateMachine stateMachine;

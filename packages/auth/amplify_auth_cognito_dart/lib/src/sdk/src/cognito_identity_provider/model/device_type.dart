@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.device_type; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -12,11 +12,11 @@ import 'package:smithy/smithy.dart' as _i3;
 
 part 'device_type.g.dart';
 
-/// The device type.
+/// Information about a user's device that they've registered for device SRP authentication in your application. For more information, see [Working with user devices in your user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
 abstract class DeviceType
     with _i1.AWSEquatable<DeviceType>
     implements Built<DeviceType, DeviceTypeBuilder> {
-  /// The device type.
+  /// Information about a user's device that they've registered for device SRP authentication in your application. For more information, see [Working with user devices in your user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
   factory DeviceType({
     String? deviceKey,
     List<AttributeType>? deviceAttributes,
@@ -26,70 +26,56 @@ abstract class DeviceType
   }) {
     return _$DeviceType._(
       deviceKey: deviceKey,
-      deviceAttributes:
-          deviceAttributes == null ? null : _i2.BuiltList(deviceAttributes),
+      deviceAttributes: deviceAttributes == null
+          ? null
+          : _i2.BuiltList(deviceAttributes),
       deviceCreateDate: deviceCreateDate,
       deviceLastModifiedDate: deviceLastModifiedDate,
       deviceLastAuthenticatedDate: deviceLastAuthenticatedDate,
     );
   }
 
-  /// The device type.
+  /// Information about a user's device that they've registered for device SRP authentication in your application. For more information, see [Working with user devices in your user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
   factory DeviceType.build([void Function(DeviceTypeBuilder) updates]) =
       _$DeviceType;
 
   const DeviceType._();
 
   static const List<_i3.SmithySerializer<DeviceType>> serializers = [
-    DeviceTypeAwsJson11Serializer()
+    DeviceTypeAwsJson11Serializer(),
   ];
 
-  /// The device key.
+  /// The device key, for example `us-west-2_EXAMPLE-a1b2c3d4-5678-90ab-cdef-EXAMPLE22222`.
   String? get deviceKey;
 
-  /// The device attributes.
+  /// Metadata about a user's device, like name and last-access source IP.
   _i2.BuiltList<AttributeType>? get deviceAttributes;
 
-  /// The creation date of the device.
+  /// The date and time when the item was created. Amazon Cognito returns this timestamp in UNIX epoch time format. Your SDK might render the output in a human-readable format like ISO 8601 or a Java `Date` object.
   DateTime? get deviceCreateDate;
 
   /// The date and time when the item was modified. Amazon Cognito returns this timestamp in UNIX epoch time format. Your SDK might render the output in a human-readable format like ISO 8601 or a Java `Date` object.
   DateTime? get deviceLastModifiedDate;
 
-  /// The date when the device was last authenticated.
+  /// The date when the user last signed in with the device.
   DateTime? get deviceLastAuthenticatedDate;
   @override
   List<Object?> get props => [
-        deviceKey,
-        deviceAttributes,
-        deviceCreateDate,
-        deviceLastModifiedDate,
-        deviceLastAuthenticatedDate,
-      ];
+    deviceKey,
+    deviceAttributes,
+    deviceCreateDate,
+    deviceLastModifiedDate,
+    deviceLastAuthenticatedDate,
+  ];
 
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('DeviceType')
-      ..add(
-        'deviceKey',
-        deviceKey,
-      )
-      ..add(
-        'deviceAttributes',
-        deviceAttributes,
-      )
-      ..add(
-        'deviceCreateDate',
-        deviceCreateDate,
-      )
-      ..add(
-        'deviceLastModifiedDate',
-        deviceLastModifiedDate,
-      )
-      ..add(
-        'deviceLastAuthenticatedDate',
-        deviceLastAuthenticatedDate,
-      );
+      ..add('deviceKey', deviceKey)
+      ..add('deviceAttributes', deviceAttributes)
+      ..add('deviceCreateDate', deviceCreateDate)
+      ..add('deviceLastModifiedDate', deviceLastModifiedDate)
+      ..add('deviceLastAuthenticatedDate', deviceLastAuthenticatedDate);
     return helper.toString();
   }
 }
@@ -99,18 +85,12 @@ class DeviceTypeAwsJson11Serializer
   const DeviceTypeAwsJson11Serializer() : super('DeviceType');
 
   @override
-  Iterable<Type> get types => const [
-        DeviceType,
-        _$DeviceType,
-      ];
+  Iterable<Type> get types => const [DeviceType, _$DeviceType];
 
   @override
   Iterable<_i3.ShapeId> get supportedProtocols => const [
-        _i3.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i3.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   DeviceType deserialize(
@@ -129,33 +109,43 @@ class DeviceTypeAwsJson11Serializer
       }
       switch (key) {
         case 'DeviceKey':
-          result.deviceKey = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.deviceKey =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'DeviceAttributes':
-          result.deviceAttributes.replace((serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-              _i2.BuiltList,
-              [FullType(AttributeType)],
-            ),
-          ) as _i2.BuiltList<AttributeType>));
+          result.deviceAttributes.replace(
+            (serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(_i2.BuiltList, [
+                    FullType(AttributeType),
+                  ]),
+                )
+                as _i2.BuiltList<AttributeType>),
+          );
         case 'DeviceCreateDate':
-          result.deviceCreateDate = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime);
+          result.deviceCreateDate =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime);
         case 'DeviceLastModifiedDate':
-          result.deviceLastModifiedDate = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime);
+          result.deviceLastModifiedDate =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime);
         case 'DeviceLastAuthenticatedDate':
-          result.deviceLastAuthenticatedDate = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(DateTime),
-          ) as DateTime);
+          result.deviceLastAuthenticatedDate =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime);
       }
     }
 
@@ -174,50 +164,59 @@ class DeviceTypeAwsJson11Serializer
       :deviceAttributes,
       :deviceCreateDate,
       :deviceLastModifiedDate,
-      :deviceLastAuthenticatedDate
+      :deviceLastAuthenticatedDate,
     ) = object;
     if (deviceKey != null) {
       result$
         ..add('DeviceKey')
-        ..add(serializers.serialize(
-          deviceKey,
-          specifiedType: const FullType(String),
-        ));
+        ..add(
+          serializers.serialize(
+            deviceKey,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (deviceAttributes != null) {
       result$
         ..add('DeviceAttributes')
-        ..add(serializers.serialize(
-          deviceAttributes,
-          specifiedType: const FullType(
-            _i2.BuiltList,
-            [FullType(AttributeType)],
+        ..add(
+          serializers.serialize(
+            deviceAttributes,
+            specifiedType: const FullType(_i2.BuiltList, [
+              FullType(AttributeType),
+            ]),
           ),
-        ));
+        );
     }
     if (deviceCreateDate != null) {
       result$
         ..add('DeviceCreateDate')
-        ..add(serializers.serialize(
-          deviceCreateDate,
-          specifiedType: const FullType(DateTime),
-        ));
+        ..add(
+          serializers.serialize(
+            deviceCreateDate,
+            specifiedType: const FullType(DateTime),
+          ),
+        );
     }
     if (deviceLastModifiedDate != null) {
       result$
         ..add('DeviceLastModifiedDate')
-        ..add(serializers.serialize(
-          deviceLastModifiedDate,
-          specifiedType: const FullType(DateTime),
-        ));
+        ..add(
+          serializers.serialize(
+            deviceLastModifiedDate,
+            specifiedType: const FullType(DateTime),
+          ),
+        );
     }
     if (deviceLastAuthenticatedDate != null) {
       result$
         ..add('DeviceLastAuthenticatedDate')
-        ..add(serializers.serialize(
-          deviceLastAuthenticatedDate,
-          specifiedType: const FullType(DateTime),
-        ));
+        ..add(
+          serializers.serialize(
+            deviceLastAuthenticatedDate,
+            specifiedType: const FullType(DateTime),
+          ),
+        );
     }
     return result$;
   }

@@ -1,3 +1,47 @@
+## 2.6.5
+
+### Chores
+- chore(datastore, analytics, auth, common, notifications, secure_storage): Bumped kotlin_version to 2.2.0 ([#6224](https://github.com/aws-amplify/amplify-flutter/pull/6224))
+- chore(datastore, analytics, auth, common, notifications, common, secure_storage): Bumped com.android.tools.build:gradle to 8.11.0 ([#6203](https://github.com/aws-amplify/amplify-flutter/pull/6203))
+- chore(datastore, notifications): Bumped com.android.tools:desugar_jdk_libs to 2.1.5 ([#6224](https://github.com/aws-amplify/amplify-flutter/pull/6224))
+- chore(datastore): Bumped com.google.code.gson:gson to 2.13.1 ([#6224](https://github.com/aws-amplify/amplify-flutter/pull/6224))
+- chore(datastore): Bumped com.amplifyframework:aws-auth-cognito to 2.29.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(datastore): Bumped com.amplifyframework:aws-api to 2.29.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(datastore): Bumped com.amplifyframework:aws-datastore to 2.29.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(datastore): Bumped com.amplifyframework:aws-api-appsync to 2.29.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(datastore, auth): Bumped org.jetbrains.kotlinx:kotlinx-coroutines-android: to 1.10.2 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(notifications): Bumped com.google.firebase:firebase-messaging to 24.1.2 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(notifications): Bumped com.amplifyframework:aws-push-notifications-pinpoint-common to 2.29.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+- chore(notifications): Bumped org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1 to 1.8.1 ([#6187](https://github.com/aws-amplify/amplify-flutter/pull/6187))
+
+### Fixes
+- fix(auth): handle fallthrough exceptions in sign out state ([#6226](https://github.com/aws-amplify/amplify-flutter/pull/6226))
+
+## 2.6.4
+
+### Chores
+- chore(all): Bump Dart SDK to 3.8.0 ([#6165](https://github.com/aws-amplify/amplify-flutter/pull/6165))
+- chore(aws_common): Added IOT Core device service to service list ([#6170](https://github.com/aws-amplify/amplify-flutter/pull/6170))
+- chore(amplify_db_common): Update sqlite3-native-library ([#6177](https://github.com/aws-amplify/amplify-flutter/pull/6177))
+- chore(auth): remove token query parameters ([#6179](https://github.com/aws-amplify/amplify-flutter/pull/6179))
+
+## 2.6.3
+
+- Minor bug fixes and improvements
+
+## 2.6.2
+
+### Fixes
+- fix(sigv4): Convert empty query parameters to null ([#6082](https://github.com/aws-amplify/amplify-flutter/pull/6082))
+
+### Chores
+- chore(all): Bump Dart SDK to 3.7.0 ([#6026](https://github.com/aws-amplify/amplify-flutter/pull/6026))
+- chore(datastore): Removed Starscream pinned version
+
+## 2.6.1
+
+- Minor bug fixes and improvements
+
 ## 2.6.0
 
 ### Features
@@ -93,7 +137,7 @@ As always, you can find us on [GitHub](https://github.com/aws-amplify/amplify-fl
 ## 1.8.0
 
 NOTE: This version has been updated to:
-- Flutter: ">=3.19.0"
+- flutter: ">=3.19.0"
 - Dart ^3.3.0
 - Java 17, Kotlin 1.9.10 and Gradle 8.1 for Android projects
 

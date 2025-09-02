@@ -13,24 +13,21 @@ class _$PasswordHistoryPolicyViolationException
   @override
   final Map<String, String>? headers;
 
-  factory _$PasswordHistoryPolicyViolationException(
-          [void Function(PasswordHistoryPolicyViolationExceptionBuilder)?
-              updates]) =>
-      (new PasswordHistoryPolicyViolationExceptionBuilder()..update(updates))
-          ._build();
+  factory _$PasswordHistoryPolicyViolationException([
+    void Function(PasswordHistoryPolicyViolationExceptionBuilder)? updates,
+  ]) => (PasswordHistoryPolicyViolationExceptionBuilder()..update(updates))
+      ._build();
 
   _$PasswordHistoryPolicyViolationException._({this.message, this.headers})
-      : super._();
-
+    : super._();
   @override
   PasswordHistoryPolicyViolationException rebuild(
-          void Function(PasswordHistoryPolicyViolationExceptionBuilder)
-              updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PasswordHistoryPolicyViolationExceptionBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PasswordHistoryPolicyViolationExceptionBuilder toBuilder() =>
-      new PasswordHistoryPolicyViolationExceptionBuilder()..replace(this);
+      PasswordHistoryPolicyViolationExceptionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -50,8 +47,10 @@ class _$PasswordHistoryPolicyViolationException
 
 class PasswordHistoryPolicyViolationExceptionBuilder
     implements
-        Builder<PasswordHistoryPolicyViolationException,
-            PasswordHistoryPolicyViolationExceptionBuilder> {
+        Builder<
+          PasswordHistoryPolicyViolationException,
+          PasswordHistoryPolicyViolationExceptionBuilder
+        > {
   _$PasswordHistoryPolicyViolationException? _$v;
 
   String? _message;
@@ -76,13 +75,13 @@ class PasswordHistoryPolicyViolationExceptionBuilder
 
   @override
   void replace(PasswordHistoryPolicyViolationException other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PasswordHistoryPolicyViolationException;
   }
 
   @override
   void update(
-      void Function(PasswordHistoryPolicyViolationExceptionBuilder)? updates) {
+    void Function(PasswordHistoryPolicyViolationExceptionBuilder)? updates,
+  ) {
     if (updates != null) updates(this);
   }
 
@@ -90,9 +89,12 @@ class PasswordHistoryPolicyViolationExceptionBuilder
   PasswordHistoryPolicyViolationException build() => _build();
 
   _$PasswordHistoryPolicyViolationException _build() {
-    final _$result = _$v ??
-        new _$PasswordHistoryPolicyViolationException._(
-            message: message, headers: headers);
+    final _$result =
+        _$v ??
+        _$PasswordHistoryPolicyViolationException._(
+          message: message,
+          headers: headers,
+        );
     replace(_$result);
     return _$result;
   }

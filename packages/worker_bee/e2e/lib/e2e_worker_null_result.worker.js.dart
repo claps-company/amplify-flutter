@@ -38,9 +38,6 @@ class E2EWorkerNullResultImpl extends E2EWorkerNullResult {
       port: baseUri.port,
       path: '$basePath/test/$relativePath',
     ).toString();
-    return [
-      relativePath,
-      testRelativePath,
-    ];
+    return [relativePath, testRelativePath];
   }
 }

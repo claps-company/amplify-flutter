@@ -12,26 +12,20 @@ class _$EmailMfaSettingsType extends EmailMfaSettingsType {
   @override
   final bool preferredMfa;
 
-  factory _$EmailMfaSettingsType(
-          [void Function(EmailMfaSettingsTypeBuilder)? updates]) =>
-      (new EmailMfaSettingsTypeBuilder()..update(updates))._build();
+  factory _$EmailMfaSettingsType([
+    void Function(EmailMfaSettingsTypeBuilder)? updates,
+  ]) => (EmailMfaSettingsTypeBuilder()..update(updates))._build();
 
   _$EmailMfaSettingsType._({required this.enabled, required this.preferredMfa})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        enabled, r'EmailMfaSettingsType', 'enabled');
-    BuiltValueNullFieldError.checkNotNull(
-        preferredMfa, r'EmailMfaSettingsType', 'preferredMfa');
-  }
-
+    : super._();
   @override
   EmailMfaSettingsType rebuild(
-          void Function(EmailMfaSettingsTypeBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EmailMfaSettingsTypeBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EmailMfaSettingsTypeBuilder toBuilder() =>
-      new EmailMfaSettingsTypeBuilder()..replace(this);
+      EmailMfaSettingsTypeBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -79,7 +73,6 @@ class EmailMfaSettingsTypeBuilder
 
   @override
   void replace(EmailMfaSettingsType other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EmailMfaSettingsType;
   }
 
@@ -92,12 +85,20 @@ class EmailMfaSettingsTypeBuilder
   EmailMfaSettingsType build() => _build();
 
   _$EmailMfaSettingsType _build() {
-    final _$result = _$v ??
-        new _$EmailMfaSettingsType._(
-            enabled: BuiltValueNullFieldError.checkNotNull(
-                enabled, r'EmailMfaSettingsType', 'enabled'),
-            preferredMfa: BuiltValueNullFieldError.checkNotNull(
-                preferredMfa, r'EmailMfaSettingsType', 'preferredMfa'));
+    final _$result =
+        _$v ??
+        _$EmailMfaSettingsType._(
+          enabled: BuiltValueNullFieldError.checkNotNull(
+            enabled,
+            r'EmailMfaSettingsType',
+            'enabled',
+          ),
+          preferredMfa: BuiltValueNullFieldError.checkNotNull(
+            preferredMfa,
+            r'EmailMfaSettingsType',
+            'preferredMfa',
+          ),
+        );
     replace(_$result);
     return _$result;
   }

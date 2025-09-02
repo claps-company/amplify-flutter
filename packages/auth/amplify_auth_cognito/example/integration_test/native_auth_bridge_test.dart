@@ -97,33 +97,32 @@ void main() {
           ..addInstance<Dispatcher<AuthEvent, AuthState>>(
             const MockDispatcher(),
           );
-        await platform.signOut(
-          options: options,
-        );
+        await platform.signOut(options: options);
       });
     },
   );
 }
 
-typedef SignInOutFn<T> = Future<T> Function(
-  String argUrl,
-  String argCallbackurlscheme,
-  bool argPreferprivatesession,
-  String? argBrowserpackagename,
-);
+typedef SignInOutFn<T> =
+    Future<T> Function(
+      String argUrl,
+      String argCallbackurlscheme,
+      bool argPreferprivatesession,
+      String? argBrowserpackagename,
+    );
 
 class MockNativeAuthBridge extends Fake implements NativeAuthBridge {
   MockNativeAuthBridge({
-    SignInOutFn<Map<String?, String?>>? signInWithUrl,
+    SignInOutFn<Map<String, String>>? signInWithUrl,
     SignInOutFn<void>? signOutWithUrl,
-  })  : _signInWithUrl = signInWithUrl,
-        _signOutWithUrl = signOutWithUrl;
+  }) : _signInWithUrl = signInWithUrl,
+       _signOutWithUrl = signOutWithUrl;
 
-  final SignInOutFn<Map<String?, String?>>? _signInWithUrl;
+  final SignInOutFn<Map<String, String>>? _signInWithUrl;
   final SignInOutFn<void>? _signOutWithUrl;
 
   @override
-  Future<Map<String?, String?>> signInWithUrl(
+  Future<Map<String, String>> signInWithUrl(
     String argUrl,
     String argCallbackurlscheme,
     bool argPreferprivatesession,

@@ -1,3 +1,28 @@
+## 0.6.8
+
+- Minor bug fixes and improvements
+
+## 0.6.7
+
+### Chores
+- chore(all): Bump Dart SDK to 3.8.0 ([#6165](https://github.com/aws-amplify/amplify-flutter/pull/6165))
+
+## 0.6.6
+
+- Minor bug fixes and improvements
+
+## 0.6.5
+
+### Fixes
+- fix(sigv4): Convert empty query parameters to null ([#6082](https://github.com/aws-amplify/amplify-flutter/pull/6082))
+
+### Chores
+- chore(all): Bump Dart SDK to 3.7.0 ([#6026](https://github.com/aws-amplify/amplify-flutter/pull/6026))
+
+## 0.6.4
+
+- Minor bug fixes and improvements
+
 ## 0.6.3
 
 - Minor bug fixes and improvements

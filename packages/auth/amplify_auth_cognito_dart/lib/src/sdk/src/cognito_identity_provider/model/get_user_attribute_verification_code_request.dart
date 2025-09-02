@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.get_user_attribute_verification_code_request; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -17,8 +17,10 @@ abstract class GetUserAttributeVerificationCodeRequest
         _i1.HttpInput<GetUserAttributeVerificationCodeRequest>,
         _i2.AWSEquatable<GetUserAttributeVerificationCodeRequest>
     implements
-        Built<GetUserAttributeVerificationCodeRequest,
-            GetUserAttributeVerificationCodeRequestBuilder> {
+        Built<
+          GetUserAttributeVerificationCodeRequest,
+          GetUserAttributeVerificationCodeRequestBuilder
+        > {
   /// Represents the request to get user attribute verification.
   factory GetUserAttributeVerificationCodeRequest({
     required String accessToken,
@@ -28,15 +30,16 @@ abstract class GetUserAttributeVerificationCodeRequest
     return _$GetUserAttributeVerificationCodeRequest._(
       accessToken: accessToken,
       attributeName: attributeName,
-      clientMetadata:
-          clientMetadata == null ? null : _i3.BuiltMap(clientMetadata),
+      clientMetadata: clientMetadata == null
+          ? null
+          : _i3.BuiltMap(clientMetadata),
     );
   }
 
   /// Represents the request to get user attribute verification.
-  factory GetUserAttributeVerificationCodeRequest.build(
-      [void Function(GetUserAttributeVerificationCodeRequestBuilder)
-          updates]) = _$GetUserAttributeVerificationCodeRequest;
+  factory GetUserAttributeVerificationCodeRequest.build([
+    void Function(GetUserAttributeVerificationCodeRequestBuilder) updates,
+  ]) = _$GetUserAttributeVerificationCodeRequest;
 
   const GetUserAttributeVerificationCodeRequest._();
 
@@ -44,83 +47,68 @@ abstract class GetUserAttributeVerificationCodeRequest
     GetUserAttributeVerificationCodeRequest payload,
     _i2.AWSBaseHttpRequest request, {
     Map<String, String> labels = const {},
-  }) =>
-      payload;
+  }) => payload;
 
   static const List<
-          _i1.SmithySerializer<GetUserAttributeVerificationCodeRequest>>
-      serializers = [
-    GetUserAttributeVerificationCodeRequestAwsJson11Serializer()
-  ];
+    _i1.SmithySerializer<GetUserAttributeVerificationCodeRequest>
+  >
+  serializers = [GetUserAttributeVerificationCodeRequestAwsJson11Serializer()];
 
-  /// A non-expired access token for the user whose attribute verification code you want to generate.
+  /// A valid access token that Amazon Cognito issued to the currently signed-in user. Must include a scope claim for `aws.cognito.signin.user.admin`.
   String get accessToken;
 
-  /// The attribute name returned by the server response to get the user attribute verification code.
+  /// The name of the attribute that the user wants to verify, for example `email`.
   String get attributeName;
 
   /// A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers.
   ///
   /// You create custom workflows by assigning Lambda functions to user pool triggers. When you use the GetUserAttributeVerificationCode API action, Amazon Cognito invokes the function that is assigned to the _custom message_ trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a `clientMetadata` attribute, which provides the data that you assigned to the ClientMetadata parameter in your GetUserAttributeVerificationCode request. In your function code in Lambda, you can process the `clientMetadata` value to enhance your workflow for your specific needs.
   ///
-  /// For more information, see [Customizing user pool Workflows with Lambda Triggers](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html) in the _Amazon Cognito Developer Guide_.
+  /// For more information, see [Using Lambda triggers](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html) in the _Amazon Cognito Developer Guide_.
   ///
-  /// When you use the ClientMetadata parameter, remember that Amazon Cognito won't do the following:
+  /// When you use the `ClientMetadata` parameter, note that Amazon Cognito won't do the following:
   ///
-  /// *   Store the ClientMetadata value. This data is available only to Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration doesn't include triggers, the ClientMetadata parameter serves no purpose.
+  /// *   Store the `ClientMetadata` value. This data is available only to Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration doesn't include triggers, the `ClientMetadata` parameter serves no purpose.
   ///
-  /// *   Validate the ClientMetadata value.
+  /// *   Validate the `ClientMetadata` value.
   ///
-  /// *   Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide sensitive information.
+  /// *   Encrypt the `ClientMetadata` value. Don't send sensitive information in this parameter.
   _i3.BuiltMap<String, String>? get clientMetadata;
   @override
   GetUserAttributeVerificationCodeRequest getPayload() => this;
 
   @override
-  List<Object?> get props => [
-        accessToken,
-        attributeName,
-        clientMetadata,
-      ];
+  List<Object?> get props => [accessToken, attributeName, clientMetadata];
 
   @override
   String toString() {
     final helper =
         newBuiltValueToStringHelper('GetUserAttributeVerificationCodeRequest')
-          ..add(
-            'accessToken',
-            '***SENSITIVE***',
-          )
-          ..add(
-            'attributeName',
-            attributeName,
-          )
-          ..add(
-            'clientMetadata',
-            clientMetadata,
-          );
+          ..add('accessToken', '***SENSITIVE***')
+          ..add('attributeName', attributeName)
+          ..add('clientMetadata', clientMetadata);
     return helper.toString();
   }
 }
 
-class GetUserAttributeVerificationCodeRequestAwsJson11Serializer extends _i1
-    .StructuredSmithySerializer<GetUserAttributeVerificationCodeRequest> {
+class GetUserAttributeVerificationCodeRequestAwsJson11Serializer
+    extends
+        _i1.StructuredSmithySerializer<
+          GetUserAttributeVerificationCodeRequest
+        > {
   const GetUserAttributeVerificationCodeRequestAwsJson11Serializer()
-      : super('GetUserAttributeVerificationCodeRequest');
+    : super('GetUserAttributeVerificationCodeRequest');
 
   @override
   Iterable<Type> get types => const [
-        GetUserAttributeVerificationCodeRequest,
-        _$GetUserAttributeVerificationCodeRequest,
-      ];
+    GetUserAttributeVerificationCodeRequest,
+    _$GetUserAttributeVerificationCodeRequest,
+  ];
 
   @override
   Iterable<_i1.ShapeId> get supportedProtocols => const [
-        _i1.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i1.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   GetUserAttributeVerificationCodeRequest deserialize(
@@ -139,26 +127,30 @@ class GetUserAttributeVerificationCodeRequestAwsJson11Serializer extends _i1
       }
       switch (key) {
         case 'AccessToken':
-          result.accessToken = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.accessToken =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'AttributeName':
-          result.attributeName = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String);
+          result.attributeName =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String);
         case 'ClientMetadata':
-          result.clientMetadata.replace((serializers.deserialize(
-            value,
-            specifiedType: const FullType(
-              _i3.BuiltMap,
-              [
-                FullType(String),
-                FullType(String),
-              ],
-            ),
-          ) as _i3.BuiltMap<String, String>));
+          result.clientMetadata.replace(
+            (serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(_i3.BuiltMap, [
+                    FullType(String),
+                    FullType(String),
+                  ]),
+                )
+                as _i3.BuiltMap<String, String>),
+          );
       }
     }
 
@@ -175,14 +167,11 @@ class GetUserAttributeVerificationCodeRequestAwsJson11Serializer extends _i1
     final GetUserAttributeVerificationCodeRequest(
       :accessToken,
       :attributeName,
-      :clientMetadata
+      :clientMetadata,
     ) = object;
     result$.addAll([
       'AccessToken',
-      serializers.serialize(
-        accessToken,
-        specifiedType: const FullType(String),
-      ),
+      serializers.serialize(accessToken, specifiedType: const FullType(String)),
       'AttributeName',
       serializers.serialize(
         attributeName,
@@ -192,16 +181,15 @@ class GetUserAttributeVerificationCodeRequestAwsJson11Serializer extends _i1
     if (clientMetadata != null) {
       result$
         ..add('ClientMetadata')
-        ..add(serializers.serialize(
-          clientMetadata,
-          specifiedType: const FullType(
-            _i3.BuiltMap,
-            [
+        ..add(
+          serializers.serialize(
+            clientMetadata,
+            specifiedType: const FullType(_i3.BuiltMap, [
               FullType(String),
               FullType(String),
-            ],
+            ]),
           ),
-        ));
+        );
     }
     return result$;
   }

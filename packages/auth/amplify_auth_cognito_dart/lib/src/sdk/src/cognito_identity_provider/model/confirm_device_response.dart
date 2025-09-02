@@ -1,5 +1,5 @@
 // Generated with smithy-dart 0.3.2. DO NOT MODIFY.
-// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,require_trailing_commas
+// ignore_for_file: avoid_unused_constructor_parameters,deprecated_member_use_from_same_package,non_constant_identifier_names,unnecessary_library_name
 
 library amplify_auth_cognito_dart.cognito_identity_provider.model.confirm_device_response; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
@@ -10,21 +10,22 @@ import 'package:smithy/smithy.dart' as _i2;
 
 part 'confirm_device_response.g.dart';
 
-/// Confirms the device response.
+/// The confirm-device response.
 abstract class ConfirmDeviceResponse
     with _i1.AWSEquatable<ConfirmDeviceResponse>
     implements Built<ConfirmDeviceResponse, ConfirmDeviceResponseBuilder> {
-  /// Confirms the device response.
+  /// The confirm-device response.
   factory ConfirmDeviceResponse({bool? userConfirmationNecessary}) {
     userConfirmationNecessary ??= false;
     return _$ConfirmDeviceResponse._(
-        userConfirmationNecessary: userConfirmationNecessary);
+      userConfirmationNecessary: userConfirmationNecessary,
+    );
   }
 
-  /// Confirms the device response.
-  factory ConfirmDeviceResponse.build(
-          [void Function(ConfirmDeviceResponseBuilder) updates]) =
-      _$ConfirmDeviceResponse;
+  /// The confirm-device response.
+  factory ConfirmDeviceResponse.build([
+    void Function(ConfirmDeviceResponseBuilder) updates,
+  ]) = _$ConfirmDeviceResponse;
 
   const ConfirmDeviceResponse._();
 
@@ -32,11 +33,10 @@ abstract class ConfirmDeviceResponse
   factory ConfirmDeviceResponse.fromResponse(
     ConfirmDeviceResponse payload,
     _i1.AWSBaseHttpResponse response,
-  ) =>
-      payload;
+  ) => payload;
 
   static const List<_i2.SmithySerializer<ConfirmDeviceResponse>> serializers = [
-    ConfirmDeviceResponseAwsJson11Serializer()
+    ConfirmDeviceResponseAwsJson11Serializer(),
   ];
 
   @BuiltValueHook(initializeBuilder: true)
@@ -44,7 +44,11 @@ abstract class ConfirmDeviceResponse
     b.userConfirmationNecessary = false;
   }
 
-  /// Indicates whether the user confirmation must confirm the device response.
+  /// When `true`, your user must confirm that they want to remember the device. Prompt the user for an answer.
+  ///
+  /// When `false`, immediately sets the device as remembered and eligible for device authentication.
+  ///
+  /// You can configure your user pool to always remember devices, in which case this response is `false`, or to allow users to opt in, in which case this response is `true`. Configure this option under _Device tracking_ in the _Sign-in_ menu of your user pool.
   bool get userConfirmationNecessary;
   @override
   List<Object?> get props => [userConfirmationNecessary];
@@ -52,10 +56,7 @@ abstract class ConfirmDeviceResponse
   @override
   String toString() {
     final helper = newBuiltValueToStringHelper('ConfirmDeviceResponse')
-      ..add(
-        'userConfirmationNecessary',
-        userConfirmationNecessary,
-      );
+      ..add('userConfirmationNecessary', userConfirmationNecessary);
     return helper.toString();
   }
 }
@@ -63,21 +64,18 @@ abstract class ConfirmDeviceResponse
 class ConfirmDeviceResponseAwsJson11Serializer
     extends _i2.StructuredSmithySerializer<ConfirmDeviceResponse> {
   const ConfirmDeviceResponseAwsJson11Serializer()
-      : super('ConfirmDeviceResponse');
+    : super('ConfirmDeviceResponse');
 
   @override
   Iterable<Type> get types => const [
-        ConfirmDeviceResponse,
-        _$ConfirmDeviceResponse,
-      ];
+    ConfirmDeviceResponse,
+    _$ConfirmDeviceResponse,
+  ];
 
   @override
   Iterable<_i2.ShapeId> get supportedProtocols => const [
-        _i2.ShapeId(
-          namespace: 'aws.protocols',
-          shape: 'awsJson1_1',
-        )
-      ];
+    _i2.ShapeId(namespace: 'aws.protocols', shape: 'awsJson1_1'),
+  ];
 
   @override
   ConfirmDeviceResponse deserialize(
@@ -96,10 +94,12 @@ class ConfirmDeviceResponseAwsJson11Serializer
       }
       switch (key) {
         case 'UserConfirmationNecessary':
-          result.userConfirmationNecessary = (serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool);
+          result.userConfirmationNecessary =
+              (serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool);
       }
     }
 

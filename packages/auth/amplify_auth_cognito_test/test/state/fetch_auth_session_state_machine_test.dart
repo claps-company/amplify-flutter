@@ -55,9 +55,7 @@ void main() {
       bool forceRefresh = false,
       required bool willRefresh,
     }) async {
-      final sm = stateMachine.getOrCreate(
-        FetchAuthSessionStateMachine.type,
-      );
+      final sm = stateMachine.getOrCreate(FetchAuthSessionStateMachine.type);
       expect(
         sm.stream.startWith(sm.currentState),
         emitsInOrder(<Matcher>[
@@ -67,12 +65,12 @@ void main() {
           isA<FetchAuthSessionSuccess>(),
         ]),
       );
-      final sessionState =
-          await stateMachine.dispatchAndComplete<FetchAuthSessionSuccess>(
-        FetchAuthSessionEvent.fetch(
-          FetchAuthSessionOptions(forceRefresh: forceRefresh),
-        ),
-      );
+      final sessionState = await stateMachine
+          .dispatchAndComplete<FetchAuthSessionSuccess>(
+            FetchAuthSessionEvent.fetch(
+              FetchAuthSessionOptions(forceRefresh: forceRefresh),
+            ),
+          );
       return sessionState.session;
     }
 
@@ -82,32 +80,27 @@ void main() {
       String? developerProvidedIdentityId,
       required bool willRefresh,
     }) async {
-      final sm = stateMachine.getOrCreate(
-        FetchAuthSessionStateMachine.type,
-      );
+      final sm = stateMachine.getOrCreate(FetchAuthSessionStateMachine.type);
       final expectation = expectLater(
         sm.stream,
         emitsInOrder(<Matcher>[
           isA<FetchAuthSessionFetching>(),
           if (willRefresh) isA<FetchAuthSessionRefreshing>(),
-          anyOf(
-            isA<FetchAuthSessionSuccess>(),
-            isA<FetchAuthSessionFailure>(),
-          ),
+          anyOf(isA<FetchAuthSessionSuccess>(), isA<FetchAuthSessionFailure>()),
         ]),
       );
-      final sessionState =
-          await stateMachine.dispatchAndComplete<FetchAuthSessionSuccess>(
-        FetchAuthSessionEvent.federate(
-          FederateToIdentityPoolRequest(
-            provider: provider,
-            token: token,
-            options: FederateToIdentityPoolOptions(
-              developerProvidedIdentityId: developerProvidedIdentityId,
+      final sessionState = await stateMachine
+          .dispatchAndComplete<FetchAuthSessionSuccess>(
+            FetchAuthSessionEvent.federate(
+              FederateToIdentityPoolRequest(
+                provider: provider,
+                token: token,
+                options: FederateToIdentityPoolOptions(
+                  developerProvidedIdentityId: developerProvidedIdentityId,
+                ),
+              ),
             ),
-          ),
-        ),
-      );
+          );
       await expectation;
       final session = sessionState.session;
       return FederateToIdentityPoolResult(
@@ -279,9 +272,8 @@ void main() {
               stateMachine.addInstance<CognitoIdentityClient>(
                 MockCognitoIdentityClient(
                   getCredentialsForIdentity: expectAsync0(
-                    () async => throw AWSHttpException(
-                      AWSHttpRequest.get(Uri()),
-                    ),
+                    () async =>
+                        throw AWSHttpException(AWSHttpRequest.get(Uri())),
                   ),
                 ),
               );
@@ -478,9 +470,8 @@ void main() {
               stateMachine.addInstance<CognitoIdentityProviderClient>(
                 MockCognitoIdentityProviderClient(
                   initiateAuth: expectAsync1(
-                    (_) async => throw AWSHttpException(
-                      AWSHttpRequest.get(Uri()),
-                    ),
+                    (_) async =>
+                        throw AWSHttpException(AWSHttpRequest.get(Uri())),
                   ),
                 ),
               );
@@ -624,9 +615,8 @@ void main() {
               stateMachine.addInstance<CognitoIdentityProviderClient>(
                 MockCognitoIdentityProviderClient(
                   initiateAuth: expectAsync1(
-                    (_) async => throw AWSHttpException(
-                      AWSHttpRequest.get(Uri()),
-                    ),
+                    (_) async =>
+                        throw AWSHttpException(AWSHttpRequest.get(Uri())),
                   ),
                 ),
               );
@@ -843,18 +833,16 @@ void main() {
               ..addInstance<CognitoIdentityProviderClient>(
                 MockCognitoIdentityProviderClient(
                   initiateAuth: expectAsync1(
-                    (_) async => throw AWSHttpException(
-                      AWSHttpRequest.get(Uri()),
-                    ),
+                    (_) async =>
+                        throw AWSHttpException(AWSHttpRequest.get(Uri())),
                   ),
                 ),
               )
               ..addInstance<CognitoIdentityClient>(
                 MockCognitoIdentityClient(
                   getCredentialsForIdentity: expectAsync0(
-                    () async => throw AWSHttpException(
-                      AWSHttpRequest.get(Uri()),
-                    ),
+                    () async =>
+                        throw AWSHttpException(AWSHttpRequest.get(Uri())),
                   ),
                 ),
               );
@@ -1099,22 +1087,10 @@ void main() {
               willRefresh: false,
             );
             expect(session.identityId, identityId);
-            expect(
-              session.credentials.accessKeyId,
-              accessKeyId,
-            );
-            expect(
-              session.credentials.secretAccessKey,
-              secretAccessKey,
-            );
-            expect(
-              session.credentials.sessionToken,
-              sessionToken,
-            );
-            expect(
-              session.credentials.expiration,
-              isNotNull,
-            );
+            expect(session.credentials.accessKeyId, accessKeyId);
+            expect(session.credentials.secretAccessKey, secretAccessKey);
+            expect(session.credentials.sessionToken, sessionToken);
+            expect(session.credentials.expiration, isNotNull);
           });
 
           test('can refresh federation with same token', () async {
@@ -1129,10 +1105,7 @@ void main() {
               willRefresh: true,
             );
             expect(newSession.identityId, firstSession.identityId);
-            expect(
-              newSession.credentials,
-              isNot(firstSession.credentials),
-            );
+            expect(newSession.credentials, isNot(firstSession.credentials));
           });
 
           test('can refresh federation with new token', () async {
@@ -1147,10 +1120,7 @@ void main() {
               willRefresh: true,
             );
             expect(newSession.identityId, firstSession.identityId);
-            expect(
-              newSession.credentials,
-              isNot(firstSession.credentials),
-            );
+            expect(newSession.credentials, isNot(firstSession.credentials));
           });
 
           test('can refresh via refresh event', () async {
@@ -1171,24 +1141,16 @@ void main() {
               fail('Refresh failed: $completion');
             }
             final identityId = completion.session.identityIdResult.valueOrNull;
-            expect(
-              identityId,
-              session.identityId,
-            );
+            expect(identityId, session.identityId);
             final credentials =
                 completion.session.credentialsResult.valueOrNull;
-            expect(
-              credentials,
-              isNot(session.credentials),
-            );
+            expect(credentials, isNot(session.credentials));
           });
 
           test('can federate after failure', () async {
             final originalClient = stateMachine.expect<CognitoIdentityClient>();
             stateMachine.addInstance<CognitoIdentityClient>(
-              MockCognitoIdentityClient(
-                getId: () async => throw Exception(),
-              ),
+              MockCognitoIdentityClient(getId: () async => throw Exception()),
             );
             await expectLater(
               federateToIdentityPool(
@@ -1224,10 +1186,7 @@ void main() {
               willRefresh: true,
             );
             expect(newSession.identityId, firstSession.identityId);
-            expect(
-              newSession.credentials,
-              isNot(firstSession.credentials),
-            );
+            expect(newSession.credentials, isNot(firstSession.credentials));
           });
         });
 

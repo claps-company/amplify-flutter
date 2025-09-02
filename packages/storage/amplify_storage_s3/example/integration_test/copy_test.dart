@@ -71,8 +71,9 @@ void main() {
       group('with options', () {
         testWidgets('getProperties', (_) async {
           final destinationPath = 'public/copy-dest-metadata-${uuid()}';
-          final destinationStoragePath =
-              StoragePath.fromString(destinationPath);
+          final destinationStoragePath = StoragePath.fromString(
+            destinationPath,
+          );
           addTearDownPath(destinationStoragePath);
           final result = await Amplify.Storage.copy(
             source: srcStoragePath,
@@ -150,12 +151,15 @@ void main() {
       final bucket1PathSource = 'public/multi-bucket-get-url-${uuid()}';
       final bucket2PathSource = 'public/multi-bucket-get-url-${uuid()}';
       final bucket2PathDestination = 'public/multi-bucket-get-url-${uuid()}';
-      final storageBucket1PathSource =
-          StoragePath.fromString(bucket1PathSource);
-      final storageBucket2PathSource =
-          StoragePath.fromString(bucket2PathSource);
-      final storageBucket2PathDestination =
-          StoragePath.fromString(bucket2PathDestination);
+      final storageBucket1PathSource = StoragePath.fromString(
+        bucket1PathSource,
+      );
+      final storageBucket2PathSource = StoragePath.fromString(
+        bucket2PathSource,
+      );
+      final storageBucket2PathDestination = StoragePath.fromString(
+        bucket2PathDestination,
+      );
 
       setUp(() async {
         await configure(amplifyEnvironments['main']!);
@@ -165,16 +169,12 @@ void main() {
         await Amplify.Storage.uploadData(
           data: StorageDataPayload.bytes(data),
           path: storageBucket1PathSource,
-          options: StorageUploadDataOptions(
-            bucket: bucket1,
-          ),
+          options: StorageUploadDataOptions(bucket: bucket1),
         ).result;
         await Amplify.Storage.uploadData(
           data: StorageDataPayload.bytes(data),
           path: storageBucket2PathSource,
-          options: StorageUploadDataOptions(
-            bucket: bucket2,
-          ),
+          options: StorageUploadDataOptions(bucket: bucket2),
         ).result;
       });
 
@@ -183,10 +183,7 @@ void main() {
           source: storageBucket1PathSource,
           destination: storageBucket2PathDestination,
           options: StorageCopyOptions(
-            buckets: CopyBuckets(
-              source: bucket1,
-              destination: bucket2,
-            ),
+            buckets: CopyBuckets(source: bucket1, destination: bucket2),
           ),
         ).result;
         expect(result.copiedItem.path, bucket2PathDestination);
@@ -195,21 +192,14 @@ void main() {
           path: storageBucket2PathDestination,
           options: StorageDownloadDataOptions(bucket: bucket2),
         ).result;
-        expect(
-          downloadResult.bytes,
-          data,
-        );
+        expect(downloadResult.bytes, data);
       });
 
       testWidgets('copy to the same bucket', (_) async {
         final result = await Amplify.Storage.copy(
           source: storageBucket2PathSource,
           destination: storageBucket2PathDestination,
-          options: StorageCopyOptions(
-            buckets: CopyBuckets.sameBucket(
-              bucket2,
-            ),
-          ),
+          options: StorageCopyOptions(buckets: CopyBuckets.sameBucket(bucket2)),
         ).result;
         expect(result.copiedItem.path, bucket2PathDestination);
 
@@ -217,10 +207,7 @@ void main() {
           path: storageBucket2PathDestination,
           options: StorageDownloadDataOptions(bucket: bucket2),
         ).result;
-        expect(
-          downloadResult.bytes,
-          data,
-        );
+        expect(downloadResult.bytes, data);
       });
     });
   });
