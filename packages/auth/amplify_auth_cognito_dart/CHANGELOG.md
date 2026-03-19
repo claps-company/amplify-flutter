@@ -1,3 +1,37 @@
+## 0.11.19
+
+### Fixes
+- fix(cognito): Add `invalidTokenException` to `SignOutPartialFailure.props` - fixes the state machine ([#6751](https://github.com/aws-amplify/amplify-flutter/pull/6751))
+
+## 0.11.18
+
+### Fixes
+- fix(auth): handle SMS_OTP challenge in USER_AUTH flow ([#6632](https://github.com/aws-amplify/amplify-flutter/pull/6632))
+
+## 0.11.17
+
+### Features
+- feat(auth): Passwordless login ([#6538](https://github.com/aws-amplify/amplify-flutter/pull/6538))
+
+## 0.11.16
+
+### Features
+- Add support for custom Cognito endpoints ([#6477](https://github.com/aws-amplify/amplify-flutter/pull/6477))
+
+## 0.11.15
+
+### Features
+- feat(auth): add support for cognito oidc parameters in managed login ([#6442](https://github.com/aws-amplify/amplify-flutter/pull/6442))
+
+## 0.11.14
+
+### Features
+- feat(auth): Added support for Android private browsing ([#6336](https://github.com/aws-amplify/amplify-flutter/pull/6336))
+- feat(auth): Refresh token rotation ([#6293](https://github.com/aws-amplify/amplify-flutter/pull/6293))
+
+### Chores
+- chore(all): Bumped Dart SDK to ^3.9.0 ([#6306](https://github.com/aws-amplify/amplify-flutter/pull/6306))
+
 ## 0.11.13
 
 ### Fixes

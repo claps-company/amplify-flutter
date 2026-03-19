@@ -1,3 +1,25 @@
+## 0.5.16
+
+### Fixes
+- fix(graphql): Keep type when parsing data ([#6657](https://github.com/aws-amplify/amplify-flutter/pull/6657))
+
+## 0.5.15
+
+- Minor bug fixes and improvements
+
+## 0.5.14
+
+- Minor bug fixes and improvements
+
+## 0.5.13
+
+- Minor bug fixes and improvements
+
+## 0.5.12
+
+### Chores
+- chore(all): Bumped Dart SDK to ^3.9.0 ([#6306](https://github.com/aws-amplify/amplify-flutter/pull/6306))
+
 ## 0.5.11
 
 ### Chores

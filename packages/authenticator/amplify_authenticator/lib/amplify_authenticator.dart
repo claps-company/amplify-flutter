@@ -43,7 +43,9 @@ export 'package:amplify_authenticator/src/utils/dial_code.dart' show DialCode;
 export 'package:amplify_authenticator/src/utils/dial_code_options.dart'
     show DialCodeOptions;
 
-export 'src/enums/enums.dart' show AuthenticatorStep, Gender;
+export 'src/controllers/authenticator_text_field_controller.dart';
+export 'src/enums/enums.dart'
+    show AuthenticatorStep, AuthenticatorTextEnabledOverride, Gender;
 export 'src/l10n/auth_strings_resolver.dart' hide ButtonResolverKeyType;
 export 'src/models/authenticator_exception.dart';
 export 'src/models/totp_options.dart';
@@ -94,6 +96,7 @@ export 'src/widgets/form_field.dart'
         SignUpFormField,
         TotpSetupFormField,
         VerifyUserFormField;
+export 'src/widgets/social/social_button.dart';
 
 /// {@template amplify_authenticator.authenticator}
 /// # Amplify Authenticator
@@ -541,10 +544,13 @@ class _AuthenticatorState extends State<Authenticator> {
         _logger.error('Error in AuthBloc', exception);
       }
       if (mounted && exception.showBanner) {
-        _showExceptionBanner(
-          type: StatusType.error,
-          message: _localizedExceptionMessage(exception) ?? exception.message,
-        );
+        final context = scaffoldMessengerKey.currentContext;
+        if (context != null && context.mounted) {
+          _showExceptionBanner(
+            type: StatusType.error,
+            message: _localizedExceptionMessage(exception) ?? exception.message,
+          );
+        }
       }
     });
   }

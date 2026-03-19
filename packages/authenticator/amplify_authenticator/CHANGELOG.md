@@ -1,3 +1,40 @@
+## 2.5.1
+
+### Fixes
+- fix(auth): Fix flaky web tests ([#6652](https://github.com/aws-amplify/amplify-flutter/pull/6652))
+- fix(auth): Fix tests (await UI changes, handle random number collision) ([#6650](https://github.com/aws-amplify/amplify-flutter/pull/6650))
+
+## 2.5.0
+
+### Features
+- feat(auth): Disable social sign-in button on awaiting actions ([#6517](https://github.com/aws-amplify/amplify-flutter/pull/6517))
+- feat(auth): Passwordless login ([#6538](https://github.com/aws-amplify/amplify-flutter/pull/6538))
+- feat(auth): Add cognito error message translation feature for authenticator ([#6541](https://github.com/aws-amplify/amplify-flutter/pull/6541))
+
+### Fixes
+- fix(auth): Fix login autofill on login ([#6554](https://github.com/aws-amplify/amplify-flutter/pull/6554))
+
+## 2.4.1
+
+- Minor bug fixes and improvements
+
+## 2.4.0
+
+### Features
+- feat(authenticator): Add TextEditingController, visible, and enabledOverride support to form fields ([#6424](https://github.com/aws-amplify/amplify-flutter/pull/6424))
+
+## 2.3.9
+
+- Minor bug fixes and improvements
+
+## 2.3.8
+
+### Chores
+- chore(all): Bumped Flutter SDK to ^3.35.0 ([#6306](https://github.com/aws-amplify/amplify-flutter/pull/6306))
+- chore(all): Bumped Dart SDK to ^3.9.0 ([#6306](https://github.com/aws-amplify/amplify-flutter/pull/6306))
+- chore(authenticator): exported social_button ([#5880](https://github.com/aws-amplify/amplify-flutter/pull/5880))
+- chore(analytics, authenticator): Bumped package_info_plus to ^9.0.0 ([#6393](https://github.com/aws-amplify/amplify-flutter/pull/6393))
+
 ## 2.3.7
 
 - Minor bug fixes and improvements

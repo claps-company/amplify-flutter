@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_authenticator/src/l10n/authenticator_localizations.dart';
 import 'package:amplify_authenticator/src/l10n/resolver.dart';
 import 'package:flutter/material.dart';

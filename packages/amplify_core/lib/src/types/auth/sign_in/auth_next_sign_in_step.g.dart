@@ -50,6 +50,12 @@ AuthNextSignInStep _$AuthNextSignInStepFromJson(
           ? null
           : TotpSetupDetails.fromJson(v as Map<String, dynamic>),
     ),
+    availableFactors: $checkedConvert(
+      'availableFactors',
+      (v) => (v as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$AuthFactorTypeEnumMap, e))
+          .toSet(),
+    ),
   );
   return val;
 });
@@ -57,17 +63,18 @@ AuthNextSignInStep _$AuthNextSignInStepFromJson(
 Map<String, dynamic> _$AuthNextSignInStepToJson(AuthNextSignInStep instance) =>
     <String, dynamic>{
       'additionalInfo': instance.additionalInfo,
-      if (instance.codeDeliveryDetails?.toJson() case final value?)
-        'codeDeliveryDetails': value,
+      'codeDeliveryDetails': ?instance.codeDeliveryDetails?.toJson(),
       'signInStep': _$AuthSignInStepEnumMap[instance.signInStep]!,
       'missingAttributes': instance.missingAttributes
           .map(const AuthUserAttributeKeyConverter().toJson)
           .toList(),
-      if (instance.allowedMfaTypes?.map((e) => _$MfaTypeEnumMap[e]!).toList()
-          case final value?)
-        'allowedMfaTypes': value,
-      if (instance.totpSetupDetails?.toJson() case final value?)
-        'totpSetupDetails': value,
+      'allowedMfaTypes': ?instance.allowedMfaTypes
+          ?.map((e) => _$MfaTypeEnumMap[e]!)
+          .toList(),
+      'totpSetupDetails': ?instance.totpSetupDetails?.toJson(),
+      'availableFactors': ?instance.availableFactors
+          ?.map((e) => _$AuthFactorTypeEnumMap[e]!)
+          .toList(),
     };
 
 const _$AuthSignInStepEnumMap = {
@@ -78,12 +85,16 @@ const _$AuthSignInStepEnumMap = {
   AuthSignInStep.continueSignInWithTotpSetup: 'continueSignInWithTotpSetup',
   AuthSignInStep.continueSignInWithEmailMfaSetup:
       'continueSignInWithEmailMfaSetup',
+  AuthSignInStep.continueSignInWithFirstFactorSelection:
+      'continueSignInWithFirstFactorSelection',
   AuthSignInStep.confirmSignInWithSmsMfaCode: 'confirmSignInWithSmsMfaCode',
   AuthSignInStep.confirmSignInWithTotpMfaCode: 'confirmSignInWithTotpMfaCode',
   AuthSignInStep.confirmSignInWithOtpCode: 'confirmSignInWithOtpCode',
   AuthSignInStep.confirmSignInWithNewPassword: 'confirmSignInWithNewPassword',
   AuthSignInStep.confirmSignInWithCustomChallenge:
       'confirmSignInWithCustomChallenge',
+  AuthSignInStep.confirmSignInWithOtp: 'confirmSignInWithOtp',
+  AuthSignInStep.confirmSignInWithPassword: 'confirmSignInWithPassword',
   AuthSignInStep.resetPassword: 'resetPassword',
   AuthSignInStep.confirmSignUp: 'confirmSignUp',
   AuthSignInStep.done: 'done',
@@ -93,4 +104,11 @@ const _$MfaTypeEnumMap = {
   MfaType.sms: 'SMS',
   MfaType.totp: 'TOTP',
   MfaType.email: 'EMAIL',
+};
+
+const _$AuthFactorTypeEnumMap = {
+  AuthFactorType.password: 'PASSWORD',
+  AuthFactorType.passwordSrp: 'PASSWORD_SRP',
+  AuthFactorType.emailOtp: 'EMAIL_OTP',
+  AuthFactorType.smsOtp: 'SMS_OTP',
 };

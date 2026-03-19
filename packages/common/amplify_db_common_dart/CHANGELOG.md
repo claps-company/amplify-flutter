@@ -1,3 +1,25 @@
+## 0.4.17
+
+### Features
+- Validate bundled WASM code on web ([#6516](https://github.com/aws-amplify/amplify-flutter/pull/6516))
+
+## 0.4.16
+
+- Minor bug fixes and improvements
+
+## 0.4.15
+
+- Minor bug fixes and improvements
+
+## 0.4.14
+
+- Minor bug fixes and improvements
+
+## 0.4.13
+
+### Chores
+- chore(all): Bumped Dart SDK to ^3.9.0 ([#6306](https://github.com/aws-amplify/amplify-flutter/pull/6306))
+
 ## 0.4.12
 
 ### Chores

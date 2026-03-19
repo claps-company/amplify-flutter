@@ -12,7 +12,6 @@ import 'package:amplify_authenticator/src/utils/list.dart';
 import 'package:amplify_authenticator/src/widgets/button.dart';
 import 'package:amplify_authenticator/src/widgets/component.dart';
 import 'package:amplify_authenticator/src/widgets/form_field.dart';
-import 'package:amplify_authenticator/src/widgets/social/social_button.dart';
 // ignore: implementation_imports
 import 'package:amplify_core/src/config/amplify_outputs/auth/identity_provider.dart';
 // ignore: implementation_imports
@@ -90,6 +89,7 @@ class AuthenticatorForm extends AuthenticatorComponent<AuthenticatorForm> {
   @override
   AuthenticatorFormState<AuthenticatorForm> createState() =>
       AuthenticatorFormState<AuthenticatorForm>();
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -169,26 +169,31 @@ class AuthenticatorFormState<T extends AuthenticatorForm>
   Widget build(BuildContext context) {
     final formKey = InheritedAuthenticatorState.of(context).formKey;
     if (widget.child != null) {
-      return Form(key: formKey, child: widget.child!);
+      return Form(
+        key: formKey,
+        child: AutofillGroup(child: widget.child!),
+      );
     }
 
     final runtimeActions = this.runtimeActions(context);
     return Form(
       key: formKey,
-      child: Column(
-        children: [
-          ...allFields,
-          Column(
-            children: [
-              if (widget.actions.isNotEmpty) const SizedBox(height: 4),
-              ...widget.actions,
-              if (runtimeActions.isNotEmpty) ...[
-                const Divider(),
-                ...runtimeActions,
-              ],
-            ].spacedBy(const SizedBox(height: 12)),
-          ),
-        ],
+      child: AutofillGroup(
+        child: Column(
+          children: [
+            ...allFields,
+            Column(
+              children: [
+                if (widget.actions.isNotEmpty) const SizedBox(height: 4),
+                ...widget.actions,
+                if (runtimeActions.isNotEmpty) ...[
+                  const Divider(),
+                  ...runtimeActions,
+                ],
+              ].spacedBy(const SizedBox(height: 12)),
+            ),
+          ],
+        ),
       ),
     );
   }

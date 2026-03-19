@@ -20,6 +20,7 @@ export 'src/model/attribute/cognito_send_user_attribute_verification_code_plugin
 export 'src/model/attribute/cognito_update_user_attribute_plugin_options.dart';
 export 'src/model/attribute/cognito_update_user_attributes_plugin_options.dart';
 export 'src/model/auth_result.dart';
+export 'src/model/auto_sign_in/cognito_auto_sign_in_plugin_options.dart';
 export 'src/model/device/cognito_device.dart';
 export 'src/model/mfa/cognito_verify_totp_setup_plugin_options.dart';
 export 'src/model/password/cognito_confirm_reset_password_plugin_options.dart';
@@ -40,6 +41,7 @@ export 'src/model/signin/cognito_confirm_sign_in_plugin_options.dart';
 export 'src/model/signin/cognito_sign_in_plugin_options.dart';
 export 'src/model/signin/cognito_sign_in_result.dart';
 export 'src/model/signin/cognito_sign_in_with_web_ui_plugin_options.dart';
+export 'src/model/signin/cognito_sign_in_with_web_ui_plugin_options_prompt.dart';
 export 'src/model/signout/cognito_sign_out_plugin_options.dart';
 export 'src/model/signout/cognito_sign_out_result.dart';
 export 'src/model/signup/cognito_confirm_sign_up_plugin_options.dart';

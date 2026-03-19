@@ -131,7 +131,7 @@ abstract class AuthenticatorPage {
   }) async {
     expect(countrySelectField, findsOneWidget);
     await tester.tap(countrySelectField);
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(seconds: 3));
     expect(countrySelectDialog, findsOneWidget);
     final dialCode = find.descendant(
       of: find.byKey(keyCountryDialog),
@@ -146,6 +146,7 @@ abstract class AuthenticatorPage {
     await tester.pumpAndSettle();
     expect(dialCode, findsOneWidget);
     await tester.tap(dialCode);
+    await tester.pumpAndSettle();
   }
 
   /// When I click "Sign out"
